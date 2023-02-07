@@ -214,8 +214,10 @@ public class Board extends Subject {
     }
     private int counter;
     public void setCounter(int number){
-        counter = number;
-        notifyChange();
+        if (number!=counter){
+            counter = number;
+            notifyChange();
+        }
     }
     public int getCounter(){
         return counter;

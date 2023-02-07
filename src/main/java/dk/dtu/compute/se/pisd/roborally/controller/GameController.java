@@ -55,13 +55,14 @@ public class GameController {
         //     message needs to be implemented at another place)
 
         Player currentPlayer = board.getCurrentPlayer();
-        int nextPlayerNumber = (board.getPlayerNumber(currentPlayer) + 1) % board.getPlayersNumber();
-        Player nextPlayer = board.getPlayer(nextPlayerNumber);
-        if (space.getPlayer() ==null){
+        if (currentPlayer!=null){
+            int nextPlayerNumber = (board.getPlayerNumber(currentPlayer) + 1) % board.getPlayersNumber();
+            Player nextPlayer = board.getPlayer(nextPlayerNumber);
+            if (space.getPlayer() ==null) {
             currentPlayer.setSpace(space);
             board.setCurrentPlayer(nextPlayer);
             board.setCounter(board.getCounter() + 1);
-
+        }
         }
     }
 
@@ -207,21 +208,40 @@ public class GameController {
 
     // TODO Assignment V2
     public void moveForward(@NotNull Player player) {
+        Space space = player.getSpace();
+        if (space != null) {
+            Heading heading = player.getHeading();
+            Space space1 = board.getNeighbour(space,heading);
+            if (space1 != null){
+                player.setSpace(space1);
+            }
+        }
 
     }
 
     // TODO Assignment V2
     public void fastForward(@NotNull Player player) {
-
+        for (int i = 0; i < 2;i++) {
+            Space space = player.getSpace();
+            if (space != null) {
+                Heading heading = player.getHeading();
+                Space space1 = board.getNeighbour(space,heading);
+                if (space1 != null){
+                    player.setSpace(space1);
+                }
+            }
+        }
     }
 
     // TODO Assignment V2
     public void turnRight(@NotNull Player player) {
+        player.setHeading(player.getHeading().next());
 
     }
 
     // TODO Assignment V2
     public void turnLeft(@NotNull Player player) {
+        player.setHeading(player.getHeading().prev());
 
     }
 
