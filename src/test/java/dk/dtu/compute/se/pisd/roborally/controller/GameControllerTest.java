@@ -96,10 +96,6 @@ class GameControllerTest {
         Assertions.assertEquals(current,board.getSpace(0,0).getPlayer(),"Player is not in the correct space");
         Assertions.assertEquals(Heading.WEST, current.getHeading(),"Player should be heading West");
         Assertions.assertNotNull(board.getSpace(0,0).getPlayer(),"Space (0,0) should not be empty");
-
-
-
-
     }
 
     @Test
@@ -112,6 +108,5 @@ class GameControllerTest {
         Assertions.assertEquals(current,board.getSpace(0,0).getPlayer(),"Player is not in the correct space");
         Assertions.assertEquals(Heading.EAST, current.getHeading(),"Player should be heading east");
         Assertions.assertNotNull(board.getSpace(0,0).getPlayer(),"Space (0,0) should not be empty");
-
     }
 }

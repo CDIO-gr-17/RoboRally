@@ -46,7 +46,12 @@ public class SpaceView extends StackPane implements ViewObserver {
 
     public final Space space;
 
-
+    /**
+     * Creates a visual space in the app and sets its height and width
+     * Sets its color to either black or white
+     *
+     * @param space  the space which should be visualized
+     */
     public SpaceView(@NotNull Space space) {
         this.space = space;
 

@@ -48,6 +48,14 @@ public class Player extends Subject {
     private CommandCardField[] program;
     private CommandCardField[] cards;
 
+    /**
+     * Creates a player and assigns a board, name and color.
+     * Assigns new cardfields to a programming-cards and a hand-cards field-array.
+     *
+     * @param board the board to which the player should adhere
+     * @param color the desired color of the player
+     * @param name  the desired name of the player
+     */
     public Player(@NotNull Board board, String color, @NotNull String name) {
         this.board = board;
         this.name = name;
@@ -70,6 +78,12 @@ public class Player extends Subject {
         return name;
     }
 
+    /**
+     * Changes the name of the player if it is not the same as previous
+     * Updates the view and space of
+     *
+     * @param name the desired name, should not be null
+     */
     public void setName(String name) {
         if (name != null && !name.equals(this.name)) {
             this.name = name;

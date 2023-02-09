@@ -31,10 +31,20 @@ public enum Heading {
 
     SOUTH, WEST, NORTH, EAST;
 
+    /**
+     * Changes the heading clockwise
+     *
+     * @return the heading after the change
+     */
     public Heading next() {
         return values()[(this.ordinal() + 1) % values().length];
     }
 
+    /**
+     * Changes the heading counter-clockwise
+     *
+     * @return the heading after the change
+     */
     public Heading prev() {
         return values()[(this.ordinal() + values().length - 1) % values().length];
     }

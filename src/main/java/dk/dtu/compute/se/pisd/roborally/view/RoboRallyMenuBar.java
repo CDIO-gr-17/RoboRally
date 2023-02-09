@@ -48,6 +48,11 @@ public class RoboRallyMenuBar extends MenuBar {
 
     private MenuItem exitApp;
 
+    /**
+     * Sets up the menu bar of the app
+     *
+     * @param appController     to which appcontroller this menubar should be applied
+     */
     public RoboRallyMenuBar(AppController appController) {
         this.appController = appController;
 
@@ -79,6 +84,10 @@ public class RoboRallyMenuBar extends MenuBar {
         update();
     }
 
+    /**
+     * Decides which elements of the menubar should be visible.
+     * Depends on whether a game is already running or a new one could be created
+     */
     public void update() {
         if (appController.isGameRunning()) {
             newGame.setVisible(false);

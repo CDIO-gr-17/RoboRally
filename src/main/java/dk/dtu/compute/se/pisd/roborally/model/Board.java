@@ -57,6 +57,13 @@ public class Board extends Subject {
 
     private boolean stepMode;
 
+    /**
+     * Creates a board with a name, width and height and creates spaces for each coordinate on the board
+     *
+     * @param width     the width of the wanted board
+     * @param height    the height of the wanted board
+     * @param boardName The name of the wanted board
+     */
     public Board(int width, int height, @NotNull String boardName) {
         this.boardName = boardName;
         this.width = width;
@@ -89,6 +96,13 @@ public class Board extends Subject {
         }
     }
 
+    /**
+     * Method returns the space on the board that belongs to and is placed on x and y
+     *
+     * @param x Integer that represents the horizontal axis
+     * @param y Integer that represents the vertical axis
+     * @return the space that belongs to the coordinates x and y
+     */
     public Space getSpace(int x, int y) {
         if (x >= 0 && x < width &&
                 y >= 0 && y < height) {
@@ -213,6 +227,12 @@ public class Board extends Subject {
 
     }
     private int counter;
+
+    /**
+     * method for counting number of moves that has been made in a game
+     *
+     * @param number    the number of moves this counter should be set to
+     */
     public void setCounter(int number){
         if (number!=counter){
             counter = number;

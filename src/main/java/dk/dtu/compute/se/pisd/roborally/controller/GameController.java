@@ -67,6 +67,12 @@ public class GameController {
     }
 
     // XXX: V2
+
+    /**
+     * Method sets current player to player one for this player to start programming
+     * It also removes the previous programmed cards and makes the fields visible
+     * Makes the player "draw" new programming cards and makes them visible
+     */
     public void startProgrammingPhase() {
         board.setPhase(Phase.PROGRAMMING);
         board.setCurrentPlayer(board.getPlayer(0));
@@ -90,6 +96,13 @@ public class GameController {
     }
 
     // XXX: V2
+
+    /**
+     * Pulls a random command from an array of all possible commands and returns it as a "commandcard"
+     * to be used in the programming phase and later executed
+     *
+     * @return  a commandcard to be used in programming phase
+     */
     private CommandCard generateRandomCommandCard() {
         Command[] commands = Command.values();
         int random = (int) (Math.random() * commands.length);
@@ -97,6 +110,11 @@ public class GameController {
     }
 
     // XXX: V2
+
+    /**
+     * Makes all programming field (and therefore cards) invisible and thereafter makes only one visible
+     * Changes to activation phase and sets currentplayer to player one for this player to start executing
+     */
     public void finishProgrammingPhase() {
         makeProgramFieldsInvisible();
         makeProgramFieldsVisible(0);
@@ -106,6 +124,12 @@ public class GameController {
     }
 
     // XXX: V2
+
+    /**
+     * Makes one programming cardfield visible for all players
+     *
+     * @param register  which cardfield should be made visible
+     */
     private void makeProgramFieldsVisible(int register) {
         if (register >= 0 && register < Player.NO_REGISTERS) {
             for (int i = 0; i < board.getPlayersNumber(); i++) {
@@ -117,6 +141,10 @@ public class GameController {
     }
 
     // XXX: V2
+
+    /**
+     * makes all programming cardfields invisible
+     */
     private void makeProgramFieldsInvisible() {
         for (int i = 0; i < board.getPlayersNumber(); i++) {
             Player player = board.getPlayer(i);
