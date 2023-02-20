@@ -156,12 +156,20 @@ public class GameController {
     }
 
     // XXX: V2
+
+    /**
+     * Sends all planned programming cards to execution
+     */
     public void executePrograms() {
         board.setStepMode(false);
         continuePrograms();
     }
 
     // XXX: V2
+
+    /**
+     * sends the next planned programming card for the current player to execution
+     */
     public void executeStep() {
         board.setStepMode(true);
         continuePrograms();
@@ -175,6 +183,10 @@ public class GameController {
     }
 
     // XXX: V2
+
+    /**
+     * Executes the current commandcard
+     */
     private void executeNextStep() {
         Player currentPlayer = board.getCurrentPlayer();
         if (board.getPhase() == Phase.ACTIVATION && currentPlayer != null) {
@@ -183,6 +195,10 @@ public class GameController {
                 CommandCard card = currentPlayer.getProgramField(step).getCard();
                 if (card != null) {
                     Command command = card.command;
+                    if (command.isInteractive()) {
+                        board.setPhase(Phase.PLAYER_INTERACTION);
+                        return;
+                    }
                     executeCommand(currentPlayer, command);
                 }
                 int nextPlayerNumber = board.getPlayerNumber(currentPlayer) + 1;
@@ -207,6 +223,42 @@ public class GameController {
             assert false;
         }
     }
+
+    /**
+     * Executes the choosen command of an interactive command-card
+     * @param option the command which should be executed
+     */
+    public void executeCommandOptionAndContinue(@NotNull Command option) {
+        Player currentPlayer = board.getCurrentPlayer();
+        if (board.getPhase() == Phase.PLAYER_INTERACTION && currentPlayer != null) {
+            int step = board.getStep();
+            if (step >= 0 && step < Player.NO_REGISTERS) {
+                board.setPhase(Phase.ACTIVATION);
+                executeCommand(currentPlayer, option);
+
+                int nextPlayerNumber = board.getPlayerNumber(currentPlayer) + 1;
+                if (nextPlayerNumber < board.getPlayersNumber()) {
+                    board.setCurrentPlayer(board.getPlayer(nextPlayerNumber));
+                } else {
+                    step++;
+                    if (step < Player.NO_REGISTERS) {
+                        makeProgramFieldsVisible(step);
+                        board.setStep(step);
+                        board.setCurrentPlayer(board.getPlayer(0));
+                    } else {
+                        startProgrammingPhase();
+                    }
+                }
+            } else {
+                // this should not happen
+                assert false;
+            }
+        } else {
+            // this should not happen
+            assert false;
+        }
+    }
+
 
     // XXX: V2
     private void executeCommand(@NotNull Player player, Command command) {

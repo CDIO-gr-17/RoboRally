@@ -1,0 +1,23 @@
+@startuml
+'https://plantuml.com/activity-diagram-beta
+
+start
+:setup;
+:Programming;
+repeat
+if (command is interactive) then (true)
+:choose command;
+else (false)
+endif
+:     <<automatic>>
+Execute command;
+
+repeat while (more steps?) is (yes)
+->no;
+
+stop
+
+
+
+
+@enduml

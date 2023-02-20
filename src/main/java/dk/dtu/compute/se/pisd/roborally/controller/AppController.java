@@ -127,6 +127,9 @@ public class AppController implements Observer {
         return false;
     }
 
+    /**
+     * Closes the game after confirmation pop-up
+     */
     public void exit() {
         if (gameController != null) {
             Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -146,6 +149,10 @@ public class AppController implements Observer {
         }
     }
 
+    /**
+     *
+     * @return Boolean that is true when the game is running or the gamecontroller has not been set null
+     */
     public boolean isGameRunning() {
         return gameController != null;
     }
