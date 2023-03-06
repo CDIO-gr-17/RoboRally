@@ -94,10 +94,18 @@ public class Player extends Subject {
         }
     }
 
+    /**
+     *
+     * @return  The color of the player as a string
+     */
     public String getColor() {
         return color;
     }
 
+    /**
+     * Change the color of a player
+     * @param color The desired color of the player as a string
+     */
     public void setColor(String color) {
         this.color = color;
         notifyChange();
@@ -106,6 +114,10 @@ public class Player extends Subject {
         }
     }
 
+    /**
+     *
+     * @return  The space which the player is positioned on
+     */
     public Space getSpace() {
         return space;
     }
@@ -125,10 +137,18 @@ public class Player extends Subject {
         }
     }
 
+    /**
+     *
+     * @return  The current heading of the player
+     */
     public Heading getHeading() {
         return heading;
     }
 
+    /**
+     * Change the heading of the player
+     * @param heading   The whished heading og the player
+     */
     public void setHeading(@NotNull Heading heading) {
         if (heading != this.heading) {
             this.heading = heading;
@@ -139,6 +159,11 @@ public class Player extends Subject {
         }
     }
 
+    /**
+     *
+     * @param i
+     * @return
+     */
     public CommandCardField getProgramField(int i) {
         return program[i];
     }

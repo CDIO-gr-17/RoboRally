@@ -22,7 +22,7 @@
 package dk.dtu.compute.se.pisd.roborally.model;
 
 /**
- * ...
+ * Contains all phases the game consists of
  *
  * @author Ekkart Kindler, ekki@dtu.dk
  *

@@ -25,7 +25,7 @@ import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * ...
+ * Card that holds a command
  *
  * @author Ekkart Kindler, ekki@dtu.dk
  *

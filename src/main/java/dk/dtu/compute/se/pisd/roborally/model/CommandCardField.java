@@ -24,7 +24,7 @@ package dk.dtu.compute.se.pisd.roborally.model;
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 
 /**
- * ...
+ * Field to which a Commandcard can be assigned.
  *
  * @author Ekkart Kindler, ekki@dtu.dk
  *

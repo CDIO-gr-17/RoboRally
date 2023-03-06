@@ -30,7 +30,7 @@ import java.util.List;
 import static dk.dtu.compute.se.pisd.roborally.model.Phase.INITIALISATION;
 
 /**
- * ...
+ *
  *
  * @author Ekkart Kindler, ekki@dtu.dk
  *
@@ -86,6 +86,11 @@ public class Board extends Subject {
         return gameId;
     }
 
+    /**
+     * Assigns an integer as a unique Identifier for the current game.
+     *
+     * @param gameId    The integer whished as Identifier
+     */
     public void setGameId(int gameId) {
         if (this.gameId == null) {
             this.gameId = gameId;
@@ -112,10 +117,18 @@ public class Board extends Subject {
         }
     }
 
+    /**
+     * Returns the amount of current players
+     * @return  int representing amount of players
+     */
     public int getPlayersNumber() {
         return players.size();
     }
 
+    /**
+     * Adds a player to the game as long as the player belongs in this game and has not already been added
+     * @param player    The player who should be added to the game
+     */
     public void addPlayer(@NotNull Player player) {
         if (player.board == this && !players.contains(player)) {
             players.add(player);
@@ -164,10 +177,18 @@ public class Board extends Subject {
         }
     }
 
+    /**
+     *
+     * @return  whether the player wants the whole planned program executed or one command at a time
+     */
     public boolean isStepMode() {
         return stepMode;
     }
 
+    /**
+     * Set whether the player wants to run the program continuosly og in steps for each command
+     * @param stepMode  True for stepmode, false for not
+     */
     public void setStepMode(boolean stepMode) {
         if (stepMode != this.stepMode) {
             this.stepMode = stepMode;

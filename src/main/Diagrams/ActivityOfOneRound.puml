@@ -1,0 +1,39 @@
+@startuml
+'https://plantuml.com/activity-diagram-beta
+
+|Player|
+|System|
+start
+|System|
+:Deal cards;
+|Player|
+:Program robot;
+|System|
+repeat
+fork
+|Player|
+:Execute interactive commands
+on current step (for all players);
+|System|
+fork again
+:Execute non-interactive commands
+on current step (for all players);
+
+end fork
+:Execute board elements;
+
+if (Damage done) then (true)
+:Deal damage cards;
+
+else (false)
+
+endif
+backward:Step++;
+repeat while (Cards left?) is (true) not (false)
+
+|Player|
+:Buy upgrade;
+
+stop
+
+@enduml

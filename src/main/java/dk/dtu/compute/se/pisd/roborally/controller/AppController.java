@@ -41,7 +41,8 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * ...
+ * This class controls the outer app the program i running in.
+ * This means running the menubar and controlling user access to files EI. database later on
  *
  * @author Ekkart Kindler, ekki@dtu.dk
  *
@@ -59,6 +60,9 @@ public class AppController implements Observer {
         this.roboRally = roboRally;
     }
 
+    /**
+     * Creates board and players according to dialouge
+     */
     public void newGame() {
         ChoiceDialog<Integer> dialog = new ChoiceDialog<>(PLAYER_NUMBER_OPTIONS.get(0), PLAYER_NUMBER_OPTIONS);
         dialog.setTitle("Player number");

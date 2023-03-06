@@ -1,0 +1,23 @@
+@startuml
+'https://plantuml.com/use-case-diagram
+Left to right direction
+actor User as U
+Rectangle Roborally {
+usecase "Program robot" as PR
+usecase "Configure game" as CG
+usecase "Upgrade robot" as UR
+
+
+}
+
+U --> PR
+U-->CG
+U-->UR
+
+
+@enduml
+
+usecase "Choose nr. of players"
+usecase "Choose board"
+usecase "Buy upgrades"
+usecase "Apply upgrades"

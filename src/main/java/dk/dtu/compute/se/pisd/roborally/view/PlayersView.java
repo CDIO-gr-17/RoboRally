@@ -28,7 +28,7 @@ import dk.dtu.compute.se.pisd.roborally.model.Player;
 import javafx.scene.control.TabPane;
 
 /**
- * ...
+ * This class contains what should be visible to all the players of the game. The information that they share
  *
  * @author Ekkart Kindler, ekki@dtu.dk
  *

@@ -35,7 +35,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 /**
- * ...
+ * This class contains what each individual player sees. The view is unique for each player.
  *
  * @author Ekkart Kindler, ekki@dtu.dk
  *

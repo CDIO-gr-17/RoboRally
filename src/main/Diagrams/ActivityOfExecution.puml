@@ -1,19 +1,22 @@
 @startuml
 'https://plantuml.com/activity-diagram-beta
 
+
 start
-:setup;
-:Programming;
+:int i=1;
 repeat
+:Choose player i;
 if (command is interactive) then (true)
-:choose command;
+:choose command
+    from options;
 else (false)
 endif
 :     <<automatic>>
 Execute command;
+backward:i++;
+repeat while (i < players.lenght) is (true)
+->false;
 
-repeat while (more steps?) is (yes)
-->no;
 
 stop
 

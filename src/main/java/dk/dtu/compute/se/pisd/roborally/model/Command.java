@@ -26,7 +26,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * ...
+ * Contains all possible commands for the robots
  *
  * @author Ekkart Kindler, ekki@dtu.dk
  *

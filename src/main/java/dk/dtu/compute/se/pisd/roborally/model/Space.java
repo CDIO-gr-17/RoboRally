@@ -24,7 +24,7 @@ package dk.dtu.compute.se.pisd.roborally.model;
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 
 /**
- * ...
+ * The board is made up of spaces and a space can have a player coupled
  *
  * @author Ekkart Kindler, ekki@dtu.dk
  *
@@ -49,10 +49,13 @@ public class Space extends Subject {
         return player;
     }
 
+    /**
+     * Sets the player belonging to this space
+     * @param player    The player which belongs to this space
+     */
     public void setPlayer(Player player) {
         Player oldPlayer = this.player;
-        if (player != oldPlayer &&
-                (player == null || board == player.board)) {
+        if (player != oldPlayer && (player == null || board == player.board)) {
             this.player = player;
             if (oldPlayer != null) {
                 // this should actually not happen

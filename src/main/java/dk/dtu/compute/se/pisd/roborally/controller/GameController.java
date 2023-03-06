@@ -25,7 +25,7 @@ import dk.dtu.compute.se.pisd.roborally.model.*;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * ...
+ *
  *
  * @author Ekkart Kindler, ekki@dtu.dk
  *
@@ -176,6 +176,10 @@ public class GameController {
     }
 
     // XXX: V2
+
+    /**
+     * Continues execution of cards as long as activation phase is active and stepmode is off
+     */
     private void continuePrograms() {
         do {
             executeNextStep();
@@ -225,7 +229,7 @@ public class GameController {
     }
 
     /**
-     * Executes the choosen command of an interactive command-card
+     * Executes the chosen command of an interactive command-card
      * @param option the command which should be executed
      */
     public void executeCommandOptionAndContinue(@NotNull Command option) {
@@ -325,6 +329,13 @@ public class GameController {
 
     }
 
+    /**
+     * Moves programming card from one field to another if this is allowed. (the field is empty)
+     *
+     * @param source    the field containing the command the player wishes to move
+     * @param target    the firld to which the command should be moved
+     * @return          True if the card is allowed to be moved
+     */
     public boolean moveCards(@NotNull CommandCardField source, @NotNull CommandCardField target) {
         CommandCard sourceCard = source.getCard();
         CommandCard targetCard = target.getCard();

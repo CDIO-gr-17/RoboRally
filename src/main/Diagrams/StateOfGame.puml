@@ -1,0 +1,24 @@
+@startuml
+'https://plantuml.com/state-diagram
+
+state RoborallyGame{
+[*] --> Initialization
+Initialization --> Programming
+Programming --> Execution
+Execution --> Interaction:[Card is interactive]
+Interaction -> Execution:[action choosen]
+Execution -> Final:[winner found]
+Interaction -> Initialization:[Configuration choosen]
+Initialization -> Interaction:[Needs configuration]
+
+state Initialization
+
+state Programming
+
+state Execution
+    state Interaction
+
+state Final
+
+}
+@enduml
