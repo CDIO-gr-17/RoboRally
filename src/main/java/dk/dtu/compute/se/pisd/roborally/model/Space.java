@@ -32,9 +32,10 @@ import java.util.List;
  *
  */
 public class Space extends Subject {
+
     //Laver en liste med headings
 
-    private List<Heading> Walls;
+    private List<Wall> Walls;
 
     public final Board board;
 
@@ -73,9 +74,11 @@ public class Space extends Subject {
         }
     }
     //Tager en heading som parameter og laver en væg i en given heading til et space og adder det til listen
-    public void createWall(Heading heading){
-        this.Walls.add(heading);
+    public void createWall(Wall wall){
+        this.Walls.add(wall);
     }
+
+
 
     void playerChanged() {
         // This is a minor hack; since some views that are registered with the space
