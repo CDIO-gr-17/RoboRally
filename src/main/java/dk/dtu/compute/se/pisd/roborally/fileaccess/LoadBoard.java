@@ -34,7 +34,7 @@ import dk.dtu.compute.se.pisd.roborally.model.Space;
 import java.io.*;
 
 /**
- * ...
+ * This class is able to read and write Json files containing information about the gameboard
  *
  * @author Ekkart Kindler, ekki@dtu.dk
  */
