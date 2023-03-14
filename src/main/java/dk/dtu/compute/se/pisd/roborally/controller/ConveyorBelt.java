@@ -37,6 +37,16 @@ public class ConveyorBelt extends FieldAction {
 
     private Heading heading;
 
+    public Space getSpace() {
+        return space;
+    }
+
+    public void setSpace(Space space) {
+        this.space = space;
+    }
+
+    private Space space;
+
     public Heading getHeading() {
         return heading;
     }
@@ -47,8 +57,17 @@ public class ConveyorBelt extends FieldAction {
 
     @Override
     public boolean doAction(@NotNull GameController gameController, @NotNull Space space) {
-        // TODO needs to be implemented
-        return false;
+
+        try {
+            if(space.getPlayer()!=null) {
+                gameController.moveToSpace(space.getPlayer(), space, heading);
+                System.out.println("Player moved");
+                notifyChange();
+            }
+        } catch (ImpossibleMoveException e) {
+
+        }
+        return true;
     }
 
 }

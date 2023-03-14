@@ -73,8 +73,8 @@ public class LoadBoard {
 			for (SpaceTemplate spaceTemplate: template.spaces) {
 			    Space space = result.getSpace(spaceTemplate.x, spaceTemplate.y);
 			    if (space != null) {
-                    space.getActions().addAll(spaceTemplate.actions);
-                    space.getWalls().addAll(spaceTemplate.walls);
+                    //space.getActions().addAll(spaceTemplate.actions);
+                    //space.getWalls().addAll(spaceTemplate.walls);
                 }
             }
 			reader.close();
@@ -94,7 +94,7 @@ public class LoadBoard {
 		}
 		return null;
     }
-
+/*
     public static void saveBoard(Board board, String name) {
         BoardTemplate template = new BoardTemplate();
         template.width = board.width;
@@ -113,6 +113,8 @@ public class LoadBoard {
                 }
             }
         }
+
+
 
         ClassLoader classLoader = LoadBoard.class.getClassLoader();
         // TODO: this is not very defensive, and will result in a NullPointerException
@@ -154,5 +156,7 @@ public class LoadBoard {
             }
         }
     }
+
+ */
 
 }

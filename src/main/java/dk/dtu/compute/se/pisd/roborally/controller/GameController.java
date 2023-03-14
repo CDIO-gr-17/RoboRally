@@ -74,6 +74,8 @@ public class GameController {
      * Makes the player "draw" new programming cards and makes them visible
      */
     public void startProgrammingPhase() {
+        board.conveyorBelt.doAction(this,board.getSpace(1,1));
+
         board.setPhase(Phase.PROGRAMMING);
         board.setCurrentPlayer(board.getPlayer(0));
         board.setStep(0);
@@ -289,7 +291,7 @@ public class GameController {
             }
         }
     }
-    private void moveToSpace(
+    public void moveToSpace(
             @NotNull Player player,
             @NotNull Space space,
             @NotNull Heading heading) throws ImpossibleMoveException {

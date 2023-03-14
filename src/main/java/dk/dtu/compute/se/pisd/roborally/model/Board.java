@@ -22,8 +22,10 @@
 package dk.dtu.compute.se.pisd.roborally.model;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
+import dk.dtu.compute.se.pisd.roborally.controller.ConveyorBelt;
 import org.jetbrains.annotations.NotNull;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,6 +52,7 @@ public class Board extends Subject {
     private final List<Player> players = new ArrayList<>();
 
     private Player current;
+    public ConveyorBelt conveyorBelt;
 
     private Phase phase = INITIALISATION;
 
@@ -75,6 +78,10 @@ public class Board extends Subject {
                 spaces[x][y] = space;
             }
         }
+        conveyorBelt = new ConveyorBelt();
+        conveyorBelt.setHeading(Heading.SOUTH);
+        conveyorBelt.setSpace(getSpace(1,1));
+
         this.stepMode = false;
     }
 
