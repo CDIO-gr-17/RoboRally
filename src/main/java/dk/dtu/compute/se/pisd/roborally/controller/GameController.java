@@ -289,15 +289,40 @@ public class GameController {
             }
         }
     }
+    private void moveToSpace(
+            @NotNull Player player,
+            @NotNull Space space,
+            @NotNull Heading heading) throws ImpossibleMoveException {
+        Player targetPlayer = space.getPlayer();
+
+
+        if (targetPlayer != null) {
+            Space nextSpace = board.getNeighbour(space, heading);
+
+            if (nextSpace != null) {
+                // XXX Note that there might be additional problems
+                // with infinite recursion here!
+                moveToSpace(targetPlayer, nextSpace, heading);
+            } else {
+                throw new ImpossibleMoveException(player, space, heading);
+            }
+        }
+        player.setSpace(space);
+    }
 
     // TODO Assignment V2
     public void moveForward(@NotNull Player player) {
         Space space = player.getSpace();
         if (space != null) {
             Heading heading = player.getHeading();
-            Space space1 = board.getNeighbour(space,heading);
-            if (space1 != null){
-                player.setSpace(space1);
+            Space target = board.getNeighbour(space,heading);
+            if (target != null){
+                try {
+                    moveToSpace(player,target,heading);
+                }catch(ImpossibleMoveException e){
+
+                }
+
             }
         }
 

@@ -23,6 +23,8 @@ package dk.dtu.compute.se.pisd.roborally.model;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 
+import java.util.List;
+
 /**
  * The board is made up of spaces and a space can have a player coupled
  *
@@ -30,6 +32,9 @@ import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
  *
  */
 public class Space extends Subject {
+    //Laver en liste med headings
+
+    private List<Heading> Walls;
 
     public final Board board;
 
@@ -66,6 +71,10 @@ public class Space extends Subject {
             }
             notifyChange();
         }
+    }
+    //Tager en heading som parameter og laver en væg i en given heading til et space og adder det til listen
+    public void createWall(Heading heading){
+        this.Walls.add(heading);
     }
 
     void playerChanged() {
