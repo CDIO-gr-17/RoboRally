@@ -300,15 +300,19 @@ public class GameController {
             @NotNull Space space,
             @NotNull Heading heading) throws ImpossibleMoveException {
         Player targetPlayer = space.getPlayer();
+        if (!space.isWallObstructing(heading)) {
+            throw new ImpossibleMoveException(player,space,heading);
+        }
 
 
         if (targetPlayer != null) {
             Space nextSpace = board.getNeighbour(space, heading);
-
             if (nextSpace != null) {
-                // XXX Note that there might be additional problems
-                // with infinite recursion here!
-                moveToSpace(targetPlayer, nextSpace, heading);
+
+                    // XXX Note that there might be additional problems
+                    // with infinite recursion here!
+
+                    moveToSpace(targetPlayer, nextSpace, heading);
             } else {
                 throw new ImpossibleMoveException(player, space, heading);
             }
@@ -339,6 +343,7 @@ public class GameController {
             moveForward(player);
         }
     }
+
     public void backUp(@NotNull Player player){
         Space currentSpace = player.getSpace();
         if (currentSpace != null) {
