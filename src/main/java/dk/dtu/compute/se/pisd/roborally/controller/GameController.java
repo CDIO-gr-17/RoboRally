@@ -300,13 +300,18 @@ public class GameController {
             @NotNull Space space,
             @NotNull Heading heading) throws ImpossibleMoveException {
         Player targetPlayer = space.getPlayer();
-        if (!space.isWallObstructing(heading)) {
+        Space prevSpace = board.getNeighbour(space,heading.next().next());
+        Space nextSpace = board.getNeighbour(space, heading);
+
+        if (prevSpace.isWallObstructing(heading)) {     //checks for walls on current space in direction and target space in reverse direction
+            throw new ImpossibleMoveException(player,space,heading);
+        }
+        if (space.isWallObstructing(heading.next().next())){
             throw new ImpossibleMoveException(player,space,heading);
         }
 
 
         if (targetPlayer != null) {
-            Space nextSpace = board.getNeighbour(space, heading);
             if (nextSpace != null) {
 
                     // XXX Note that there might be additional problems

@@ -50,5 +50,4 @@ public class ConveyorBelt extends FieldAction {
         // TODO needs to be implemented
         return false;
     }
-
 }
