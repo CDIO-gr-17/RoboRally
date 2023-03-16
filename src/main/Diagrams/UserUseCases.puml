@@ -3,21 +3,44 @@
 Left to right direction
 actor User as U
 Rectangle Roborally {
+usecase "Start game"
+    usecase "Choose map"
+    usecase "Choose nr of players"
+    usecase "Configure game" as CG
 usecase "Program robot" as PR
-usecase "Configure game" as CG
-usecase "Upgrade robot" as UR
+    usecase "Draw cards"
+    usecase "play cards"
 
-
+usecase "Execute round"
+rectangle Step{
+usecase "Execute commands"
+    usecase "Execute entities"
 }
 
+usecase "Upgrade robot" as UR
+usecase "Finish game"
+}
+
+
+"Start game" <|-- CG
+"Start game" <|- "Choose map"
+"Start game" <|-- "Choose nr of players"
+
+"Execute round" <|-- "Execute commands"
+"Execute round" <|-- "Execute entities"
+
+PR <|-- "Draw cards"
+PR <|-- "play cards"
+
+U --> "Execute round"
+U --> "Start game"
 U --> PR
-U-->CG
 U-->UR
+U --> "Finish game"
 
 
 @enduml
 
-usecase "Choose nr. of players"
 usecase "Choose board"
 usecase "Buy upgrades"
 usecase "Apply upgrades"
