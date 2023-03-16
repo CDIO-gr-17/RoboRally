@@ -313,10 +313,8 @@ public class GameController {
 
         if (targetPlayer != null) {
             if (nextSpace != null) {
-
                     // XXX Note that there might be additional problems
                     // with infinite recursion here!
-
                     moveToSpace(targetPlayer, nextSpace, heading);
             } else {
                 throw new ImpossibleMoveException(player, space, heading);

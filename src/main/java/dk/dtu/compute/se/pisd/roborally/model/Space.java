@@ -85,6 +85,9 @@ public class Space extends Subject {
         }
         return false;
     }
+    public List<Heading> getWalls(){
+        return walls;
+    }
 
     void playerChanged() {
         // This is a minor hack; since some views that are registered with the space

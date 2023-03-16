@@ -36,6 +36,9 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeLineCap;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * ...
  *
@@ -74,7 +77,7 @@ public class SpaceView extends StackPane implements ViewObserver {
         }
 
         // updatePlayer();
-        drawWall();
+        drawWalls(space.getWalls());
         // This space view should listen to changes of the space
         space.attach(this);
         update(space);
@@ -100,18 +103,35 @@ public class SpaceView extends StackPane implements ViewObserver {
         }
     }
 
-    private void drawWall(){
-        Pane pane = new Pane();
-        Rectangle rectangle = new Rectangle();
-        rectangle.setFill(Color.TRANSPARENT);
-        pane.getChildren().add(rectangle);
-
-
-        Line line = new Line(2,SPACE_HEIGHT-2,SPACE_WIDTH-2,SPACE_HEIGHT-2);
-        line.setStroke(Color.RED);
-        line.setStrokeWidth(5);
-        pane.getChildren().add(line);
-        this.getChildren().add(pane);
+    /**
+     * Draws all walls belonging to this space
+     *
+     * @param walls     A list of walls that is placed on the space being created
+     * @author s224570
+     */
+    private void drawWalls(List<Heading> walls){
+        for(Heading wall:walls){
+            Pane pane = new Pane();
+            Rectangle rectangle = new Rectangle();
+            rectangle.setFill(Color.TRANSPARENT);
+            pane.getChildren().add(rectangle);
+            Line line = null;
+            switch(wall){
+                case SOUTH: line = new Line(2,SPACE_HEIGHT-2,SPACE_WIDTH-2,SPACE_HEIGHT-2);
+                    break;
+                case WEST: line = new Line (2,2,2,SPACE_HEIGHT-2);
+                    break;
+                case NORTH: line = new Line(2,2,SPACE_WIDTH-2,2);
+                    break;
+                case EAST: line = new Line(SPACE_WIDTH-2,SPACE_HEIGHT-2,SPACE_WIDTH-2,2);
+                    break;
+                default: line = null;
+            }
+            line.setStroke(Color.RED);
+            line.setStrokeWidth(5);
+            pane.getChildren().add(line);
+            this.getChildren().add(pane);
+        }
     }
 
     @Override
@@ -119,10 +139,7 @@ public class SpaceView extends StackPane implements ViewObserver {
         if (subject == this.space) {
             updatePlayer();
         }
-        if (space.isWallObstructing(Heading.SOUTH)){
-            drawWall();
-
-        }
+            drawWalls(space.getWalls());
     }
 
 }
