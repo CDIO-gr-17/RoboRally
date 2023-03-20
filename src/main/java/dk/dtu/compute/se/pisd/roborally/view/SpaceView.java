@@ -22,21 +22,18 @@
 package dk.dtu.compute.se.pisd.roborally.view;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
+import dk.dtu.compute.se.pisd.roborally.model.ConveyorBelt;
 import dk.dtu.compute.se.pisd.roborally.model.Heading;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.StrokeLineCap;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -77,7 +74,6 @@ public class SpaceView extends StackPane implements ViewObserver {
         }
 
         // updatePlayer();
-        drawWalls(space.getWalls());
         // This space view should listen to changes of the space
         space.attach(this);
         update(space);
@@ -102,7 +98,16 @@ public class SpaceView extends StackPane implements ViewObserver {
             this.getChildren().add(arrow);
         }
     }
-
+    private void drawConveyorbelt(ConveyorBelt conveyorBelt){
+        if(conveyorBelt!=null) {
+            Polygon arrow = new Polygon(0.0, 0.0,
+                    5.0, 10.0,
+                    10.0, 0.0);
+            arrow.setFill(Color.GREY);
+            arrow.setRotate((90 * conveyorBelt.getHeading().ordinal()) % 360);
+            this.getChildren().add(arrow);
+        }
+    }
     /**
      * Draws all walls belonging to this space
      *
@@ -139,7 +144,8 @@ public class SpaceView extends StackPane implements ViewObserver {
         if (subject == this.space) {
             updatePlayer();
         }
-            drawWalls(space.getWalls());
+        drawWalls(space.getWalls());
+        drawConveyorbelt(space.getConveyorBelt());
     }
 
 }
