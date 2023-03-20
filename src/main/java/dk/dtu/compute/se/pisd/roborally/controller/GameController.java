@@ -298,6 +298,14 @@ public class GameController {
     }
 
     /**
+     * @author Jakob Agergaard
+     */
+    public void executeEntities(){
+        executeCheckpoints();
+        executeConveyorbelts();
+    }
+
+    /**
      * executes the doAction() method for all conveyorbelts on the board
      */
     public void executeConveyorbelts() {
@@ -308,6 +316,20 @@ public class GameController {
             }
         }
     }
+
+    /**
+     * @author Jakob Agergaard
+     */
+    public void executeCheckpoints() {
+        for (int i = 0; i < board.width; i++) {
+            for (int j = 0; j < board.height; j++) {
+                Checkpoint checkpoint = board.getSpace(i,j).getCheckpoint();
+                if(checkpoint!=null){
+                    checkpoint.doAction(this,board.getSpace(i,j));
+                }
+            }
+
+    }}
 
     /**
      * Moves a player to a specific space in a direction. If another player is on the space a player is trying to move onto,

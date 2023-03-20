@@ -76,12 +76,18 @@ public class Board extends Subject {
                 spaces[x][y] = space;
             }
         }
-        /*
-        spaces[0][0].createWall(Heading.WEST);
-        spaces[1][0].createWall(Heading.WEST);
-        spaces[0][1].createWall(Heading.WEST);
-        spaces[0][0].createWall(Heading.WEST);
-        */
+/*
+        spaces[0][2].createWall(Heading.SOUTH);
+        spaces[2][0].createWall(Heading.SOUTH);
+        spaces[7][7].createWall(Heading.NORTH);
+        spaces[6][6].createWall(Heading.WEST);
+        spaces[6][6].createWall(Heading.EAST);
+        spaces[0][0].createCheckpoint(1);
+        spaces[3][3].createCheckpoint(2);
+        spaces[4][4].createCheckpoint(3);
+*/
+
+
 
         this.stepMode = false;
     }

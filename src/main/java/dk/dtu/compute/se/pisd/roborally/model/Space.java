@@ -35,7 +35,14 @@ import java.util.List;
  *
  */
 public class Space extends Subject {
+
+    //Laver en liste med headings
+
     private List<Heading> walls = new ArrayList<>();
+
+
+
+    private Checkpoint checkpoint;
 
     private ConveyorBelt conveyorBelt;
 
@@ -76,9 +83,9 @@ public class Space extends Subject {
     //Tager en heading som parameter og laver en væg i en given heading til et space og adder det til listen
 
     /**
-     * Creates a wall on this space with the given heading as direction
-     *
-     * @param heading   Which diretion the wall shall face
+     * "creates" a wall by adding the walls heading to the list of walls on this space
+     * @param heading       The heading which the wall should be facing
+     * @author Jakob Agergaard
      */
     public void createWall(Heading heading){
         walls.add(heading);
@@ -112,6 +119,13 @@ public class Space extends Subject {
      * Creates a conveyorbelt on this space with a given heading
      * @param heading the direction the conveyorbelt is pointing
      */
+
+     public void createCheckpoint(int checkpointID){
+        this.checkpoint= new Checkpoint(checkpointID);
+     }
+    public Checkpoint getCheckpoint() {
+        return checkpoint;
+    }
     public void createConveyorbelt(Heading heading){
         this.conveyorBelt = new ConveyorBelt(heading);
     }

@@ -36,6 +36,7 @@ class GameControllerTest {
 
     /**
      * Test for Assignment V1 (can be deleted later once V1 was shown to the teacher)
+     * @author Jakob Agergaard
      */
     @Test
     void testV1() {
@@ -46,6 +47,10 @@ class GameControllerTest {
 
         Assertions.assertEquals(player, board.getSpace(0, 4).getPlayer(), "Player " + player.getName() + " should beSpace (0,4)!");
     }
+
+    /**
+     *@author Jakob Agergaard
+     */
     @Test
     void testWalls(){
         Board board = gameController.board;
@@ -63,6 +68,35 @@ class GameControllerTest {
             gameController.turnLeft(currentPlayer);
         }
         Assertions.assertEquals(board.getSpace(0,0),currentPlayer.getSpace(),"Player should be in the same space");
+    }
+
+    /**
+     * @author Jakob Agergaard
+     */
+    @Test
+    void testCheckpoints () {
+        Board board = gameController.board;
+        Player currentPlayer = board.getCurrentPlayer();
+
+
+        board.getSpace(2,3).createCheckpoint(1);
+        board.getSpace(3,4).createCheckpoint(2);
+        board.getSpace(4,3).createCheckpoint(3);
+
+        gameController.executeEntities();
+        Assertions.assertEquals(0,currentPlayer.getPlayerToken());      //test player does not get when not standing on checkpoint
+        currentPlayer.setSpace(board.getSpace(2,3));
+        gameController.executeEntities();
+        Assertions.assertEquals(1,currentPlayer.getPlayerToken());      //test player gets one token after first checkpoint
+        currentPlayer.setSpace(board.getSpace(4,3));
+        gameController.executeEntities();
+        Assertions.assertEquals(1,currentPlayer.getPlayerToken());      //test player cant grab a checkpoint of higher order than is meant
+        currentPlayer.setSpace(board.getSpace(3,4));
+        gameController.executeEntities();
+        Assertions.assertEquals(2,currentPlayer.getPlayerToken());      //normal continuation of incrementel checkpoint grabbing
+        currentPlayer.setSpace(board.getSpace(4,3));
+        gameController.executeEntities();
+        Assertions.assertEquals(3,currentPlayer.getPlayerToken());
     }
 
 
