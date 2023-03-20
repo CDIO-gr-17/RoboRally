@@ -81,9 +81,17 @@ public class Space extends Subject {
         }
     }
     //Tager en heading som parameter og laver en væg i en given heading til et space og adder det til listen
+
+    /**
+     * "creates" a wall by adding the walls heading to the list of walls on this space
+     * @param heading       The heading which the wall should be facing
+     * @author Jakob Agergaard
+     */
     public void createWall(Heading heading){
         walls.add(heading);
     }
+
+
     public boolean isWallObstructing(Heading heading){
         for (Heading wall : walls) {
             if (heading == wall) {
@@ -92,13 +100,13 @@ public class Space extends Subject {
         }
         return false;
     }
-     public void createCheckpoint(int checkpointID){
-        this.checkpoint= new Checkpoint(checkpointID);
-     }
-
     public List<Heading> getWalls(){
         return walls;
     }
+
+     public void createCheckpoint(int checkpointID){
+        this.checkpoint= new Checkpoint(checkpointID);
+     }
     public void createConveyorbelt(Heading heading){
         this.conveyorBelt = new ConveyorBelt(heading);
     }

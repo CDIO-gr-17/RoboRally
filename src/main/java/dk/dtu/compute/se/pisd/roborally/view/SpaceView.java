@@ -109,7 +109,7 @@ public class SpaceView extends StackPane implements ViewObserver {
      * Draws all walls belonging to this space
      *
      * @param walls     A list of walls that is placed on the space being created
-     * @author s224570
+     * @author Jakob Agergaard
      */
     private void drawWalls(List<Heading> walls){
         for(Heading wall:walls){
