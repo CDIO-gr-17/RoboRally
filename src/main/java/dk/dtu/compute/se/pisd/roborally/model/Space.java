@@ -33,9 +33,13 @@ import java.util.List;
  *
  */
 public class Space extends Subject {
+
     //Laver en liste med headings
 
     private List<Heading> walls = new ArrayList<>();
+    private List<Checkpoint> checkpoints = new ArrayList<>();
+
+   private Checkpoint checkpoint;
 
     public final Board board;
 
@@ -85,6 +89,16 @@ public class Space extends Subject {
         }
         return false;
     }
+
+    public void createChecpoint(int checkpointID){
+        checkpoints.add(checkpoint);
+    }
+
+
+
+
+
+
     public List<Heading> getWalls(){
         return walls;
     }

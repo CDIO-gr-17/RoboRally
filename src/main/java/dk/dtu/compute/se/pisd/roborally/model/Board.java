@@ -47,6 +47,10 @@ public class Board extends Subject {
 
     private final Space[][] spaces;
 
+
+
+
+
     private final List<Player> players = new ArrayList<>();
 
     private Player current;
@@ -80,6 +84,9 @@ public class Board extends Subject {
         spaces[7][7].createWall(Heading.NORTH);
         spaces[6][6].createWall(Heading.WEST);
         spaces[6][6].createWall(Heading.EAST);
+        spaces[1][1].createChecpoint(1);
+
+
 
         this.stepMode = false;
     }
@@ -106,6 +113,8 @@ public class Board extends Subject {
             }
         }
     }
+
+
 
     /**
      * Method returns the space on the board that belongs to and is placed on x and y
@@ -271,4 +280,6 @@ public class Board extends Subject {
     }
 
 
+
 }
+
