@@ -37,11 +37,11 @@ public class Space extends Subject {
 
     private List<Heading> walls = new ArrayList<>();
 
-    public final Board board;
+    private ConveyorBelt conveyorBelt;
 
+    public final Board board;
     public final int x;
     public final int y;
-
     private Player player;
 
     public Space(Board board, int x, int y) {
@@ -87,6 +87,12 @@ public class Space extends Subject {
     }
     public List<Heading> getWalls(){
         return walls;
+    }
+    public void createConveyorbelt(Heading heading){
+        this.conveyorBelt = new ConveyorBelt(heading);
+    }
+    public ConveyorBelt getConveyorBelt(){
+        return this.conveyorBelt;
     }
 
     void playerChanged() {

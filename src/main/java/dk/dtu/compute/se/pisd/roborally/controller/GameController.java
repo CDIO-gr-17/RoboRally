@@ -116,6 +116,7 @@ public class GameController {
      * Changes to activation phase and sets currentplayer to player one for this player to start executing
      */
     public void finishProgrammingPhase() {
+        executeEntities();
         makeProgramFieldsInvisible();
         makeProgramFieldsVisible(0);
         board.setPhase(Phase.ACTIVATION);
@@ -295,7 +296,15 @@ public class GameController {
             }
         }
     }
-    private void moveToSpace(
+    public void executeEntities() {
+        for (int i = 0; i < board.width; i++) {
+            for (int j = 0; j < board.height; j++) {
+                if(board.getSpace(i,j).getConveyorBelt()!=null)
+                    board.getSpace(i,j).getConveyorBelt().doAction(this,board.getSpace(i,j));
+            }
+        }
+    }
+    public void moveToSpace(
             @NotNull Player player,
             @NotNull Space space,
             @NotNull Heading heading) throws ImpossibleMoveException {

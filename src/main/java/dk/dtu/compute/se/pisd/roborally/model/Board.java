@@ -24,6 +24,7 @@ package dk.dtu.compute.se.pisd.roborally.model;
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import org.jetbrains.annotations.NotNull;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,7 +51,6 @@ public class Board extends Subject {
     private final List<Player> players = new ArrayList<>();
 
     private Player current;
-
     private Phase phase = INITIALISATION;
 
     private int step = 0;
@@ -75,12 +75,10 @@ public class Board extends Subject {
                 spaces[x][y] = space;
             }
         }
-        spaces[0][2].createWall(Heading.SOUTH);
-        spaces[2][0].createWall(Heading.SOUTH);
-        spaces[7][7].createWall(Heading.NORTH);
-        spaces[6][6].createWall(Heading.WEST);
-        spaces[6][6].createWall(Heading.EAST);
-
+        spaces[1][1].createWall(Heading.SOUTH);
+        spaces[1][1].createConveyorbelt(Heading.EAST);
+        spaces[3][4].createConveyorbelt(Heading.SOUTH);
+        spaces[7][1].createConveyorbelt(Heading.NORTH);
         this.stepMode = false;
     }
 
