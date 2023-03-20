@@ -37,9 +37,12 @@ public class Space extends Subject {
     //Laver en liste med headings
 
     private List<Heading> walls = new ArrayList<>();
-    private List<Checkpoint> checkpoints = new ArrayList<>();
 
-   private Checkpoint checkpoint;
+    public Checkpoint getCheckpoint() {
+        return checkpoint;
+    }
+
+    private Checkpoint checkpoint;
 
     private ConveyorBelt conveyorBelt;
 
@@ -89,15 +92,9 @@ public class Space extends Subject {
         }
         return false;
     }
-
-    public void createChecpoint(int checkpointID){
-        checkpoints.add(checkpoint);
-    }
-
-
-
-
-
+     public void createCheckpoint(int checkpointID){
+        this.checkpoint= new Checkpoint(checkpointID);
+     }
 
     public List<Heading> getWalls(){
         return walls;

@@ -81,7 +81,7 @@ public class Board extends Subject {
         spaces[7][7].createWall(Heading.NORTH);
         spaces[6][6].createWall(Heading.WEST);
         spaces[6][6].createWall(Heading.EAST);
-        spaces[1][1].createChecpoint(1);
+        spaces[7][7].createCheckpoint(1);
 
 
 

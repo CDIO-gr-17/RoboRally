@@ -22,10 +22,7 @@
 package dk.dtu.compute.se.pisd.roborally.view;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
-import dk.dtu.compute.se.pisd.roborally.model.ConveyorBelt;
-import dk.dtu.compute.se.pisd.roborally.model.Heading;
-import dk.dtu.compute.se.pisd.roborally.model.Player;
-import dk.dtu.compute.se.pisd.roborally.model.Space;
+import dk.dtu.compute.se.pisd.roborally.model.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -139,6 +136,16 @@ public class SpaceView extends StackPane implements ViewObserver {
         }
     }
 
+    private void drawCheckPoint(Checkpoint checkpoint){
+        if(checkpoint!=null) {
+            Polygon diamond = new Polygon(10.0, 20.0,
+                    30.0, 40.0,
+                    40.0, 30.0);
+            diamond.setFill(Color.GREEN);
+            this.getChildren().add(diamond);
+        }
+    }
+
     @Override
     public void updateView(Subject subject) {
         if (subject == this.space) {
@@ -146,6 +153,8 @@ public class SpaceView extends StackPane implements ViewObserver {
         }
         drawWalls(space.getWalls());
         drawConveyorbelt(space.getConveyorBelt());
+        drawCheckPoint(space.getCheckpoint());
+
     }
 
 }
