@@ -116,7 +116,7 @@ public class GameController {
      * Changes to activation phase and sets currentplayer to player one for this player to start executing
      */
     public void finishProgrammingPhase() {
-        executeEntities();
+        executeConveyorbelts();
         makeProgramFieldsInvisible();
         makeProgramFieldsVisible(0);
         board.setPhase(Phase.ACTIVATION);
@@ -296,7 +296,7 @@ public class GameController {
             }
         }
     }
-    public void executeEntities() {
+    public void executeConveyorbelts() {
         for (int i = 0; i < board.width; i++) {
             for (int j = 0; j < board.height; j++) {
                 if(board.getSpace(i,j).getConveyorBelt()!=null)
