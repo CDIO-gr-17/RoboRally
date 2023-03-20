@@ -23,6 +23,7 @@ package dk.dtu.compute.se.pisd.roborally.model;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,13 +35,13 @@ import java.util.List;
 public class Space extends Subject {
     //Laver en liste med headings
 
-    private List<Heading> Walls;
+    private List<Heading> walls = new ArrayList<>();
+
+    private ConveyorBelt conveyorBelt;
 
     public final Board board;
-
     public final int x;
     public final int y;
-
     private Player player;
 
     public Space(Board board, int x, int y) {
@@ -74,7 +75,24 @@ public class Space extends Subject {
     }
     //Tager en heading som parameter og laver en væg i en given heading til et space og adder det til listen
     public void createWall(Heading heading){
-        this.Walls.add(heading);
+        walls.add(heading);
+    }
+    public boolean isWallObstructing(Heading heading){
+        for (Heading wall : walls) {
+            if (heading == wall) {
+                return true;
+            }
+        }
+        return false;
+    }
+    public List<Heading> getWalls(){
+        return walls;
+    }
+    public void createConveyorbelt(Heading heading){
+        this.conveyorBelt = new ConveyorBelt(heading);
+    }
+    public ConveyorBelt getConveyorBelt(){
+        return this.conveyorBelt;
     }
 
     void playerChanged() {

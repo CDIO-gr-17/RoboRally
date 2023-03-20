@@ -19,10 +19,11 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  */
-package dk.dtu.compute.se.pisd.roborally.controller;
+package dk.dtu.compute.se.pisd.roborally.model;
 
-import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
-import dk.dtu.compute.se.pisd.roborally.model.Space;
+import dk.dtu.compute.se.pisd.roborally.controller.GameController;
+import dk.dtu.compute.se.pisd.roborally.controller.ImpossibleMoveException;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * ...
@@ -30,16 +31,29 @@ import dk.dtu.compute.se.pisd.roborally.model.Space;
  * @author Ekkart Kindler, ekki@dtu.dk
  *
  */
-public abstract class FieldAction extends Subject {
+public class ConveyorBelt extends FieldAction {
 
-    /**
-     * Executes the field action for a given space. In order to be able to do
-     * that the GameController associated with the game is passed to this method.
-     *
-     * @param gameController the gameController of the respective game
-     * @param space the space this action should be executed for
-     * @return whether the action was successfully executed
-     */
-    public abstract boolean doAction(GameController gameController, Space space);
+    private Heading heading;
+    public ConveyorBelt(@NotNull Heading heading){
+        this.heading = heading;
+    }
+
+    public Heading getHeading() {
+        return heading;
+    }
+    @Override
+    public boolean doAction(@NotNull GameController gameController, @NotNull Space space) {
+        try {
+            if(space.getPlayer()!=null) {
+                Player player = space.getPlayer();
+                Space nextSpace = space.board.getNeighbour(space,heading);
+                gameController.moveToSpace(player, nextSpace, heading);
+                System.out.println("Player moved");
+            }
+        } catch (ImpossibleMoveException e) {
+
+        }
+        return true;
+    }
 
 }

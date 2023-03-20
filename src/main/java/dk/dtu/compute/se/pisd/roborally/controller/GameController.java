@@ -74,8 +74,6 @@ public class GameController {
      * Makes the player "draw" new programming cards and makes them visible
      */
     public void startProgrammingPhase() {
-        board.conveyorBelt.doAction(this,board.getSpace(1,1));
-
         board.setPhase(Phase.PROGRAMMING);
         board.setCurrentPlayer(board.getPlayer(0));
         board.setStep(0);
@@ -118,6 +116,7 @@ public class GameController {
      * Changes to activation phase and sets currentplayer to player one for this player to start executing
      */
     public void finishProgrammingPhase() {
+        executeEntities();
         makeProgramFieldsInvisible();
         makeProgramFieldsVisible(0);
         board.setPhase(Phase.ACTIVATION);
@@ -288,6 +287,14 @@ public class GameController {
                     break;
                 default:
                     // DO NOTHING (for now)
+            }
+        }
+    }
+    public void executeEntities() {
+        for (int i = 0; i < board.width; i++) {
+            for (int j = 0; j < board.height; j++) {
+                if(board.getSpace(i,j).getConveyorBelt()!=null)
+                    board.getSpace(i,j).getConveyorBelt().doAction(this,board.getSpace(i,j));
             }
         }
     }
