@@ -9,13 +9,11 @@ import java.util.List;
 
 public class Checkpoint extends FieldAction {
     private Space space;
-    private final int token;
     private int checkPointID;
 
 
 
     public Checkpoint( int checkpointID) {
-        this.token = 1;
         this.checkPointID = checkpointID;
     }
 
@@ -26,8 +24,7 @@ public class Checkpoint extends FieldAction {
        Player player =  space.getPlayer();
         if(player!= null){
             if (player.getPlayerToken() + 1 ==checkPointID)
-
-            player.addToken();
+                player.addToken();
             return true;
         }
         else

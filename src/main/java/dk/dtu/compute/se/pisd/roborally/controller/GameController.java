@@ -116,7 +116,6 @@ public class GameController {
      * Changes to activation phase and sets currentplayer to player one for this player to start executing
      */
     public void finishProgrammingPhase() {
-        executeConveyorbelts();
         makeProgramFieldsInvisible();
         makeProgramFieldsVisible(0);
         board.setPhase(Phase.ACTIVATION);
@@ -211,6 +210,7 @@ public class GameController {
                     board.setCurrentPlayer(board.getPlayer(nextPlayerNumber));
                 } else {
                     step++;
+                    executeEntities();
                     if (step < Player.NO_REGISTERS) {
                         makeProgramFieldsVisible(step);
                         board.setStep(step);
@@ -296,6 +296,10 @@ public class GameController {
             }
         }
     }
+    public void executeEntities(){
+        executeCheckpoints();
+        executeConveyorbelts();
+    }
     public void executeConveyorbelts() {
         for (int i = 0; i < board.width; i++) {
             for (int j = 0; j < board.height; j++) {
@@ -304,6 +308,16 @@ public class GameController {
             }
         }
     }
+    public void executeCheckpoints() {
+        for (int i = 0; i < board.width; i++) {
+            for (int j = 0; j < board.height; j++) {
+                Checkpoint checkpoint = board.getSpace(i,j).getCheckpoint();
+                if(checkpoint!=null){
+                    checkpoint.doAction(this,board.getSpace(i,j));
+                }
+            }
+
+    }}
     public void moveToSpace(
             @NotNull Player player,
             @NotNull Space space,
