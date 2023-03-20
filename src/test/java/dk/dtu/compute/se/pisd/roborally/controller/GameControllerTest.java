@@ -32,6 +32,7 @@ class GameControllerTest {
     @AfterEach
     void tearDown() {
         gameController = null;
+
     }
 
     /**
@@ -45,6 +46,24 @@ class GameControllerTest {
         gameController.moveCurrentPlayerToSpace(board.getSpace(0, 4));
 
         Assertions.assertEquals(player, board.getSpace(0, 4).getPlayer(), "Player " + player.getName() + " should beSpace (0,4)!");
+    }
+    @Test
+    void testWalls(){
+        Board board = gameController.board;
+        Player currentPlayer = board.getCurrentPlayer();
+        currentPlayer.setSpace(board.getSpace(0,0));            //secures player is on correct space
+
+        board.getSpace(0,0).createWall(Heading.WEST);
+        board.getSpace(1,0).createWall(Heading.WEST);
+        board.getSpace(0,1).createWall(Heading.NORTH);
+        board.getSpace(0,0).createWall(Heading.NORTH);
+
+        for (int i = 0; i < 4; i++) {                       // tries to move player through every wall in every direction
+            gameController.moveForward(currentPlayer);
+            gameController.fastForward(currentPlayer);
+            gameController.turnLeft(currentPlayer);
+        }
+        Assertions.assertEquals(board.getSpace(0,0),currentPlayer.getSpace(),"Player should be in the same space");
     }
 
 

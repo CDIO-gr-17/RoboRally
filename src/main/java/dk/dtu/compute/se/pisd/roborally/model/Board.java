@@ -51,6 +51,7 @@ public class Board extends Subject {
     private final List<Player> players = new ArrayList<>();
 
     private Player current;
+
     private Phase phase = INITIALISATION;
 
     private int step = 0;
@@ -75,10 +76,14 @@ public class Board extends Subject {
                 spaces[x][y] = space;
             }
         }
-        spaces[1][1].createWall(Heading.SOUTH);
-        spaces[1][1].createConveyorbelt(Heading.EAST);
-        spaces[3][4].createConveyorbelt(Heading.SOUTH);
-        spaces[7][1].createConveyorbelt(Heading.NORTH);
+        /*
+        spaces[0][0].createWall(Heading.WEST);
+        spaces[1][0].createWall(Heading.WEST);
+        spaces[0][1].createWall(Heading.WEST);
+        spaces[0][0].createWall(Heading.WEST);
+
+        */
+
         this.stepMode = false;
     }
 
