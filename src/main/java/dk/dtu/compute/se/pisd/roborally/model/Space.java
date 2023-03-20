@@ -107,6 +107,11 @@ public class Space extends Subject {
     public List<Heading> getWalls(){
         return walls;
     }
+
+    /**
+     * Creates a conveyorbelt on this space with a given heading
+     * @param heading the direction the conveyorbelt is pointing
+     */
     public void createConveyorbelt(Heading heading){
         this.conveyorBelt = new ConveyorBelt(heading);
     }

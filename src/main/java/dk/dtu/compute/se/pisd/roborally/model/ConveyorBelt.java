@@ -41,6 +41,13 @@ public class ConveyorBelt extends FieldAction {
     public Heading getHeading() {
         return heading;
     }
+
+    /**
+     * Moves the player a single space in the heading of the conveyorbelt
+     * @param gameController the gameController of the respective game
+     * @param space the space this action should be executed for
+     * @return true if an action is performed
+     */
     @Override
     public boolean doAction(@NotNull GameController gameController, @NotNull Space space) {
         try {

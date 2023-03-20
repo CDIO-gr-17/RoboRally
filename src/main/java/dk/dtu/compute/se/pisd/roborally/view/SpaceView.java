@@ -98,6 +98,11 @@ public class SpaceView extends StackPane implements ViewObserver {
             this.getChildren().add(arrow);
         }
     }
+
+    /**
+     * Draw the conveyorbelt on this space
+     * @param conveyorBelt the conveyorbelt to be drawn (gets the heading of conveyorbelt)
+     */
     private void drawConveyorbelt(ConveyorBelt conveyorBelt){
         if(conveyorBelt!=null) {
             Polygon arrow = new Polygon(0.0, 0.0,

@@ -81,7 +81,6 @@ public class Board extends Subject {
         spaces[1][0].createWall(Heading.WEST);
         spaces[0][1].createWall(Heading.WEST);
         spaces[0][0].createWall(Heading.WEST);
-
         */
 
         this.stepMode = false;

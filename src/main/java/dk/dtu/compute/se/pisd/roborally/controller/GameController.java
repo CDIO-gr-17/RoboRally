@@ -296,6 +296,10 @@ public class GameController {
             }
         }
     }
+
+    /**
+     * executes the doAction() method for all conveyorbelts on the board
+     */
     public void executeConveyorbelts() {
         for (int i = 0; i < board.width; i++) {
             for (int j = 0; j < board.height; j++) {
@@ -304,6 +308,15 @@ public class GameController {
             }
         }
     }
+
+    /**
+     * Moves a player to a specific space in a direction. If another player is on the space a player is trying to move onto,
+     * the second player is pushed in the heading of the first player
+     * @param player the player to move
+     * @param space the space to move the player to
+     * @param heading the heading to move the player in
+     * @throws ImpossibleMoveException thrown if something is obstructing the player to move
+     */
     public void moveToSpace(
             @NotNull Player player,
             @NotNull Space space,
@@ -332,7 +345,10 @@ public class GameController {
         player.setSpace(space);
     }
 
-    // TODO Assignment V2
+    /**
+     * Moves the given player a space forward in the heading of the player
+     * @param player the player to move
+     */
     public void moveForward(@NotNull Player player) {
         Space space = player.getSpace();
         if (space != null) {
@@ -349,13 +365,21 @@ public class GameController {
         }
 
     }
-    // TODO Assignment V2
+
+    /**
+     * Moves the given player two spaces forward in the heading of the player
+     * @param player the player to move
+     */
     public void fastForward(@NotNull Player player) {
         for (int i = 0; i < 2;i++) {
             moveForward(player);
         }
     }
 
+    /**
+     * Moves the given player a space backward without changing the heading
+     * @param player
+     */
     public void backUp(@NotNull Player player){
         Space currentSpace = player.getSpace();
         if (currentSpace != null) {
@@ -371,16 +395,27 @@ public class GameController {
         }
     }
 
-    // TODO Assignment V2
+    /**
+     * Turns the player to the right
+     * @param player the player to move
+     */
     public void turnRight(@NotNull Player player) {
         player.setHeading(player.getHeading().next());
 
     }
 
-    // TODO Assignment V2
+    /**
+     * Turns the player to the left
+     * @param player the player to move
+     */
     public void turnLeft(@NotNull Player player) {
         player.setHeading(player.getHeading().prev());
     }
+
+    /**
+     * Turns the player 180degrees around itself(u-turn)
+     * @param player the player to turn
+     */
     public void uTurn(@NotNull Player player){
         player.setHeading(player.getHeading().next().next());
     }
