@@ -232,6 +232,7 @@ public class GameController {
     /**
      * Executes the chosen command of an interactive command-card
      * @param option the command which should be executed
+     * @author Jakob Agergaard
      */
     public void executeCommandOptionAndContinue(@NotNull Command option) {
         Player currentPlayer = board.getCurrentPlayer();
@@ -338,6 +339,8 @@ public class GameController {
      * @param space the space to move the player to
      * @param heading the heading to move the player in
      * @throws ImpossibleMoveException thrown if something is obstructing the player to move
+     * @author
+     * @author Jakob Agergaard
      */
     public void moveToSpace(
             @NotNull Player player,

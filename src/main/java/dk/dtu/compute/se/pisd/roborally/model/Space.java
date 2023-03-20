@@ -96,6 +96,7 @@ public class Space extends Subject {
      *
      * @param heading   which direction you want to check
      * @return          True if there is a wall
+     * @author Jakob Agergaard
      */
     public boolean isWallObstructing(Heading heading){
         for (Heading wall : walls) {
@@ -110,22 +111,23 @@ public class Space extends Subject {
      * Returns a list of all walls on this space
      *
      * @return      A list of walls on this space
+     * @author Jakob Agergaard
      */
     public List<Heading> getWalls(){
         return walls;
     }
 
+    public Checkpoint getCheckpoint() {
+        return checkpoint;
+    }
+
+    public void createCheckpoint(int checkpointID){
+        this.checkpoint= new Checkpoint(checkpointID);
+    }
     /**
      * Creates a conveyorbelt on this space with a given heading
      * @param heading the direction the conveyorbelt is pointing
      */
-
-     public void createCheckpoint(int checkpointID){
-        this.checkpoint= new Checkpoint(checkpointID);
-     }
-    public Checkpoint getCheckpoint() {
-        return checkpoint;
-    }
     public void createConveyorbelt(Heading heading){
         this.conveyorBelt = new ConveyorBelt(heading);
     }
