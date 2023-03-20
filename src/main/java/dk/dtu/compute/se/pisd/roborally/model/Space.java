@@ -27,14 +27,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The board is made up of spaces and a space can have a player coupled
+ * This class is a space. The board is made up of spaces.
+ * This space contains all entities belonging to it and
+ * can have many walls, one player, one checkpoint, one conveyorbelt and so on.
  *
  * @author Ekkart Kindler, ekki@dtu.dk
  *
  */
 public class Space extends Subject {
-    //Laver en liste med headings
-
     private List<Heading> walls = new ArrayList<>();
 
     private ConveyorBelt conveyorBelt;
@@ -74,9 +74,22 @@ public class Space extends Subject {
         }
     }
     //Tager en heading som parameter og laver en væg i en given heading til et space og adder det til listen
+
+    /**
+     * Creates a wall on this space with the given heading as direction
+     *
+     * @param heading   Which diretion the wall shall face
+     */
     public void createWall(Heading heading){
         walls.add(heading);
     }
+
+    /**
+     * Checks whether a wall i present on this space in the given heading
+     *
+     * @param heading   which direction you want to check
+     * @return          True if there is a wall
+     */
     public boolean isWallObstructing(Heading heading){
         for (Heading wall : walls) {
             if (heading == wall) {
@@ -85,6 +98,12 @@ public class Space extends Subject {
         }
         return false;
     }
+
+    /**
+     * Returns a list of all walls on this space
+     *
+     * @return      A list of walls on this space
+     */
     public List<Heading> getWalls(){
         return walls;
     }
