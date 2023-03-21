@@ -95,6 +95,11 @@ public class Player extends Subject {
             }
         }
     }
+
+    /**
+     * @author Jarl Boyd Roest, s224556@dtu.dk og Esben Elnegaard, s224555@dtu.dk
+     * the counter for a player to be abel to collect checkpoints
+     */
     public void addToken() {
         playerToken++;
         System.out.println("Player has" + playerToken + "tokens!");
@@ -178,6 +183,10 @@ public class Player extends Subject {
         return cards[i];
     }
 
+    /**
+     * @author Jarl Boyd Roest, s224556@dtu.dk og Esben Elnegaard, s224555@dtu.dk
+     * @return the amount of tokens a player has
+     */
     public int getPlayerToken() {
         return playerToken;
     }
