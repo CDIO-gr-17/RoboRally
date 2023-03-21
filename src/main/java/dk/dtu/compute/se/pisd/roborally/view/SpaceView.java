@@ -22,17 +22,16 @@
 package dk.dtu.compute.se.pisd.roborally.view;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
-import dk.dtu.compute.se.pisd.roborally.model.Heading;
-import dk.dtu.compute.se.pisd.roborally.model.Player;
-import dk.dtu.compute.se.pisd.roborally.model.Space;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
+import dk.dtu.compute.se.pisd.roborally.model.*;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
-import javafx.scene.shape.StrokeLineCap;
+import javafx.scene.shape.Rectangle;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
 
 /**
  * ...
@@ -72,7 +71,6 @@ public class SpaceView extends StackPane implements ViewObserver {
         }
 
         // updatePlayer();
-
         // This space view should listen to changes of the space
         space.attach(this);
         update(space);
@@ -86,15 +84,70 @@ public class SpaceView extends StackPane implements ViewObserver {
         if (player != null) {
             Polygon arrow = new Polygon(0.0, 0.0,
                     10.0, 20.0,
-                    20.0, 0.0 );
+                    20.0, 0.0);
             try {
                 arrow.setFill(Color.valueOf(player.getColor()));
             } catch (Exception e) {
                 arrow.setFill(Color.MEDIUMPURPLE);
             }
 
-            arrow.setRotate((90*player.getHeading().ordinal())%360);
+            arrow.setRotate((90 * player.getHeading().ordinal()) % 360);
             this.getChildren().add(arrow);
+        }
+    }
+
+    /**
+     * Draw the conveyorbelt on this space
+     * @param conveyorBelt the conveyorbelt to be drawn (gets the heading of conveyorbelt)
+     */
+    private void drawConveyorbelt(ConveyorBelt conveyorBelt){
+        if(conveyorBelt!=null) {
+            Polygon arrow = new Polygon(0.0, 0.0,
+                    5.0, 10.0,
+                    10.0, 0.0);
+            arrow.setFill(Color.GREY);
+            arrow.setRotate((90 * conveyorBelt.getHeading().ordinal()) % 360);
+            this.getChildren().add(arrow);
+        }
+    }
+    /**
+     * Draws all walls belonging to this space
+     *
+     * @param walls     A list of walls that is placed on the space being created
+     * @author Jakob Agergaard
+     */
+    private void drawWalls(List<Heading> walls){
+        for(Heading wall:walls){
+            Pane pane = new Pane();
+            Rectangle rectangle = new Rectangle();
+            rectangle.setFill(Color.TRANSPARENT);
+            pane.getChildren().add(rectangle);
+            Line line = null;
+            switch(wall){
+                case SOUTH: line = new Line(2,SPACE_HEIGHT-2,SPACE_WIDTH-2,SPACE_HEIGHT-2);
+                    break;
+                case WEST: line = new Line (2,2,2,SPACE_HEIGHT-2);
+                    break;
+                case NORTH: line = new Line(2,2,SPACE_WIDTH-2,2);
+                    break;
+                case EAST: line = new Line(SPACE_WIDTH-2,SPACE_HEIGHT-2,SPACE_WIDTH-2,2);
+                    break;
+                default: line = null;
+            }
+            line.setStroke(Color.RED);
+            line.setStrokeWidth(5);
+            pane.getChildren().add(line);
+            this.getChildren().add(pane);
+        }
+    }
+
+    private void drawCheckPoint(Checkpoint checkpoint){
+        if(checkpoint!=null) {
+            Polygon diamond = new Polygon(10.0, 20.0,
+                    30.0, 40.0,
+                    40.0, 30.0);
+            diamond.setFill(Color.GREEN);
+            this.getChildren().add(diamond);
         }
     }
 
@@ -103,6 +156,10 @@ public class SpaceView extends StackPane implements ViewObserver {
         if (subject == this.space) {
             updatePlayer();
         }
+        drawWalls(space.getWalls());
+        drawConveyorbelt(space.getConveyorBelt());
+        drawCheckPoint(space.getCheckpoint());
+
     }
 
 }

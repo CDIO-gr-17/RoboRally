@@ -23,10 +23,13 @@ package dk.dtu.compute.se.pisd.roborally.model;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The board is made up of spaces and a space can have a player coupled
+ * This class is a space. The board is made up of spaces.
+ * This space contains all entities belonging to it and
+ * can have many walls, one player, one checkpoint, one conveyorbelt and so on.
  *
  * @author Ekkart Kindler, ekki@dtu.dk
  *
@@ -35,13 +38,17 @@ public class Space extends Subject {
 
     //Laver en liste med headings
 
-    private List<Wall> Walls;
+    private List<Heading> walls = new ArrayList<>();
+
+
+
+    private Checkpoint checkpoint;
+
+    private ConveyorBelt conveyorBelt;
 
     public final Board board;
-
     public final int x;
     public final int y;
-
     private Player player;
 
     public Space(Board board, int x, int y) {
@@ -74,11 +81,59 @@ public class Space extends Subject {
         }
     }
     //Tager en heading som parameter og laver en væg i en given heading til et space og adder det til listen
-    public void createWall(Wall wall){
-        this.Walls.add(wall);
+
+    /**
+     * "creates" a wall by adding the walls heading to the list of walls on this space
+     * @param heading       The heading which the wall should be facing
+     * @author Jakob Agergaard
+     */
+    public void createWall(Heading heading){
+        walls.add(heading);
     }
 
+    /**
+     * Checks whether a wall i present on this space in the given heading
+     *
+     * @param heading   which direction you want to check
+     * @return          True if there is a wall
+     * @author Jakob Agergaard
+     */
+    public boolean isWallObstructing(Heading heading){
+        for (Heading wall : walls) {
+            if (heading == wall) {
+                return true;
+            }
+        }
+        return false;
+    }
 
+    /**
+     * Returns a list of all walls on this space
+     *
+     * @return      A list of walls on this space
+     * @author Jakob Agergaard
+     */
+    public List<Heading> getWalls(){
+        return walls;
+    }
+
+    public Checkpoint getCheckpoint() {
+        return checkpoint;
+    }
+
+    public void createCheckpoint(int checkpointID){
+        this.checkpoint= new Checkpoint(checkpointID);
+    }
+    /**
+     * Creates a conveyorbelt on this space with a given heading
+     * @param heading the direction the conveyorbelt is pointing
+     */
+    public void createConveyorbelt(Heading heading){
+        this.conveyorBelt = new ConveyorBelt(heading);
+    }
+    public ConveyorBelt getConveyorBelt(){
+        return this.conveyorBelt;
+    }
 
     void playerChanged() {
         // This is a minor hack; since some views that are registered with the space

@@ -116,6 +116,7 @@ public class GameController {
      * Changes to activation phase and sets currentplayer to player one for this player to start executing
      */
     public void finishProgrammingPhase() {
+        executeConveyorbelts();
         makeProgramFieldsInvisible();
         makeProgramFieldsVisible(0);
         board.setPhase(Phase.ACTIVATION);
@@ -231,6 +232,7 @@ public class GameController {
     /**
      * Executes the chosen command of an interactive command-card
      * @param option the command which should be executed
+     * @author Jakob Agergaard
      */
     public void executeCommandOptionAndContinue(@NotNull Command option) {
         Player currentPlayer = board.getCurrentPlayer();
@@ -295,20 +297,72 @@ public class GameController {
             }
         }
     }
-    private void moveToSpace(
+
+    /**
+     * @author Jakob Agergaard
+     */
+    public void executeEntities(){
+        executeCheckpoints();
+        executeConveyorbelts();
+    }
+
+    /**
+     * executes the doAction() method for all conveyorbelts on the board
+     */
+    public void executeConveyorbelts() {
+        for (int i = 0; i < board.width; i++) {
+            for (int j = 0; j < board.height; j++) {
+                if(board.getSpace(i,j).getConveyorBelt()!=null)
+                    board.getSpace(i,j).getConveyorBelt().doAction(this,board.getSpace(i,j));
+            }
+        }
+    }
+
+    /**
+     * @author Jakob Agergaard
+     */
+    public void executeCheckpoints() {
+        for (int i = 0; i < board.width; i++) {
+            for (int j = 0; j < board.height; j++) {
+                Checkpoint checkpoint = board.getSpace(i,j).getCheckpoint();
+                if(checkpoint!=null){
+                    checkpoint.doAction(this,board.getSpace(i,j));
+                }
+            }
+
+    }}
+
+    /**
+     * Moves a player to a specific space in a direction. If another player is on the space a player is trying to move onto,
+     * the second player is pushed in the heading of the first player
+     * @param player the player to move
+     * @param space the space to move the player to
+     * @param heading the heading to move the player in
+     * @throws ImpossibleMoveException thrown if something is obstructing the player to move
+     * @author
+     * @author Jakob Agergaard
+     */
+    public void moveToSpace(
             @NotNull Player player,
             @NotNull Space space,
             @NotNull Heading heading) throws ImpossibleMoveException {
         Player targetPlayer = space.getPlayer();
+        Space prevSpace = board.getNeighbour(space,heading.next().next());
+        Space nextSpace = board.getNeighbour(space, heading);
+
+        if (prevSpace.isWallObstructing(heading)) {     //checks for walls on current space in direction and target space in reverse direction
+            throw new ImpossibleMoveException(player,space,heading);
+        }
+        if (space.isWallObstructing(heading.next().next())){
+            throw new ImpossibleMoveException(player,space,heading);
+        }
 
 
         if (targetPlayer != null) {
-            Space nextSpace = board.getNeighbour(space, heading);
-
             if (nextSpace != null) {
-                // XXX Note that there might be additional problems
-                // with infinite recursion here!
-                moveToSpace(targetPlayer, nextSpace, heading);
+                    // XXX Note that there might be additional problems
+                    // with infinite recursion here!
+                    moveToSpace(targetPlayer, nextSpace, heading);
             } else {
                 throw new ImpossibleMoveException(player, space, heading);
             }
@@ -316,7 +370,10 @@ public class GameController {
         player.setSpace(space);
     }
 
-    // TODO Assignment V2
+    /**
+     * Moves the given player a space forward in the heading of the player
+     * @param player the player to move
+     */
     public void moveForward(@NotNull Player player) {
         Space space = player.getSpace();
         if (space != null) {
@@ -333,12 +390,21 @@ public class GameController {
         }
 
     }
-    // TODO Assignment V2
+
+    /**
+     * Moves the given player two spaces forward in the heading of the player
+     * @param player the player to move
+     */
     public void fastForward(@NotNull Player player) {
         for (int i = 0; i < 2;i++) {
             moveForward(player);
         }
     }
+
+    /**
+     * Moves the given player a space backward without changing the heading
+     * @param player
+     */
     public void backUp(@NotNull Player player){
         Space currentSpace = player.getSpace();
         if (currentSpace != null) {
@@ -354,16 +420,27 @@ public class GameController {
         }
     }
 
-    // TODO Assignment V2
+    /**
+     * Turns the player to the right
+     * @param player the player to move
+     */
     public void turnRight(@NotNull Player player) {
         player.setHeading(player.getHeading().next());
 
     }
 
-    // TODO Assignment V2
+    /**
+     * Turns the player to the left
+     * @param player the player to move
+     */
     public void turnLeft(@NotNull Player player) {
         player.setHeading(player.getHeading().prev());
     }
+
+    /**
+     * Turns the player 180degrees around itself(u-turn)
+     * @param player the player to turn
+     */
     public void uTurn(@NotNull Player player){
         player.setHeading(player.getHeading().next().next());
     }

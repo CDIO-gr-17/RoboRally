@@ -42,6 +42,8 @@ public class Player extends Subject {
     private String name;
     private String color;
 
+    private int playerToken = 0;
+
     private Space space;
     private Heading heading = SOUTH;
 
@@ -92,6 +94,10 @@ public class Player extends Subject {
                 space.playerChanged();
             }
         }
+    }
+    public void addToken() {
+        playerToken++;
+        System.out.println("Player has" + playerToken + "tokens!");
     }
 
     /**
@@ -170,6 +176,14 @@ public class Player extends Subject {
 
     public CommandCardField getCardField(int i) {
         return cards[i];
+    }
+
+    public int getPlayerToken() {
+        return playerToken;
+    }
+
+    public void setPlayerToken(int playerToken) {
+        this.playerToken = playerToken;
     }
 
 }

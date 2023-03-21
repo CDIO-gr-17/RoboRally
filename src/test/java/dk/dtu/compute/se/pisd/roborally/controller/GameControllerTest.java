@@ -3,7 +3,6 @@ package dk.dtu.compute.se.pisd.roborally.controller;
 import dk.dtu.compute.se.pisd.roborally.model.Board;
 import dk.dtu.compute.se.pisd.roborally.model.Heading;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
-import dk.dtu.compute.se.pisd.roborally.model.Space;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -32,10 +31,12 @@ class GameControllerTest {
     @AfterEach
     void tearDown() {
         gameController = null;
+
     }
 
     /**
      * Test for Assignment V1 (can be deleted later once V1 was shown to the teacher)
+     * @author Jakob Agergaard
      */
     @Test
     void testV1() {
@@ -45,6 +46,57 @@ class GameControllerTest {
         gameController.moveCurrentPlayerToSpace(board.getSpace(0, 4));
 
         Assertions.assertEquals(player, board.getSpace(0, 4).getPlayer(), "Player " + player.getName() + " should beSpace (0,4)!");
+    }
+
+    /**
+     *@author Jakob Agergaard
+     */
+    @Test
+    void testWalls(){
+        Board board = gameController.board;
+        Player currentPlayer = board.getCurrentPlayer();
+        currentPlayer.setSpace(board.getSpace(0,0));            //secures player is on correct space
+
+        board.getSpace(0,0).createWall(Heading.WEST);
+        board.getSpace(1,0).createWall(Heading.WEST);
+        board.getSpace(0,1).createWall(Heading.NORTH);
+        board.getSpace(0,0).createWall(Heading.NORTH);
+
+        for (int i = 0; i < 4; i++) {                       // tries to move player through every wall in every direction
+            gameController.moveForward(currentPlayer);
+            gameController.fastForward(currentPlayer);
+            gameController.turnLeft(currentPlayer);
+        }
+        Assertions.assertEquals(board.getSpace(0,0),currentPlayer.getSpace(),"Player should be in the same space");
+    }
+
+    /**
+     * @author Jakob Agergaard
+     */
+    @Test
+    void testCheckpoints () {
+        Board board = gameController.board;
+        Player currentPlayer = board.getCurrentPlayer();
+
+
+        board.getSpace(2,3).createCheckpoint(1);
+        board.getSpace(3,4).createCheckpoint(2);
+        board.getSpace(4,3).createCheckpoint(3);
+
+        gameController.executeEntities();
+        Assertions.assertEquals(0,currentPlayer.getPlayerToken());      //test player does not get when not standing on checkpoint
+        currentPlayer.setSpace(board.getSpace(2,3));
+        gameController.executeEntities();
+        Assertions.assertEquals(1,currentPlayer.getPlayerToken());      //test player gets one token after first checkpoint
+        currentPlayer.setSpace(board.getSpace(4,3));
+        gameController.executeEntities();
+        Assertions.assertEquals(1,currentPlayer.getPlayerToken());      //test player cant grab a checkpoint of higher order than is meant
+        currentPlayer.setSpace(board.getSpace(3,4));
+        gameController.executeEntities();
+        Assertions.assertEquals(2,currentPlayer.getPlayerToken());      //normal continuation of incrementel checkpoint grabbing
+        currentPlayer.setSpace(board.getSpace(4,3));
+        gameController.executeEntities();
+        Assertions.assertEquals(3,currentPlayer.getPlayerToken());
     }
 
 
@@ -102,11 +154,44 @@ class GameControllerTest {
     void turnLeft() {
         Board board = gameController.board;
         Player current = board.getCurrentPlayer();
-
         gameController.turnLeft(current);
 
         Assertions.assertEquals(current,board.getSpace(0,0).getPlayer(),"Player is not in the correct space");
         Assertions.assertEquals(Heading.EAST, current.getHeading(),"Player should be heading east");
         Assertions.assertNotNull(board.getSpace(0,0).getPlayer(),"Space (0,0) should not be empty");
+    }
+    @Test
+    void conveyorbeltMove() {
+        Board board = gameController.board;
+        Player current = board.getCurrentPlayer();
+
+        board.getSpace(0,0).createConveyorbelt(Heading.SOUTH);
+        gameController.executeConveyorbelts();
+
+        Assertions.assertEquals(current, board.getSpace(0, 1).getPlayer(), "Player " + current.getName() + " should beSpace (0,1)!");
+        Assertions.assertEquals(Heading.SOUTH, current.getHeading(), "Player 0 should be heading SOUTH!");
+        Assertions.assertNull(board.getSpace(0, 0).getPlayer(), "Space (0,0) should be empty!");
+    }
+    @Test
+    void uTurn() {
+        Board board = gameController.board;
+        Player current = board.getCurrentPlayer();
+        gameController.uTurn(current);
+
+        Assertions.assertEquals(current,board.getSpace(0,0).getPlayer(),"Player is not in the correct space");
+        Assertions.assertEquals(Heading.NORTH, current.getHeading(),"Player should be heading NORTH");
+        Assertions.assertNotNull(board.getSpace(0,0).getPlayer(),"Space (0,0) should not be empty");
+    }
+    @Test
+    void backUp() {
+        Board board = gameController.board;
+        Player current = board.getCurrentPlayer();
+
+        current.setSpace(board.getSpace(5,5));
+        gameController.backUp(current);
+
+        Assertions.assertEquals(current, board.getSpace(5, 4).getPlayer(), "Player " + current.getName() + " should beSpace (0,1)!");
+        Assertions.assertEquals(Heading.SOUTH, current.getHeading(), "Player 0 should be heading SOUTH!");
+        Assertions.assertNull(board.getSpace(5, 5).getPlayer(), "Space (0,0) should be empty!");
     }
 }
