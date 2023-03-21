@@ -1,0 +1,17 @@
+@startuml
+'https://plantuml.com/activity-diagram-beta
+
+start
+:Blue conveyor belts;
+:Green conveyor belts;
+:Push panels;
+:Gears;
+:Board lasers;
+:Robot lasers;
+:Energy Space;
+:Checkpoints;
+
+
+stop
+
+@enduml
