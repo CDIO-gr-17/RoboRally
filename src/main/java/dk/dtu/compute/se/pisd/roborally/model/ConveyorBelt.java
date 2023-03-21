@@ -47,6 +47,7 @@ public class ConveyorBelt extends FieldAction {
      * @param gameController the gameController of the respective game
      * @param space the space this action should be executed for
      * @return true if an action is performed
+     * @author Philip Muff
      */
     @Override
     public boolean doAction(@NotNull GameController gameController, @NotNull Space space) {
@@ -55,7 +56,6 @@ public class ConveyorBelt extends FieldAction {
                 Player player = space.getPlayer();
                 Space nextSpace = space.board.getNeighbour(space,heading);
                 gameController.moveToSpace(player, nextSpace, heading);
-                System.out.println("Player moved");
             }
         } catch (ImpossibleMoveException e) {
 
