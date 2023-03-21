@@ -116,7 +116,6 @@ public class GameController {
      * Changes to activation phase and sets currentplayer to player one for this player to start executing
      */
     public void finishProgrammingPhase() {
-        executeConveyorbelts();
         makeProgramFieldsInvisible();
         makeProgramFieldsVisible(0);
         board.setPhase(Phase.ACTIVATION);
@@ -211,6 +210,7 @@ public class GameController {
                     board.setCurrentPlayer(board.getPlayer(nextPlayerNumber));
                 } else {
                     step++;
+                    executeEntities();
                     if (step < Player.NO_REGISTERS) {
                         makeProgramFieldsVisible(step);
                         board.setStep(step);
