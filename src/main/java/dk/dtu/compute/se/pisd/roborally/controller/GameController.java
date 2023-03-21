@@ -308,6 +308,7 @@ public class GameController {
 
     /**
      * executes the doAction() method for all conveyorbelts on the board
+     * @author Philip Muff
      */
     public void executeConveyorbelts() {
         for (int i = 0; i < board.width; i++) {
@@ -404,6 +405,7 @@ public class GameController {
     /**
      * Moves the given player a space backward without changing the heading
      * @param player
+     * @author Philip Muff
      */
     public void backUp(@NotNull Player player){
         Space currentSpace = player.getSpace();
@@ -440,6 +442,7 @@ public class GameController {
     /**
      * Turns the player 180degrees around itself(u-turn)
      * @param player the player to turn
+     * @author Philip Muff
      */
     public void uTurn(@NotNull Player player){
         player.setHeading(player.getHeading().next().next());

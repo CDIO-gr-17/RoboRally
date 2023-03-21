@@ -127,6 +127,7 @@ public class Space extends Subject {
     /**
      * Creates a conveyorbelt on this space with a given heading
      * @param heading the direction the conveyorbelt is pointing
+     * @author Philip Muff
      */
     public void createConveyorbelt(Heading heading){
         this.conveyorBelt = new ConveyorBelt(heading);

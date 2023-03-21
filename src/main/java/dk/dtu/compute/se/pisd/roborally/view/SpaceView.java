@@ -99,6 +99,7 @@ public class SpaceView extends StackPane implements ViewObserver {
     /**
      * Draw the conveyorbelt on this space
      * @param conveyorBelt the conveyorbelt to be drawn (gets the heading of conveyorbelt)
+     * @author Philip Muff
      */
     private void drawConveyorbelt(ConveyorBelt conveyorBelt){
         if(conveyorBelt!=null) {
