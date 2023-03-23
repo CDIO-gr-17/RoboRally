@@ -21,11 +21,14 @@
  */
 package dk.dtu.compute.se.pisd.roborally.controller;
 
+import com.sun.jdi.connect.Connector;
 import dk.dtu.compute.se.pisd.designpatterns.observer.Observer;
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 
 import dk.dtu.compute.se.pisd.roborally.RoboRally;
 
+import dk.dtu.compute.se.pisd.roborally.dal.IRepository;
+import dk.dtu.compute.se.pisd.roborally.dal.RepositoryAccess;
 import dk.dtu.compute.se.pisd.roborally.model.Board;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
 
@@ -36,6 +39,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceDialog;
 import org.jetbrains.annotations.NotNull;
 
+import java.awt.*;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -51,11 +55,12 @@ public class AppController implements Observer {
 
     final private List<Integer> PLAYER_NUMBER_OPTIONS = Arrays.asList(2, 3, 4, 5, 6);
     final private List<String> PLAYER_COLORS = Arrays.asList("red", "green", "blue", "orange", "grey", "magenta");
+    final private List<String> BOARDS = Arrays.asList("default", "easy", "medium", "hard");
 
     final private RoboRally roboRally;
 
     private GameController gameController;
-
+    private IRepository repoAcces = RepositoryAccess.getRepository();
     public AppController(@NotNull RoboRally roboRally) {
         this.roboRally = roboRally;
     }
@@ -64,10 +69,18 @@ public class AppController implements Observer {
      * Creates board and players according to dialouge
      */
     public void newGame() {
-        ChoiceDialog<Integer> dialog = new ChoiceDialog<>(PLAYER_NUMBER_OPTIONS.get(0), PLAYER_NUMBER_OPTIONS);
-        dialog.setTitle("Player number");
-        dialog.setHeaderText("Select number of players");
-        Optional<Integer> result = dialog.showAndWait();
+        ChoiceDialog<Integer> playerDialog = new ChoiceDialog<>(PLAYER_NUMBER_OPTIONS.get(0), PLAYER_NUMBER_OPTIONS);
+        playerDialog.setTitle("Player number");
+        playerDialog.setHeaderText("Select number of players");
+        Optional<Integer> result = playerDialog.showAndWait();
+
+        //asks player which map/board is wanted
+        if(result.isPresent()) {
+            ChoiceDialog<String> boardDialog = new ChoiceDialog<>(BOARDS.get(0), BOARDS);
+            boardDialog.setTitle("Board");
+            boardDialog.setHeaderText("Select the board you want to play");
+            Optional<String> boardResult = boardDialog.showAndWait();
+        }
 
         if (result.isPresent()) {
             if (gameController != null) {
@@ -94,18 +107,23 @@ public class AppController implements Observer {
             gameController.startProgrammingPhase();
 
             roboRally.createBoardView(gameController);
+
+            repoAcces.createGameInDB(gameController.board);
+
         }
     }
 
     public void saveGame() {
         // XXX needs to be implemented eventually
+        repoAcces.updateGameInDB(gameController.board);
+
     }
 
     public void loadGame() {
         // XXX needs to be implememted eventually
         // for now, we just create a new game
         if (gameController == null) {
-            newGame();
+            repoAcces.loadGameFromDB(1);
         }
     }
 
