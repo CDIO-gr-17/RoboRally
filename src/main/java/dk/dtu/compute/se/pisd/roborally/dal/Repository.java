@@ -205,9 +205,11 @@ class Repository implements IRepository {
 			int playerNo = -1;
 			if (rs.next()) {
 				// TODO the width and height could eventually come from the database
-				// int width = AppController.BOARD_WIDTH;
-				// int height = AppController.BOARD_HEIGHT;
-				// game = new Board(width,height);
+				//int width = AppController.BOARD_WIDTH;
+				int width = 8;
+				//int height = AppController.BOARD_HEIGHT;
+				int height = 8;
+				game = new Board(width,height);
 				// TODO and we should also store the used game board in the database
 				//      for now, we use the default game board
 				game = LoadBoard.loadBoard(null);
@@ -218,6 +220,7 @@ class Repository implements IRepository {
 				// TODO currently we do not set the games name (needs to be added)
 				game.setPhase(Phase.values()[rs.getInt(GAME_PHASE)]);
 				game.setStep(rs.getInt(GAME_STEP));
+
 			} else {
 				// TODO error handling
 				return null;

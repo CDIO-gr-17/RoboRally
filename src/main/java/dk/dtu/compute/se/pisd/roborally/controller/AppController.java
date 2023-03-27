@@ -27,6 +27,7 @@ import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 
 import dk.dtu.compute.se.pisd.roborally.RoboRally;
 
+import dk.dtu.compute.se.pisd.roborally.dal.GameInDB;
 import dk.dtu.compute.se.pisd.roborally.dal.IRepository;
 import dk.dtu.compute.se.pisd.roborally.dal.RepositoryAccess;
 import dk.dtu.compute.se.pisd.roborally.model.Board;
@@ -40,6 +41,7 @@ import javafx.scene.control.ChoiceDialog;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
+import java.sql.PreparedStatement;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -56,6 +58,7 @@ public class AppController implements Observer {
     final private List<Integer> PLAYER_NUMBER_OPTIONS = Arrays.asList(2, 3, 4, 5, 6);
     final private List<String> PLAYER_COLORS = Arrays.asList("red", "green", "blue", "orange", "grey", "magenta");
     final private List<String> BOARDS = Arrays.asList("default", "easy", "medium", "hard");
+    private List<GameInDB> games;
 
     final private RoboRally roboRally;
 
@@ -120,10 +123,23 @@ public class AppController implements Observer {
     }
 
     public void loadGame() {
+        games = repoAcces.getGames();
+
+        //Lets player choose which game should be loaded
+        ChoiceDialog<GameInDB> boardDialog = new ChoiceDialog<>(games.get(0), games);
+        boardDialog.setTitle("Game");
+        boardDialog.setHeaderText("Select which saved game you want to continue playing");
+        Optional<GameInDB> boardResult = boardDialog.showAndWait();
+
+
         // XXX needs to be implememted eventually
         // for now, we just create a new game
         if (gameController == null) {
-            repoAcces.loadGameFromDB(1);
+            Board board = repoAcces.loadGameFromDB(boardResult.get().id);
+            gameController = new GameController(board);
+            roboRally.createBoardView(gameController);
+
+
         }
     }
 
