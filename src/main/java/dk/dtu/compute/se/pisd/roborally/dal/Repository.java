@@ -273,9 +273,28 @@ class Repository implements IRepository {
 		return result;
 	}
 
-	private void createCardFieldsInDB(Board game) {
-		//PreparedStatement ps = getSelectCardFieldsStatement();
+	/**
+	 * Stores the cards in hand in the database
+	 * @param game			The game whoose playerhands we want to save
+	 * @throws SQLException
+	 * @author	Jakob Agergaard
+	 */
+	private void createCardFieldsInDB(Board game) throws SQLException {
+		PreparedStatement ps = getInsertHandStatement();
 
+		for (int i = 0; i < game.getPlayersNumber(); i++) {
+
+				ps.setInt(1,game.getGameId());
+				ps.setInt(2,game.getPlayerNumber(game.getPlayer(i)));
+				for (int j = 0; j < 7; j++) {
+					String command = game.getPlayer(i).getCardField(j).getCard().command.name();
+					ps.setString(j+3,command);
+				}
+				int affectedRows = ps.executeUpdate();
+				ResultSet generatedKeys = ps.getGeneratedKeys();
+				//ps.insertRow();
+		}
+		ps.close();
 	}
 
 	private void loadCardFieldsFromDB(Board game) {
@@ -456,6 +475,48 @@ class Repository implements IRepository {
 			}
 		}
 		return select_games_stmt;
+	}
+
+	/**
+	 * SQL insert query for inserting a hand of cards in the database
+	 * @author Jakob Agergaard
+	 */
+	private static final String SQL_INSERT_HAND =
+			"INSERT INTO HAND(gameID, playerID, CARD1, CARD2, CARD3, CARD4, CARD5, CARD6, CARD7) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	private PreparedStatement insert_hand_stmt = null;
+	private PreparedStatement getInsertHandStatement(){
+		if (insert_hand_stmt == null) {
+			Connection connection = connector.getConnection();
+			try {
+				insert_hand_stmt = connection.prepareStatement(
+						SQL_INSERT_HAND,
+						Statement.RETURN_GENERATED_KEYS);
+			} catch (SQLException e) {
+				// TODO error handling
+				e.printStackTrace();
+			}
+		}
+		return insert_hand_stmt;
+	}
+
+	/**
+	 * SQL select query for the hand table
+	 * @author Jakob Agergaard
+	 */
+	private static final String SQL_SELECT_HAND =
+			"SELECT * FROM HAND";
+	private PreparedStatement select_hand_stmt = null;
+	private PreparedStatement getSelectHandStatement() {
+		if(select_hand_stmt == null) {
+			Connection connection = connector.getConnection();
+			try {
+				select_hand_stmt = connection.prepareStatement(SQL_SELECT_HAND);
+			} catch (SQLException e) {
+				// TODO error handling
+				e.printStackTrace();
+			}
+		}
+		return select_hand_stmt;
 	}
 
 

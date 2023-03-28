@@ -116,12 +116,18 @@ public class AppController implements Observer {
         }
     }
 
+    /**
+     * @author Jakob Agergaard
+     */
     public void saveGame() {
         // XXX needs to be implemented eventually
         repoAcces.updateGameInDB(gameController.board);
 
     }
 
+    /**
+     * @author Jakob Agergaard
+     */
     public void loadGame() {
         games = repoAcces.getGames();
 
