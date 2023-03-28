@@ -281,24 +281,46 @@ class Repository implements IRepository {
 	 */
 	private void createCardFieldsInDB(Board game) throws SQLException {
 		PreparedStatement ps = getInsertHandStatement();
-
 		for (int i = 0; i < game.getPlayersNumber(); i++) {
 
 				ps.setInt(1,game.getGameId());
 				ps.setInt(2,game.getPlayerNumber(game.getPlayer(i)));
-				for (int j = 0; j < 7; j++) {
+				for (int j = 0; j < 8; j++) {
 					String command = game.getPlayer(i).getCardField(j).getCard().command.name();
 					ps.setString(j+3,command);
 				}
 				int affectedRows = ps.executeUpdate();
 				ResultSet generatedKeys = ps.getGeneratedKeys();
-				//ps.insertRow();
 		}
 		ps.close();
 	}
 
-	private void loadCardFieldsFromDB(Board game) {
-		//PreparedStatement ps =
+	/**
+	 * Loads cards from players hand into game
+	 * @param game			The game from which you want to load the hands
+	 * @throws SQLException
+	 * @author Jakob Agergaard
+	 */
+	private void loadCardFieldsFromDB(Board game) throws SQLException {
+		PreparedStatement ps = getSelectHandStatement();
+		ps.setInt(1,game.getGameId());
+
+		ResultSet rs = ps.executeQuery();
+
+		int i = 0;
+		while (rs.next()) {
+			int playerId = rs.getInt(PLAYER_PLAYERID);
+			if (i++ == playerId){
+				for (int j = 0; j < 8; j++) {
+					String commandInDB = rs.getString(j+3);
+					CommandCardField field = game.getPlayer(playerId).getCardField(j);
+					CommandCard card;
+					card = new CommandCard(Command.valueOf(commandInDB));
+					field.setCard(card);
+				}
+			}
+		}
+		rs.close();
 	}
 
 	private void createPlayersInDB(Board game) throws SQLException {
@@ -482,7 +504,7 @@ class Repository implements IRepository {
 	 * @author Jakob Agergaard
 	 */
 	private static final String SQL_INSERT_HAND =
-			"INSERT INTO HAND(gameID, playerID, CARD1, CARD2, CARD3, CARD4, CARD5, CARD6, CARD7) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			"INSERT INTO HAND(gameID, playerID, CARD1, CARD2, CARD3, CARD4, CARD5, CARD6, CARD7, CARD8) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private PreparedStatement insert_hand_stmt = null;
 	private PreparedStatement getInsertHandStatement(){
 		if (insert_hand_stmt == null) {
@@ -504,7 +526,7 @@ class Repository implements IRepository {
 	 * @author Jakob Agergaard
 	 */
 	private static final String SQL_SELECT_HAND =
-			"SELECT * FROM HAND";
+			"SELECT * FROM HAND WHERE gameID = ?";
 	private PreparedStatement select_hand_stmt = null;
 	private PreparedStatement getSelectHandStatement() {
 		if(select_hand_stmt == null) {
