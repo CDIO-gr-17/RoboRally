@@ -239,7 +239,9 @@ public class Board extends Subject {
 
         return getSpace(x, y);
     }
-
+    public String getNextCheckpointnr(){
+        return "Next checkpoint: " + (getCurrentPlayer().getPlayerToken()+1);
+    }
     public String getStatusMessage() {
         // this is actually a view aspect, but for making assignment V1 easy for
         // the students, this method gives a string representation of the current
