@@ -40,8 +40,10 @@ public class Space extends Subject {
 
     private List<Heading> walls = new ArrayList<>();
 
+    private List<FieldAction> actions = new ArrayList<>();
 
 
+    private List <Checkpoint> checkpoints = new ArrayList<>();
     private Checkpoint checkpoint;
 
     private ConveyorBelt conveyorBelt;
@@ -116,6 +118,9 @@ public class Space extends Subject {
     public List<Heading> getWalls(){
         return walls;
     }
+    public List <FieldAction> getActions() {
+        return actions;
+    }
 
     public Checkpoint getCheckpoint() {
         return checkpoint;
@@ -124,6 +129,14 @@ public class Space extends Subject {
     public void createCheckpoint(int checkpointID){
         this.checkpoint= new Checkpoint(checkpointID);
     }
+
+    public List<Checkpoint> getCheckpoints(){
+        return checkpoints;
+    }
+
+
+
+
     /**
      * Creates a conveyorbelt on this space with a given heading
      * @param heading the direction the conveyorbelt is pointing
@@ -135,6 +148,7 @@ public class Space extends Subject {
     public ConveyorBelt getConveyorBelt(){
         return this.conveyorBelt;
     }
+
 
     void playerChanged() {
         // This is a minor hack; since some views that are registered with the space

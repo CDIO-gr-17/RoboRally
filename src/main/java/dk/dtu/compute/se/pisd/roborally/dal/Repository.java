@@ -379,6 +379,7 @@ class Repository implements IRepository {
 					    ResultSet.CONCUR_UPDATABLE);
 			} catch (SQLException e) {
 				// TODO error handling
+
 				e.printStackTrace();
 			}
 		}
