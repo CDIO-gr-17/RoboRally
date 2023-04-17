@@ -316,19 +316,9 @@ public class GameController {
             for (int j = 0; j < board.height; j++) {
                 Space currentSpace = board.getSpace(i,j);
                 for (FieldAction action : currentSpace.getActions()) {
-                    if (action.getClass()==ConveyorBelt.class){
-                        action.doAction(this,currentSpace);
+                    if (action.getClass()==ConveyorBelt.class) {
+                        action.doAction(this, currentSpace);
                     }
-
-
-                /*
-                if (!currentSpace.getActions().contains(ConveyorBelt.class)){
-                    int index = currentSpace.getActions().indexOf(ConveyorBelt.class);
-                    currentSpace.getActions().get(index).doAction(this,currentSpace);
-                }
-*/
-
-
                 }
             }
         }
@@ -340,13 +330,15 @@ public class GameController {
     public void executeCheckpoints() {
         for (int i = 0; i < board.width; i++) {
             for (int j = 0; j < board.height; j++) {
-                Checkpoint checkpoint = board.getSpace(i,j).getCheckpoint();
-                if(checkpoint!=null){
-                    checkpoint.doAction(this,board.getSpace(i,j));
+                Space currentSpace = board.getSpace(i,j);
+                for (FieldAction action: currentSpace.getActions()) {
+                    if (action.getClass()==ConveyorBelt.class){
+                        action.doAction(this,currentSpace);
+                    }
                 }
             }
-
-    }}
+        }
+    }
 
     /**
      * Moves a player to a specific space in a direction. If another player is on the space a player is trying to move onto,
