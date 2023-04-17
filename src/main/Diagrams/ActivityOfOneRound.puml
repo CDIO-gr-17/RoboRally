@@ -4,23 +4,13 @@
 |Player|
 |System|
 start
-|System|
-:Deal cards;
+|Player|
+:Draw cards;
 |Player|
 :Program robot;
 |System|
 repeat
-fork
-|Player|
-:Execute interactive commands
-on current step (for all players);
-|System|
-fork again
-:Execute non-interactive commands
-on current step (for all players);
-
-end fork
-:Execute board elements;
+:Execute next step;
 
 if (Damage done) then (true)
 :Deal damage cards;
@@ -28,7 +18,7 @@ if (Damage done) then (true)
 else (false)
 
 endif
-backward:Step++;
+
 repeat while (Cards left?) is (true) not (false)
 
 |Player|
