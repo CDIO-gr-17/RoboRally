@@ -309,12 +309,27 @@ public class GameController {
     /**
      * executes the doAction() method for all conveyorbelts on the board
      * @author Philip Muff
+     * @author Jakob Agergaard
      */
     public void executeConveyorbelts() {
         for (int i = 0; i < board.width; i++) {
             for (int j = 0; j < board.height; j++) {
-                if(board.getSpace(i,j).getConveyorBelt()!=null)
-                    board.getSpace(i,j).getConveyorBelt().doAction(this,board.getSpace(i,j));
+                Space currentSpace = board.getSpace(i,j);
+                for (FieldAction action : currentSpace.getActions()) {
+                    if (action.getClass()==ConveyorBelt.class){
+                        action.doAction(this,currentSpace);
+                    }
+
+
+                /*
+                if (!currentSpace.getActions().contains(ConveyorBelt.class)){
+                    int index = currentSpace.getActions().indexOf(ConveyorBelt.class);
+                    currentSpace.getActions().get(index).doAction(this,currentSpace);
+                }
+*/
+
+
+                }
             }
         }
     }

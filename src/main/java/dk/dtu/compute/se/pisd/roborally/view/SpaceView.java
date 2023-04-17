@@ -33,6 +33,7 @@ import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -103,6 +104,7 @@ public class SpaceView extends StackPane implements ViewObserver {
      * @param conveyorBelt the conveyorbelt to be drawn (gets the heading of conveyorbelt)
      * @author Philip Muff
      */
+
     private void drawConveyorbelt(ConveyorBelt conveyorBelt){
         if(conveyorBelt!=null) {
             Polygon arrow = new Polygon(0.0, 0.0,
@@ -153,6 +155,23 @@ public class SpaceView extends StackPane implements ViewObserver {
             this.getChildren().add(diamond);
         }
     }
+    private void drawActions(List<FieldAction> actions){
+        for (FieldAction action : actions) {
+            switch (action.getClass().getSimpleName()){
+                case "ConveyorBelt":
+                    drawConveyorbelt((ConveyorBelt) action);
+                    break;
+                case "Checkpoint":
+                    drawCheckPoint((Checkpoint) action);
+                    break;
+                case "Boardlaser": ;
+                    break;
+                default:
+                    System.out.println("Action not drawn!");
+            }
+        }
+    }
+
 
     @Override
     public void updateView(Subject subject) {
@@ -160,8 +179,8 @@ public class SpaceView extends StackPane implements ViewObserver {
             updatePlayer();
         }
         drawWalls(space.getWalls());
-        drawConveyorbelt(space.getConveyorBelt());
-        drawCheckPoint(space.getCheckpoint());
+        drawActions(space.getActions());
+
 
     }
 

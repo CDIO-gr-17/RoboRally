@@ -30,6 +30,7 @@ import dk.dtu.compute.se.pisd.roborally.RoboRally;
 import dk.dtu.compute.se.pisd.roborally.dal.GameInDB;
 import dk.dtu.compute.se.pisd.roborally.dal.IRepository;
 import dk.dtu.compute.se.pisd.roborally.dal.RepositoryAccess;
+import dk.dtu.compute.se.pisd.roborally.fileaccess.LoadBoard;
 import dk.dtu.compute.se.pisd.roborally.model.Board;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
 
@@ -78,12 +79,16 @@ public class AppController implements Observer {
         Optional<Integer> result = playerDialog.showAndWait();
 
         //asks player which map/board is wanted
-        if(result.isPresent()) {
+        if(!result.isPresent()) {
+            return;
+        }
+
             ChoiceDialog<String> boardDialog = new ChoiceDialog<>(BOARDS.get(0), BOARDS);
             boardDialog.setTitle("Board");
             boardDialog.setHeaderText("Select the board you want to play");
             Optional<String> boardResult = boardDialog.showAndWait();
-        }
+
+
 
         if (result.isPresent()) {
             if (gameController != null) {
@@ -96,7 +101,7 @@ public class AppController implements Observer {
 
             // XXX the board should eventually be created programmatically or loaded from a file
             //     here we just create an empty board with the required number of players.
-            Board board = new Board(16,8);
+            Board board = LoadBoard.loadBoard(boardResult.get()+"board");
             gameController = new GameController(board);
             int no = result.get();
             for (int i = 0; i < no; i++) {
