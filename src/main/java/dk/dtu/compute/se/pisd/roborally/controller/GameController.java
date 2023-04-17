@@ -304,6 +304,7 @@ public class GameController {
     public void executeEntities(){
         executeCheckpoints();
         executeConveyorbelts();
+        executeBoardLasers();
     }
 
     /**
@@ -332,6 +333,14 @@ public class GameController {
             }
 
     }}
+    public void executeBoardLasers(){
+        for (int i = 0; i < board.width; i++) {
+            for (int j = 0; j < board.height; j++) {
+                if(board.getSpace(i,j).getBoardLaser()!=null)
+                    board.getSpace(i,j).getBoardLaser().doAction(this,board.getSpace(i,j));
+            }
+        }
+    }
 
     /**
      * Moves a player to a specific space in a direction. If another player is on the space a player is trying to move onto,

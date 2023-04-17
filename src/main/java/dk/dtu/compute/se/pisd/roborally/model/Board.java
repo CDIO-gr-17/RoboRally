@@ -87,6 +87,8 @@ public class Board extends Subject {
         spaces[0][0].createCheckpoint(1);
         spaces[3][3].createCheckpoint(2);
         spaces[4][4].createCheckpoint(3);
+        spaces[2][3].createBoardLaser(Heading.EAST);
+        spaces[5][3].createWall(Heading.WEST);
 
 
 

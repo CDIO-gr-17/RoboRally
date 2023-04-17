@@ -153,6 +153,52 @@ public class SpaceView extends StackPane implements ViewObserver {
         }
     }
 
+    private void drawBoardLaser(BoardLaser boardLaser){
+        if(boardLaser!=null){
+            Polygon arrow = new Polygon(0.0, 0.0,
+                    15.0, 30.0,
+                    30.0, 0.0);
+            arrow.setFill(Color.RED);
+            arrow.setRotate((90 * boardLaser.getHeading().ordinal()) % 360);
+            this.getChildren().add(arrow);
+        }
+    }
+    private void drawLaser(List <Heading> lasers){
+        boolean step = space.board.isStepMode();
+
+        if(step==true) {
+            for(Heading laser: lasers) {
+                Pane pane = new Pane();
+                Rectangle rectangle = new Rectangle();
+                rectangle.setFill(Color.TRANSPARENT);
+                pane.getChildren().add(rectangle);
+                Line line = null;
+                switch (laser) {
+                    case SOUTH:
+                        line = new Line(2, space.board.height - 2, space.board.width- 2, space.board.height - 2);
+                        break;
+                    case WEST:
+                        line = new Line(2, 2, 2, space.board.height - 2);
+                        break;
+                    case NORTH:
+                        line = new Line(2, 2, space.board.width - 2, 2);
+                        break;
+                    case EAST:
+                        line = new Line(space.board.width - 2, space.board.height - 2, space.board.width - 2, 2);
+                        break;
+                    default:
+                        line = null;
+                }
+                line.setStroke(Color.RED);
+                line.setStrokeWidth(3);
+                pane.getChildren().add(line);
+                this.getChildren().add(pane);
+            }
+        }
+        }
+
+
+
     @Override
     public void updateView(Subject subject) {
         if (subject == this.space) {
@@ -161,7 +207,8 @@ public class SpaceView extends StackPane implements ViewObserver {
         drawWalls(space.getWalls());
         drawConveyorbelt(space.getConveyorBelt());
         drawCheckPoint(space.getCheckpoint());
-
+        drawBoardLaser(space.getBoardLaser());
+        drawLaser(space.getBoardLaser());
     }
 
 }
