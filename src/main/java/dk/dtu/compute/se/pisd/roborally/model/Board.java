@@ -57,6 +57,7 @@ public class Board extends Subject {
     private int step = 0;
 
     private boolean stepMode;
+    private String gameName;
 
     /**
      * Creates a board with a name, width and height and creates spaces for each coordinate on the board
@@ -76,19 +77,7 @@ public class Board extends Subject {
                 spaces[x][y] = space;
             }
         }
-        spaces[0][2].createWall(Heading.SOUTH);
-        spaces[2][0].createWall(Heading.SOUTH);
-        spaces[7][7].createWall(Heading.NORTH);
-        spaces[6][6].createWall(Heading.WEST);
-        spaces[6][6].createWall(Heading.EAST);
-        spaces[2][2].createConveyorbelt(Heading.EAST);
-        spaces[7][7].createConveyorbelt(Heading.WEST);
-        spaces[7][7].createConveyorbelt(Heading.NORTH);
-        spaces[0][0].createCheckpoint(1);
-        spaces[3][3].createCheckpoint(2);
-        spaces[4][4].createCheckpoint(3);
-        spaces[2][3].createBoardLaser(Heading.EAST);
-        spaces[5][3].createWall(Heading.WEST);
+
 
 
 
@@ -284,4 +273,11 @@ public class Board extends Subject {
     }
 
 
+    public String getGameName() {
+        return gameName;
+    }
+
+    public void setGameName(String gameName) {
+        this.gameName = gameName;
+    }
 }

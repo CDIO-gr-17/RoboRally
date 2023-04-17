@@ -1,15 +1,19 @@
 package dk.dtu.compute.se.pisd.roborally.model;
 
-import dk.dtu.compute.se.pisd.roborally.model.FieldAction;
 import dk.dtu.compute.se.pisd.roborally.controller.GameController;
+import dk.dtu.compute.se.pisd.roborally.model.FieldAction;
+import dk.dtu.compute.se.pisd.roborally.model.Player;
+import dk.dtu.compute.se.pisd.roborally.model.Space;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.List;
+/**
+ *
+ */
 
 public class Checkpoint extends FieldAction {
     private Space space;
     private int checkPointID;
+
 
 
     /**
@@ -42,4 +46,7 @@ public class Checkpoint extends FieldAction {
         else
         return false;
     }
+
+
+
 }

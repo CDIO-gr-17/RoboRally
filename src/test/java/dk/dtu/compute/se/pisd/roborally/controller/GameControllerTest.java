@@ -194,4 +194,6 @@ class GameControllerTest {
         Assertions.assertEquals(Heading.SOUTH, current.getHeading(), "Player 0 should be heading SOUTH!");
         Assertions.assertNull(board.getSpace(5, 5).getPlayer(), "Space (0,0) should be empty!");
     }
+
+
 }

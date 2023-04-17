@@ -23,6 +23,7 @@ package dk.dtu.compute.se.pisd.roborally.model;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +40,11 @@ public class Space extends Subject {
     //Laver en liste med headings
 
     private List<Heading> walls = new ArrayList<>();
+
+    private List<FieldAction> actions = new ArrayList<>();
+
+
+    private List <Checkpoint> checkpoints = new ArrayList<>();
     private Checkpoint checkpoint;
 
     private ConveyorBelt conveyorBelt;
@@ -114,6 +120,9 @@ public class Space extends Subject {
     public List<Heading> getWalls(){
         return walls;
     }
+    public List <FieldAction> getActions() {
+        return actions;
+    }
 
     public Checkpoint getCheckpoint() {
         return checkpoint;
@@ -122,6 +131,14 @@ public class Space extends Subject {
     public void createCheckpoint(int checkpointID){
         this.checkpoint= new Checkpoint(checkpointID);
     }
+
+    public List<Checkpoint> getCheckpoints(){
+        return checkpoints;
+    }
+
+
+
+
     /**
      * Creates a conveyorbelt on this space with a given heading
      * @param heading the direction the conveyorbelt is pointing
@@ -131,7 +148,10 @@ public class Space extends Subject {
         this.conveyorBelt = new ConveyorBelt(heading);
     }
     public ConveyorBelt getConveyorBelt(){
-        return this.conveyorBelt;
+        if (actions.contains(ConveyorBelt.class)){
+            //return actions.listIterator()
+        }
+        return null;
     }
     public void createBoardLaser(Heading heading){this.boardLaser = new BoardLaser(heading);}
     public BoardLaser getBoardLaser(){

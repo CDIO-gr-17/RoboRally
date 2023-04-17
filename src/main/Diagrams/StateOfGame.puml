@@ -2,21 +2,22 @@
 'https://plantuml.com/state-diagram
 
 state RoborallyGame{
-[*] --> Initialization
-Initialization --> Programming
-Programming --> Execution
+[*] -> Initialization
+Initialization --> Programming:[Game is configured]
+Programming --> Execution:[30 sec || All cards placed]
 Execution --> Interaction:[Card is interactive]
-Interaction -> Execution:[action choosen]
-Execution -> Final:[winner found]
-Interaction -> Initialization:[Configuration choosen]
+Interaction --> Execution:[action choosen]
+Execution --> Final:[winner found]
+Execution --> Programming: [round over]
+Interaction --> Initialization:[Configuration choosen]
 Initialization -> Interaction:[Needs configuration]
 
-state Initialization
+state Initialization:Of game configuration
 
 state Programming
 
-state Execution
-    state Interaction
+state Execution:Of Programming Cards
+state Interaction:With player
 
 state Final
 

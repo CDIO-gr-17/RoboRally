@@ -22,6 +22,7 @@
 package dk.dtu.compute.se.pisd.roborally.view;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
+import dk.dtu.compute.se.pisd.roborally.model.Checkpoint;
 import dk.dtu.compute.se.pisd.roborally.model.ConveyorBelt;
 import dk.dtu.compute.se.pisd.roborally.model.*;
 import javafx.scene.layout.Pane;
@@ -32,6 +33,7 @@ import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -152,6 +154,23 @@ public class SpaceView extends StackPane implements ViewObserver {
             this.getChildren().add(diamond);
         }
     }
+    private void drawActions(List<FieldAction> actions){
+        for (FieldAction action : actions) {
+            switch (action.getClass().getSimpleName()){
+                case "ConveyorBelt":
+                    drawConveyorbelt((ConveyorBelt) action);
+                    break;
+                case "Checkpoint":
+                    drawCheckPoint((Checkpoint) action);
+                    break;
+                case "Boardlaser": ;
+                    break;
+                default:
+                    System.out.println("Action not drawn!");
+            }
+        }
+    }
+
 
     private void drawBoardLaser(BoardLaser boardLaser){
         if(boardLaser!=null){
@@ -205,10 +224,9 @@ public class SpaceView extends StackPane implements ViewObserver {
             updatePlayer();
         }
         drawWalls(space.getWalls());
-        drawConveyorbelt(space.getConveyorBelt());
-        drawCheckPoint(space.getCheckpoint());
-        drawBoardLaser(space.getBoardLaser());
-        drawLaser(space.getBoardLaser());
+        drawActions(space.getActions());
+
+
     }
 
 }

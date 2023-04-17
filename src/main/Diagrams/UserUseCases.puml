@@ -1,23 +1,46 @@
 @startuml
 'https://plantuml.com/use-case-diagram
 Left to right direction
-actor User as U
+actor Player as U
 Rectangle Roborally {
+usecase "Start game"
+    usecase "Choose map"
+    usecase "Choose nr of players"
+    usecase "Configure game" as CG
 usecase "Program robot" as PR
-usecase "Configure game" as CG
-usecase "Upgrade robot" as UR
+    usecase "Draw cards"
+    usecase "play cards"
 
-
+usecase "Execute round"
+rectangle Step/Register{
+usecase "Execute commands"
+    usecase "Execute entities"
 }
 
+usecase "Upgrade robot" as UR
+usecase "Finish game"
+}
+
+
+"Start game" ..> CG :<<include>>
+"Start game" .> "Choose map":<<include>>
+"Start game" ..> "Choose nr of players":<<include>>
+
+"Execute round" ..> "Execute commands": <<include>>
+"Execute round" ..> "Execute entities": <<include>>
+
+PR ..> "Draw cards":<<include>>
+PR ..> "play cards":<<include>>
+
+U --> "Execute round"
+U --> "Start game"
 U --> PR
-U-->CG
 U-->UR
+U --> "Finish game"
 
 
 @enduml
 
-usecase "Choose nr. of players"
 usecase "Choose board"
 usecase "Buy upgrades"
 usecase "Apply upgrades"

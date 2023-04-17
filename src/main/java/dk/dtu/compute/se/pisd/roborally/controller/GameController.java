@@ -304,18 +304,22 @@ public class GameController {
     public void executeEntities(){
         executeCheckpoints();
         executeConveyorbelts();
-        executeBoardLasers();
     }
 
     /**
      * executes the doAction() method for all conveyorbelts on the board
      * @author Philip Muff
+     * @author Jakob Agergaard
      */
     public void executeConveyorbelts() {
         for (int i = 0; i < board.width; i++) {
             for (int j = 0; j < board.height; j++) {
-                if(board.getSpace(i,j).getConveyorBelt()!=null)
-                    board.getSpace(i,j).getConveyorBelt().doAction(this,board.getSpace(i,j));
+                Space currentSpace = board.getSpace(i,j);
+                for (FieldAction action : currentSpace.getActions()) {
+                    if (action.getClass()==ConveyorBelt.class) {
+                        action.doAction(this, currentSpace);
+                    }
+                }
             }
         }
     }
@@ -326,13 +330,17 @@ public class GameController {
     public void executeCheckpoints() {
         for (int i = 0; i < board.width; i++) {
             for (int j = 0; j < board.height; j++) {
-                Checkpoint checkpoint = board.getSpace(i,j).getCheckpoint();
-                if(checkpoint!=null){
-                    checkpoint.doAction(this,board.getSpace(i,j));
+                Space currentSpace = board.getSpace(i,j);
+                for (FieldAction action: currentSpace.getActions()) {
+                    if (action.getClass()==ConveyorBelt.class){
+                        action.doAction(this,currentSpace);
+                    }
                 }
             }
+        }
+    }
 
-    }}
+
     public void executeBoardLasers(){
         for (int i = 0; i < board.width; i++) {
             for (int j = 0; j < board.height; j++) {
