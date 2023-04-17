@@ -35,10 +35,10 @@ import dk.dtu.compute.se.pisd.roborally.model.Board;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
 
 import javafx.application.Platform;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.ChoiceDialog;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
@@ -83,12 +83,15 @@ public class AppController implements Observer {
             return;
         }
 
-            ChoiceDialog<String> boardDialog = new ChoiceDialog<>(BOARDS.get(0), BOARDS);
-            boardDialog.setTitle("Board");
-            boardDialog.setHeaderText("Select the board you want to play");
-            Optional<String> boardResult = boardDialog.showAndWait();
+        ChoiceDialog<String> boardDialog = new ChoiceDialog<>(BOARDS.get(0), BOARDS);
+        boardDialog.setTitle("Board");
+        boardDialog.setHeaderText("Select the board you want to play");
+        Optional<String> boardResult = boardDialog.showAndWait();
 
-
+        TextInputDialog nameDialog = new TextInputDialog();
+        nameDialog.setTitle("Name");
+        nameDialog.setHeaderText("Give your game a name");
+        Optional<String> nameResult = nameDialog.showAndWait();
 
         if (result.isPresent()) {
             if (gameController != null) {
@@ -98,10 +101,10 @@ public class AppController implements Observer {
                     return;
                 }
             }
-
             // XXX the board should eventually be created programmatically or loaded from a file
             //     here we just create an empty board with the required number of players.
             Board board = LoadBoard.loadBoard(boardResult.get()+"board");
+            board.setGameName(nameResult.get());
             gameController = new GameController(board);
             int no = result.get();
             for (int i = 0; i < no; i++) {
@@ -113,9 +116,7 @@ public class AppController implements Observer {
             // XXX: V2
             // board.setCurrentPlayer(board.getPlayer(0));
             gameController.startProgrammingPhase();
-
             roboRally.createBoardView(gameController);
-
             repoAcces.createGameInDB(gameController.board);
 
         }
@@ -126,6 +127,7 @@ public class AppController implements Observer {
      */
     public void saveGame() {
         // XXX needs to be implemented eventually
+
         repoAcces.updateGameInDB(gameController.board);
 
     }

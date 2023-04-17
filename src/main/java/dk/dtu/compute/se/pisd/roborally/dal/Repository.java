@@ -38,8 +38,9 @@ import java.util.List;
 class Repository implements IRepository {
 	
 	private static final String GAME_GAMEID = "gameID";
+	private static final String BOARD_NAME = "boardname";
 
-	private static final String GAME_NAME = "name";
+	private static final String GAME_NAME = "gamename";
 	
 	private static final String GAME_CURRENTPLAYER = "currentPlayer";
 
@@ -60,6 +61,7 @@ class Repository implements IRepository {
 	private static final String PLAYER_POSITION_Y = "positionY";
 
 	private static final String PLAYER_HEADING = "heading";
+	private static final String PLAYER_CHECKPOINT = "checkpoint";
 
 	private Connector connector;
 	
@@ -78,10 +80,11 @@ class Repository implements IRepository {
 				// TODO: the name should eventually set by the user
 				//       for the game and should be then used 
 				//       game.getName();
-				ps.setString(1, "Date: " +  new Date()); // instead of name
-				ps.setNull(2, Types.TINYINT); // game.getPlayerNumber(game.getCurrentPlayer())); is inserted after players!
-				ps.setInt(3, game.getPhase().ordinal());
-				ps.setInt(4, game.getStep());
+				ps.setString(1, game.getGameName()); // instead of name
+				ps.setString(2, game.boardName);
+				ps.setNull(3, Types.TINYINT); // game.getPlayerNumber(game.getCurrentPlayer())); is inserted after players!
+				ps.setInt(4, game.getPhase().ordinal());
+				ps.setInt(5, game.getStep());
 
 				// If you have a foreign key constraint for current players,
 				// the check would need to be temporarily disabled, since
@@ -157,6 +160,7 @@ class Repository implements IRepository {
 
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
+
 				rs.updateInt(GAME_CURRENTPLAYER, game.getPlayerNumber(game.getCurrentPlayer()));
 				rs.updateInt(GAME_PHASE, game.getPhase().ordinal());
 				rs.updateInt(GAME_STEP, game.getStep());
@@ -204,15 +208,15 @@ class Repository implements IRepository {
 			ResultSet rs = ps.executeQuery();
 			int playerNo = -1;
 			if (rs.next()) {
-				// TODO the width and height could eventually come from the database
+				/*// TODO the width and height could eventually come from the database
 				//int width = AppController.BOARD_WIDTH;
 				int width = 8;
 				//int height = AppController.BOARD_HEIGHT;
 				int height = 8;
 				game = new Board(width,height);
 				// TODO and we should also store the used game board in the database
-				//      for now, we use the default game board
-				game = LoadBoard.loadBoard(null);
+				//      for now, we use the default game board*/
+				game = LoadBoard.loadBoard(rs.getString(BOARD_NAME));
 				if (game == null) {
 					return null;
 				}
@@ -236,10 +240,7 @@ class Repository implements IRepository {
 				// TODO  error handling
 				return null;
 			}
-
-			/* TOODO this method needs to be implemented first*/
 			loadCardFieldsFromDB(game);
-
 
 			return game;
 		} catch (SQLException e) {
@@ -365,6 +366,9 @@ class Repository implements IRepository {
 				player.setSpace(game.getSpace(x,y));
 				int heading = rs.getInt(PLAYER_HEADING);
 				player.setHeading(Heading.values()[heading]);
+				int checkpoint = rs.getInt(PLAYER_CHECKPOINT);
+				player.setPlayerToken(checkpoint);
+
 
 				// TODO  should also load players program and hand here
 			} else {
@@ -388,6 +392,7 @@ class Repository implements IRepository {
 			rs.updateInt(PLAYER_POSITION_X, player.getSpace().x);
 			rs.updateInt(PLAYER_POSITION_Y, player.getSpace().y);
 			rs.updateInt(PLAYER_HEADING, player.getHeading().ordinal());
+			rs.updateInt(PLAYER_CHECKPOINT,player.getPlayerToken());
 			// TODO error handling
 			// TODO take care of case when number of players changes, etc
 			rs.updateRow();
@@ -398,7 +403,7 @@ class Repository implements IRepository {
 	}
 
 	private static final String SQL_INSERT_GAME =
-			"INSERT INTO Game(name, currentPlayer, phase, step) VALUES (?, ?, ?, ?)";
+			"INSERT INTO Game(gamename, boardname, currentPlayer, phase, step) VALUES (?, ?, ?, ?, ?)";
 
 	private PreparedStatement insert_game_stmt = null;
 
@@ -482,7 +487,7 @@ class Repository implements IRepository {
 	}
 	
 	private static final String SQL_SELECT_GAMES =
-			"SELECT gameID, name FROM Game";
+			"SELECT gameID, gamename FROM Game";
 	
 	private PreparedStatement select_games_stmt = null;
 	
