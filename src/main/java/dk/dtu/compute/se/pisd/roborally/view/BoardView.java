@@ -90,6 +90,12 @@ public class BoardView extends VBox implements ViewObserver {
             Phase phase = board.getPhase();
             statusLabel.setText(board.getStatusMessage());
             checkpointStatus.setText(board.getNextCheckpointnr());
+
+
+            //this is stupid
+            if (board.getPhase()== Phase.FINALISATION){
+
+            }
         }
     }
     // XXX this handler and its uses should eventually be deleted! This is just to help test the

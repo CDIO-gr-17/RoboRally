@@ -32,6 +32,7 @@ import dk.dtu.compute.se.pisd.roborally.dal.IRepository;
 import dk.dtu.compute.se.pisd.roborally.dal.RepositoryAccess;
 import dk.dtu.compute.se.pisd.roborally.fileaccess.LoadBoard;
 import dk.dtu.compute.se.pisd.roborally.model.Board;
+import dk.dtu.compute.se.pisd.roborally.model.Phase;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
 
 import javafx.application.Platform;
@@ -58,7 +59,7 @@ public class AppController implements Observer {
 
     final private List<Integer> PLAYER_NUMBER_OPTIONS = Arrays.asList(2, 3, 4, 5, 6);
     final private List<String> PLAYER_COLORS = Arrays.asList("red", "green", "blue", "orange", "grey", "magenta");
-    final private List<String> BOARDS = Arrays.asList("default", "easy", "medium", "hard");
+    final private List<String> BOARDS = Arrays.asList("default", "test", "medium", "hard");
     private List<GameInDB> games;
 
     final private RoboRally roboRally;
@@ -152,6 +153,14 @@ public class AppController implements Observer {
             gameController = new GameController(board);
             roboRally.createBoardView(gameController);
 
+
+        }
+    }
+    public void finishGame(String winner){
+        if(gameController.board.getPhase()== Phase.FINALISATION){
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Winner found");
+            alert.setContentText("The winner is ");
 
         }
     }

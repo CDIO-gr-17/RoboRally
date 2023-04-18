@@ -27,6 +27,7 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import dk.dtu.compute.se.pisd.roborally.fileaccess.model.BoardTemplate;
 import dk.dtu.compute.se.pisd.roborally.fileaccess.model.SpaceTemplate;
+import dk.dtu.compute.se.pisd.roborally.model.Checkpoint;
 import dk.dtu.compute.se.pisd.roborally.model.FieldAction;
 import dk.dtu.compute.se.pisd.roborally.model.Board;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
@@ -75,6 +76,11 @@ public class LoadBoard {
                 if (space != null) {
                     space.getWalls().addAll(spaceTemplate.walls);
                     space.getActions().addAll(spaceTemplate.actions);
+                    for (FieldAction action : space.getActions()) {
+                        if (action.getClass().getSimpleName().equals("Checkpoint")){
+                            result.addMaxCheckpoints();
+                        }
+                    }
                 }
             }
             reader.close();

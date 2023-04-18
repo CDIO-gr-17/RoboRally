@@ -22,7 +22,15 @@
 package dk.dtu.compute.se.pisd.roborally.controller;
 
 import dk.dtu.compute.se.pisd.roborally.model.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import org.jetbrains.annotations.NotNull;
+
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
 /**
  *
@@ -33,6 +41,7 @@ import org.jetbrains.annotations.NotNull;
 public class GameController {
 
     final public Board board;
+    private Player winner;
 
     public GameController(@NotNull Board board) {
         this.board = board;
@@ -121,6 +130,21 @@ public class GameController {
         board.setPhase(Phase.ACTIVATION);
         board.setCurrentPlayer(board.getPlayer(0));
         board.setStep(0);
+    }
+    public void startFinalisationPhase(){
+        makeProgramFieldsInvisible();
+        board.setPhase(Phase.FINALISATION);
+        //This is not proper
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Winner found");
+        alert.setContentText("The winner is " + winner.getName());
+        Optional<ButtonType> result = alert.showAndWait();
+
+        System.out.println("der er fundet en vinder");
+
+
+
+
     }
 
     // XXX: V2
@@ -211,6 +235,13 @@ public class GameController {
                 } else {
                     step++;
                     executeEntities();
+                    for (int i = 0; i < board.getPlayersNumber(); i++) {
+                        if(board.getPlayer(i).getPlayerToken()==board.getMaxCheckpoints()){
+                            winner = board.getPlayer(i);
+                            startFinalisationPhase();
+                            break;
+                        }
+                    }
                     if (step < Player.NO_REGISTERS) {
                         makeProgramFieldsVisible(step);
                         board.setStep(step);
@@ -332,7 +363,7 @@ public class GameController {
             for (int j = 0; j < board.height; j++) {
                 Space currentSpace = board.getSpace(i,j);
                 for (FieldAction action: currentSpace.getActions()) {
-                    if (action.getClass()==ConveyorBelt.class){
+                    if (action.getClass()==Checkpoint.class){
                         action.doAction(this,currentSpace);
                     }
                 }
