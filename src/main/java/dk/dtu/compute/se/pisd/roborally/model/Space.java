@@ -23,7 +23,6 @@ package dk.dtu.compute.se.pisd.roborally.model;
 
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,6 +48,11 @@ public class Space extends Subject {
 
     private ConveyorBelt conveyorBelt;
     private BoardLaser boardLaser;
+
+    private Pushpanel pushpanel;
+
+
+   // private Gear gear;
 
     public final Board board;
     public final int x;
@@ -153,6 +157,19 @@ public class Space extends Subject {
         }
         return null;
     }
+
+    /*public void createPushpanel(Heading heading) {
+        this.pushpanel = new Pushpanel(heading);
+    }
+    public Pushpanel getPushpanel (){
+        if (actions.contains(Pushpanel.class)){
+        }
+        return null;
+    }*/
+
+
+
+
     public void createBoardLaser(Heading heading){this.boardLaser = new BoardLaser(heading);}
     public BoardLaser getBoardLaser(){
         return this.boardLaser;
