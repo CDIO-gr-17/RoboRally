@@ -5,7 +5,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class BoardLaser extends FieldAction{
     private Heading heading;
-    public Boolean isLaserDisrupted;
+    public int stepCount = 0;
     public BoardLaser(@NotNull Heading heading){
         this.heading = heading;
     }
@@ -16,7 +16,7 @@ public class BoardLaser extends FieldAction{
 
     @Override
     public boolean doAction(@NotNull GameController gameController, @NotNull Space space) {
-        isLaserDisrupted = false;
+        boolean isLaserDisrupted = false;
         Space nextSpace = space.board.getNeighbour(space,heading);
         while(!isLaserDisrupted) {
             for (Heading wallHeading : nextSpace.getWalls()) {
@@ -32,6 +32,7 @@ public class BoardLaser extends FieldAction{
                 }
                 isLaserDisrupted = true;
             }
+            stepCount++;
             nextSpace = nextSpace.board.getNeighbour(nextSpace,heading);
         }
         return true;

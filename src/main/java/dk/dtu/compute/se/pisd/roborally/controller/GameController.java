@@ -304,6 +304,7 @@ public class GameController {
     public void executeEntities(){
         executeCheckpoints();
         executeConveyorbelts();
+        executeBoardLasers();
     }
 
     /**
@@ -344,8 +345,12 @@ public class GameController {
     public void executeBoardLasers(){
         for (int i = 0; i < board.width; i++) {
             for (int j = 0; j < board.height; j++) {
-                if(board.getSpace(i,j).getBoardLaser()!=null)
-                    board.getSpace(i,j).getBoardLaser().doAction(this,board.getSpace(i,j));
+                Space currentSpace = board.getSpace(i,j);
+                for (FieldAction action: currentSpace.getActions()) {
+                    if (action.getClass()==BoardLaser.class){
+                        action.doAction(this,currentSpace);
+                    }
+                }
             }
         }
     }
