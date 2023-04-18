@@ -336,7 +336,7 @@ public class GameController {
         executeCheckpoints();
         executeConveyorbelts();
         executeBoardLasers();
-        //executeGear();
+        executeGear();
         executePushpanel();
     }
 
@@ -358,7 +358,7 @@ public class GameController {
         }
     }
 
-    /*public void executeGear() {
+    public void executeGear() {
         for (int i = 0; i < board.width; i++) {
             for (int j = 0; j < board.height; j++) {
                 Space currentSpace = board.getSpace(i,j);
@@ -370,7 +370,7 @@ public class GameController {
 
             }
         }
-    }*/
+    }
 
     public void executePushpanel() {
         for (int i = 0; i < board.width; i++) {

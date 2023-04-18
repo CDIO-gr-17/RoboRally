@@ -122,7 +122,7 @@ public class SpaceView extends StackPane implements ViewObserver {
         }
     }
 
-    /*private void drawGear(Gear gear){
+    private void drawGear(Gear gear){
         if(gear!=null) {
             Polygon arrow = new Polygon(0.0, 0.0,
                     7.0, 10.0,
@@ -131,7 +131,7 @@ public class SpaceView extends StackPane implements ViewObserver {
             this.getChildren().add(arrow);
         }
     }
-    */
+
 
     /**
      * Draws all walls belonging to this space
@@ -199,9 +199,15 @@ public class SpaceView extends StackPane implements ViewObserver {
                     break;
                 case "Pushpanel":
                     drawPushPanel((Pushpanel) action);
-                case "BoardLaser":
+                    break;
+                case "Gear":
+                    drawGear((Gear) action);
+                    break;
+
+                    case "BoardLaser":
                     drawBoardLaser((BoardLaser) action);
                     break;
+
                     default:
                     System.out.println("Action not drawn!");
             }
