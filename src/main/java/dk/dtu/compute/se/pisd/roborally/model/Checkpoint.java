@@ -24,6 +24,7 @@ public class Checkpoint extends FieldAction {
     public Checkpoint( int checkpointID) {
         this.checkPointID = checkpointID;
     }
+    public int getCheckpointID(){return checkPointID;}
 
 
     /**
