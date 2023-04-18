@@ -33,7 +33,6 @@ import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -115,6 +114,16 @@ public class SpaceView extends StackPane implements ViewObserver {
             this.getChildren().add(arrow);
         }
     }
+
+    private void drawGear(Gear gear){
+        if(gear!=null) {
+            Polygon arrow = new Polygon(0.0, 0.0,
+                    7.0, 10.0,
+                    7.0, 0.0);
+            arrow.setFill(Color.DARKRED);
+            this.getChildren().add(arrow);
+        }
+    }
     /**
      * Draws all walls belonging to this space
      *
@@ -155,6 +164,15 @@ public class SpaceView extends StackPane implements ViewObserver {
             this.getChildren().add(diamond);
         }
     }
+    private void drawPushPanel(Pushpanel pushPanel){
+        if(pushPanel!=null) {
+            Polygon arrow = new Polygon(7.0, 3.0,
+                    3.0, 7.0,
+                    9.0, 4.0);
+            arrow.setFill(Color.DARKBLUE);
+            this.getChildren().add(arrow);
+        }
+    }
     private void drawActions(List<FieldAction> actions){
         for (FieldAction action : actions) {
             switch (action.getClass().getSimpleName()){
@@ -164,7 +182,13 @@ public class SpaceView extends StackPane implements ViewObserver {
                 case "Checkpoint":
                     drawCheckPoint((Checkpoint) action);
                     break;
+                case "Gear":
+                    drawGear((Gear) action);
+                    break;
                 case "Boardlaser": ;
+                    break;
+                case "Pushpanel":
+                    drawPushPanel((Pushpanel) action);
                     break;
                 default:
                     System.out.println("Action not drawn!");
@@ -180,7 +204,6 @@ public class SpaceView extends StackPane implements ViewObserver {
         }
         drawWalls(space.getWalls());
         drawActions(space.getActions());
-
 
     }
 

@@ -304,6 +304,8 @@ public class GameController {
     public void executeEntities(){
         executeCheckpoints();
         executeConveyorbelts();
+        executeGear();
+        executePushpanel();
     }
 
     /**
@@ -317,6 +319,33 @@ public class GameController {
                 Space currentSpace = board.getSpace(i,j);
                 for (FieldAction action : currentSpace.getActions()) {
                     if (action.getClass()==ConveyorBelt.class) {
+                        action.doAction(this, currentSpace);
+                    }
+                }
+            }
+        }
+    }
+
+    public void executeGear() {
+        for (int i = 0; i < board.width; i++) {
+            for (int j = 0; j < board.height; j++) {
+                Space currentSpace = board.getSpace(i,j);
+                for (FieldAction action : currentSpace.getActions()) {
+                    if (action.getClass()==Gear.class) {
+                        action.doAction(this, currentSpace);
+                    }
+                }
+
+            }
+        }
+    }
+
+    public void executePushpanel() {
+        for (int i = 0; i < board.width; i++) {
+            for (int j = 0; j < board.height; j++) {
+                Space currentSpace = board.getSpace(i,j);
+                for (FieldAction action : currentSpace.getActions()) {
+                    if (action.getClass()== Pushpanel.class) {
                         action.doAction(this, currentSpace);
                     }
                 }
