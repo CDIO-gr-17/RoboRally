@@ -243,6 +243,9 @@ public class Board extends Subject {
     public String getNextCheckpointnr(){
         return "Next checkpoint: " + (getCurrentPlayer().getPlayerToken()+1);
     }
+    public String getHealth(){
+        return "Health: " + getCurrentPlayer().getPlayerHealth();
+    }
     public String getStatusMessage() {
         // this is actually a view aspect, but for making assignment V1 easy for
         // the students, this method gives a string representation of the current
