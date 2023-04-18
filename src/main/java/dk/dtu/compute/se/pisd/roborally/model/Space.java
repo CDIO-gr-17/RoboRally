@@ -48,8 +48,10 @@ public class Space extends Subject {
 
     private ConveyorBelt conveyorBelt;
 
-    private Pushpanel pushPanel;
-    private Gear gear;
+    private Pushpanel pushpanel;
+
+
+   // private Gear gear;
 
     public final Board board;
     public final int x;
@@ -154,24 +156,18 @@ public class Space extends Subject {
         }
         return null;
     }
-    public void createGear() {
-        this.gear = new Gear();
-    }
-    public Gear getGear(){
-        if (actions.contains(Gear.class)){
-        }
-        return null;
-    }
 
-    public void createPushPanel(Heading heading) {
-        this.pushPanel = new Pushpanel(heading);
-        createWall(heading.next().next());
+    /*public void createPushpanel(Heading heading) {
+        this.pushpanel = new Pushpanel(heading);
     }
-    public Pushpanel getPushPanel(){
-        if (actions.contains(Pushpanel.class)) {
+    public Pushpanel getPushpanel (){
+        if (actions.contains(Pushpanel.class)){
         }
         return null;
-    }
+    }*/
+
+
+
 
     void playerChanged() {
         // This is a minor hack; since some views that are registered with the space

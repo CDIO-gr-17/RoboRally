@@ -77,9 +77,7 @@ public class Board extends Subject {
                 spaces[x][y] = space;
             }
         }
-        spaces[1][1].createGear();
 
-       spaces[3][3].createPushPanel(Heading.EAST);
 
         this.stepMode = false;
     }
