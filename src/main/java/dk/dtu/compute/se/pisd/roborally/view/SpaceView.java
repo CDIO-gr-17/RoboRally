@@ -28,11 +28,16 @@ import dk.dtu.compute.se.pisd.roborally.model.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import org.jetbrains.annotations.NotNull;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -147,11 +152,11 @@ public class SpaceView extends StackPane implements ViewObserver {
 
     private void drawCheckPoint(Checkpoint checkpoint){
         if(checkpoint!=null) {
-            Polygon diamond = new Polygon(10.0, 20.0,
-                    30.0, 40.0,
-                    40.0, 30.0);
-            diamond.setFill(Color.GREEN);
-            this.getChildren().add(diamond);
+            Text checkpointText = new Text(""+checkpoint.getCheckpointID());
+            Circle circle = new Circle(20,Color.GREEN);
+            checkpointText.setFont(Font.font("Times New Roman", FontWeight.BOLD,20));
+            this.getChildren().add(circle);
+            this.getChildren().add(checkpointText);
         }
     }
     private void drawActions(List<FieldAction> actions){
