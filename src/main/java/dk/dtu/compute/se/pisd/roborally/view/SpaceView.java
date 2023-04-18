@@ -28,6 +28,7 @@ import dk.dtu.compute.se.pisd.roborally.model.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.CubicCurve;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
@@ -168,11 +169,17 @@ public class SpaceView extends StackPane implements ViewObserver {
     }
     private void drawPushPanel(Pushpanel pushPanel){
         if(pushPanel!=null) {
-            Polygon arrow = new Polygon(7.0, 3.0,
-                    3.0, 7.0,
-                    9.0, 4.0);
-            arrow.setFill(Color.DARKBLUE);
-            this.getChildren().add(arrow);
+            CubicCurve cubic= new CubicCurve();
+            cubic.setStartX(0.0f);
+            cubic.setStartY(15.0f);
+            cubic.setControlX1(25.0f);
+            cubic.setControlY1(0.0f);
+            cubic.setControlX2(35.0f);
+            cubic.setControlY2(20.0f);
+            cubic.setEndX(10.0f);
+            cubic.setEndY(15.0f);
+            cubic.setFill(Color.DARKBLUE);
+            this.getChildren().add(cubic);
         }
     }
     private void drawActions(List<FieldAction> actions){
