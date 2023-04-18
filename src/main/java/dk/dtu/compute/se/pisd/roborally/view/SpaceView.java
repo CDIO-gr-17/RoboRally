@@ -44,8 +44,8 @@ import java.util.List;
  */
 public class SpaceView extends StackPane implements ViewObserver {
 
-    final public static int SPACE_HEIGHT = 50; // 60; // 75;
-    final public static int SPACE_WIDTH = 50;  // 60; // 75;
+    final public static int SPACE_HEIGHT = 75; // 60; // 75;
+    final public static int SPACE_WIDTH = 75;  // 60; // 75;
 
     public final Space space;
 
@@ -104,7 +104,6 @@ public class SpaceView extends StackPane implements ViewObserver {
      * @param conveyorBelt the conveyorbelt to be drawn (gets the heading of conveyorbelt)
      * @author Philip Muff
      */
-
     private void drawConveyorbelt(ConveyorBelt conveyorBelt){
         if(conveyorBelt!=null) {
             Polygon arrow = new Polygon(0.0, 0.0,
@@ -164,13 +163,40 @@ public class SpaceView extends StackPane implements ViewObserver {
                 case "Checkpoint":
                     drawCheckPoint((Checkpoint) action);
                     break;
-                case "Boardlaser": ;
+                case "BoardLaser":
+                    drawBoardLaser((BoardLaser) action);
                     break;
-                default:
+                    default:
                     System.out.println("Action not drawn!");
             }
         }
     }
+
+
+    private void drawBoardLaser(BoardLaser boardLaser){
+        if(boardLaser!=null){
+            Polygon arrow = new Polygon(0.0, 0.0,
+                    15.0, 30.0,
+                    30.0, 0.0);
+            arrow.setFill(Color.RED);
+            arrow.setRotate((90 * boardLaser.getHeading().ordinal()) % 360);
+            this.getChildren().add(arrow);
+        }
+    }
+    private void drawLaser(BoardLaser boardLaser){
+        if(boardLaser!=null) {
+                for (int i = 0; i < boardLaser.stepCount; i++) {
+                    Polygon arrow = new Polygon(0.0, 0.0,
+                            2, 2,
+                            2.0, 0.0);
+                    arrow.setFill(Color.RED);
+                    arrow.setRotate((90 * boardLaser.getHeading().ordinal()) % 360);
+                    this.getChildren().add(arrow);
+            }
+        }
+    }
+
+
 
 
     @Override
@@ -179,6 +205,7 @@ public class SpaceView extends StackPane implements ViewObserver {
             updatePlayer();
         }
         drawWalls(space.getWalls());
+        drawLaser(space.getBoardLaser());
         drawActions(space.getActions());
 
 

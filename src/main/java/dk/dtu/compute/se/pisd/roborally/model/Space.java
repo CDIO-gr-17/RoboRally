@@ -48,6 +48,7 @@ public class Space extends Subject {
     private Checkpoint checkpoint;
 
     private ConveyorBelt conveyorBelt;
+    private BoardLaser boardLaser;
 
     public final Board board;
     public final int x;
@@ -152,7 +153,10 @@ public class Space extends Subject {
         }
         return null;
     }
-
+    public void createBoardLaser(Heading heading){this.boardLaser = new BoardLaser(heading);}
+    public BoardLaser getBoardLaser(){
+        return this.boardLaser;
+    }
     void playerChanged() {
         // This is a minor hack; since some views that are registered with the space
         // also need to update when some player attributes change, the player can
