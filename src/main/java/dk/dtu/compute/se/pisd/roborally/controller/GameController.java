@@ -432,18 +432,17 @@ public class GameController {
         Player targetPlayer = space.getPlayer();
         Space prevSpace = board.getNeighbour(space,heading.next().next());
         Space nextSpace = board.getNeighbour(space, heading);
-
         if (prevSpace.isWallObstructing(heading)) {     //checks for walls on current space in direction and target space in reverse direction
             throw new ImpossibleMoveException(player,space,heading);
         }
         if (space.isWallObstructing(heading.next().next())){
             throw new ImpossibleMoveException(player,space,heading);
         }
-        if (space.getActions().contains(BoardLaser.class)){
-            throw new ImpossibleMoveException(player,space,heading);
+        for (FieldAction action : space.getActions()) {
+            if (action.getClass().getSimpleName().equals("BoardLaser")) {
+                throw new ImpossibleMoveException(player, space, heading);
+            }
         }
-
-
         if (targetPlayer != null) {
             if (nextSpace != null) {
                     // XXX Note that there might be additional problems

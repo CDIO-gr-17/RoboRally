@@ -128,20 +128,9 @@ public class Space extends Subject {
         return actions;
     }
 
-    public Checkpoint getCheckpoint() {
-        return checkpoint;
-    }
-
     public void createCheckpoint(int checkpointID){
         this.checkpoint= new Checkpoint(checkpointID);
     }
-
-    public List<Checkpoint> getCheckpoints(){
-        return checkpoints;
-    }
-
-
-
 
     /**
      * Creates a conveyorbelt on this space with a given heading
@@ -150,12 +139,6 @@ public class Space extends Subject {
      */
     public void createConveyorbelt(Heading heading){
         this.conveyorBelt = new ConveyorBelt(heading);
-    }
-    public ConveyorBelt getConveyorBelt(){
-        if (actions.contains(ConveyorBelt.class)){
-            //return actions.listIterator()
-        }
-        return null;
     }
 
     /*public void createPushpanel(Heading heading) {
@@ -167,13 +150,7 @@ public class Space extends Subject {
         return null;
     }*/
 
-
-
-
     public void createBoardLaser(Heading heading){this.boardLaser = new BoardLaser(heading);}
-    public BoardLaser getBoardLaser(){
-        return this.boardLaser;
-    }
     void playerChanged() {
         // This is a minor hack; since some views that are registered with the space
         // also need to update when some player attributes change, the player can
