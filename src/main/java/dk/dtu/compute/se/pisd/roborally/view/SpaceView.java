@@ -246,6 +246,10 @@ public class SpaceView extends StackPane implements ViewObserver {
             this.getChildren().add(arrow);
         }
     }
+    /*
+
+    Method not implemented
+
     private void drawLaser(BoardLaser boardLaser){
         if(boardLaser!=null) {
                 for (int i = 0; i < boardLaser.stepCount; i++) {
@@ -258,6 +262,7 @@ public class SpaceView extends StackPane implements ViewObserver {
             }
         }
     }
+     */
 
 
 
@@ -268,7 +273,6 @@ public class SpaceView extends StackPane implements ViewObserver {
             updatePlayer();
         }
         drawWalls(space.getWalls());
-        drawLaser(space.getBoardLaser());
         drawActions(space.getActions());
 
 
