@@ -25,17 +25,18 @@ import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import dk.dtu.compute.se.pisd.roborally.model.Checkpoint;
 import dk.dtu.compute.se.pisd.roborally.model.ConveyorBelt;
 import dk.dtu.compute.se.pisd.roborally.model.*;
+import javafx.scene.Group;
+import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.CubicCurve;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Line;
+import javafx.scene.shape.*;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
@@ -45,6 +46,7 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+
 
 /**
  * ...
@@ -126,13 +128,18 @@ public class SpaceView extends StackPane implements ViewObserver {
         }
     }
 
-    private void drawGear(Gear gear){
-        if(gear!=null) {
-            Polygon arrow = new Polygon(0.0, 0.0,
-                    7.0, 10.0,
-                    7.0, 0.0);
-            arrow.setFill(Color.DARKRED);
-            this.getChildren().add(arrow);
+    private void drawGear(Gear gear) {
+        if (gear != null) {
+             Arc arc = new Arc();
+            arc.setCenterX(50.0f);
+            arc.setCenterY(10.0f);
+            arc.setRadiusX(15.0f);
+            arc.setRadiusY(15.0f);
+            arc.setStartAngle(45.0f);
+            arc.setLength(270.0f);
+            arc.setType(ArcType.OPEN);
+            arc.setFill(Color.DARKBLUE);
+            this.getChildren().add(arc);
         }
     }
 
@@ -179,17 +186,27 @@ public class SpaceView extends StackPane implements ViewObserver {
     }
     private void drawPushPanel(Pushpanel pushPanel){
         if(pushPanel!=null) {
-            CubicCurve cubic= new CubicCurve();
-            cubic.setStartX(0.0f);
-            cubic.setStartY(15.0f);
-            cubic.setControlX1(25.0f);
-            cubic.setControlY1(0.0f);
-            cubic.setControlX2(35.0f);
-            cubic.setControlY2(20.0f);
-            cubic.setEndX(10.0f);
-            cubic.setEndY(15.0f);
-            cubic.setFill(Color.DARKBLUE);
-            this.getChildren().add(cubic);
+            Arc arc = new Arc();
+            arc.setCenterX(1.0f);
+            arc.setCenterY(1.0f);
+            arc.setRadiusX(20.0f);
+            arc.setRadiusY(20.0f);
+            arc.setStartAngle(90.0f);
+            arc.setLength(180.0f);
+            arc.setType(ArcType.OPEN);
+            arc.setFill(Color.DARKCYAN);
+
+            Rectangle r = new Rectangle();
+            r.setX(150);
+            r.setY(150);
+            r.setWidth(25);
+            r.setHeight(5);
+            r.setArcWidth(10);
+            r.setArcHeight(20);
+            r.setFill(Color.DARKCYAN);
+
+            this.getChildren().add(r);
+            this.getChildren().add(arc);
         }
     }
     private void drawActions(List<FieldAction> actions){
