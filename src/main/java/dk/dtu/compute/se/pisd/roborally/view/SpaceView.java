@@ -38,7 +38,11 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import org.jetbrains.annotations.NotNull;
 
+import javax.swing.*;
+import javax.swing.text.html.ImageView;
 import java.awt.*;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 

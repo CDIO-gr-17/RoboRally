@@ -439,6 +439,9 @@ public class GameController {
         if (space.isWallObstructing(heading.next().next())){
             throw new ImpossibleMoveException(player,space,heading);
         }
+        if (space.getActions().contains(BoardLaser.class)){
+            throw new ImpossibleMoveException(player,space,heading);
+        }
 
 
         if (targetPlayer != null) {

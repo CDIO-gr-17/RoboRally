@@ -3,6 +3,7 @@ SET FOREIGN_KEY_CHECKS = 0;;
 
 
 
+
 CREATE TABLE IF NOT EXISTS Game (
   gameID int NOT NULL UNIQUE AUTO_INCREMENT,
 
@@ -28,6 +29,7 @@ CREATE TABLE IF NOT EXISTS Player (
   positionY int,
   checkpoint int,
   heading tinyint,
+  healthpoints int default 10,
   
   PRIMARY KEY (gameID, playerID),
   FOREIGN KEY (gameID) REFERENCES Game(gameID)

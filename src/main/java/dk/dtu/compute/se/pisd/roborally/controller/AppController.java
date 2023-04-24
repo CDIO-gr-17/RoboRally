@@ -36,14 +36,20 @@ import dk.dtu.compute.se.pisd.roborally.model.Phase;
 import dk.dtu.compute.se.pisd.roborally.model.Player;
 
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.util.Pair;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
+import java.awt.Label;
 import java.sql.PreparedStatement;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -59,7 +65,7 @@ public class AppController implements Observer {
 
     final private List<Integer> PLAYER_NUMBER_OPTIONS = Arrays.asList(2, 3, 4, 5, 6);
     final private List<String> PLAYER_COLORS = Arrays.asList("red", "green", "blue", "orange", "grey", "magenta");
-    final private List<String> BOARDS = Arrays.asList("default", "test", "medium", "hard");
+    final private List<String> BOARDS = Arrays.asList("default", "test");
     private List<GameInDB> games;
 
     final private RoboRally roboRally;
@@ -77,10 +83,10 @@ public class AppController implements Observer {
         ChoiceDialog<Integer> playerDialog = new ChoiceDialog<>(PLAYER_NUMBER_OPTIONS.get(0), PLAYER_NUMBER_OPTIONS);
         playerDialog.setTitle("Player number");
         playerDialog.setHeaderText("Select number of players");
-        Optional<Integer> result = playerDialog.showAndWait();
+        Optional<Integer> numberResult = playerDialog.showAndWait();
 
         //asks player which map/board is wanted
-        if(!result.isPresent()) {
+        if(!numberResult.isPresent()) {
             return;
         }
 
@@ -94,7 +100,17 @@ public class AppController implements Observer {
         nameDialog.setHeaderText("Give your game a name");
         Optional<String> nameResult = nameDialog.showAndWait();
 
-        if (result.isPresent()) {
+        List<Optional<String>> playerNameResult = new ArrayList<>();
+
+        for (int i = 0; i < numberResult.get(); i++) {
+            TextInputDialog playerNameDialog = new TextInputDialog();
+            playerNameDialog.setTitle("Player name");
+            playerNameDialog.setHeaderText("Write the name of player "+ (i+1));
+            Optional<String> temp = playerNameDialog.showAndWait();
+            playerNameResult.add(temp);
+        }
+
+        if (numberResult.isPresent()) {
             if (gameController != null) {
                 // The UI should not allow this, but in case this happens anyway.
                 // give the user the option to save the game or abort this operation!
@@ -106,12 +122,14 @@ public class AppController implements Observer {
             //     here we just create an empty board with the required number of players.
             Board board = LoadBoard.loadBoard(boardResult.get()+"board");
             board.setGameName(nameResult.get());
+
             gameController = new GameController(board);
-            int no = result.get();
+            int no = numberResult.get();
             for (int i = 0; i < no; i++) {
                 Player player = new Player(board, PLAYER_COLORS.get(i), "Player " + (i + 1));
                 board.addPlayer(player);
                 player.setSpace(board.getSpace(i % board.width, i));
+                player.setName(playerNameResult.get(i).get());
             }
 
             // XXX: V2
