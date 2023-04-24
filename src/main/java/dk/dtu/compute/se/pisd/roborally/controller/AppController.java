@@ -89,25 +89,36 @@ public class AppController implements Observer {
         if(!numberResult.isPresent()) {
             return;
         }
-
         ChoiceDialog<String> boardDialog = new ChoiceDialog<>(BOARDS.get(0), BOARDS);
         boardDialog.setTitle("Board");
         boardDialog.setHeaderText("Select the board you want to play");
         Optional<String> boardResult = boardDialog.showAndWait();
-
+        if(!boardResult.isPresent()) {
+            return;
+        }
         TextInputDialog nameDialog = new TextInputDialog();
         nameDialog.setTitle("Name");
         nameDialog.setHeaderText("Give your game a name");
         Optional<String> nameResult = nameDialog.showAndWait();
-
-        List<Optional<String>> playerNameResult = new ArrayList<>();
+        if(!nameResult.isPresent()) {
+            return;
+        }
+        List<String> playerNameResult = new ArrayList<>();
 
         for (int i = 0; i < numberResult.get(); i++) {
             TextInputDialog playerNameDialog = new TextInputDialog();
             playerNameDialog.setTitle("Player name");
             playerNameDialog.setHeaderText("Write the name of player "+ (i+1));
             Optional<String> temp = playerNameDialog.showAndWait();
-            playerNameResult.add(temp);
+            if(!temp.isPresent()) {
+                return;
+            }
+            if(temp.get().equals("")) {
+                playerNameResult.add("Player " + (i+1));
+            } else {
+                playerNameResult.add(temp.get());
+            }
+
         }
 
         if (numberResult.isPresent()) {
@@ -129,7 +140,7 @@ public class AppController implements Observer {
                 Player player = new Player(board, PLAYER_COLORS.get(i), "Player " + (i + 1));
                 board.addPlayer(player);
                 player.setSpace(board.getSpace(i % board.width, i));
-                player.setName(playerNameResult.get(i).get());
+                player.setName(playerNameResult.get(i));
             }
 
             // XXX: V2

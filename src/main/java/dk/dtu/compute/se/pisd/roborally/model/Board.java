@@ -59,6 +59,7 @@ public class Board extends Subject {
     private boolean stepMode;
     private String gameName;
     private int maxCheckpoints;
+    private String winner;
 
     /**
      * Creates a board with a name, width and height and creates spaces for each coordinate on the board
@@ -78,7 +79,6 @@ public class Board extends Subject {
                 spaces[x][y] = space;
             }
         }
-
 
         this.stepMode = false;
     }
@@ -282,12 +282,19 @@ public class Board extends Subject {
     public void setGameName(String gameName) {
         this.gameName = gameName;
     }
+
     public int getMaxCheckpoints() {
         return maxCheckpoints;
     }
-
     public void addMaxCheckpoints() {
         this.maxCheckpoints++;
+    }
+    public String getWinner() {
+        return winner;
+    }
+
+    public void setWinner(String winner) {
+        this.winner = winner;
     }
 }
 

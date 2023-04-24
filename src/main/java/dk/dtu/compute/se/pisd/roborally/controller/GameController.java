@@ -41,6 +41,7 @@ import java.util.Optional;
 public class GameController {
 
     final public Board board;
+
     private Player winner;
 
     public GameController(@NotNull Board board) {
@@ -75,8 +76,8 @@ public class GameController {
         }
     }
 
-    // XXX: V2
 
+    // XXX: V2
     /**
      * Method sets current player to player one for this player to start programming
      * It also removes the previous programmed cards and makes the fields visible
@@ -104,8 +105,8 @@ public class GameController {
         }
     }
 
-    // XXX: V2
 
+    // XXX: V2
     /**
      * Pulls a random command from an array of all possible commands and returns it as a "commandcard"
      * to be used in the programming phase and later executed
@@ -116,6 +117,10 @@ public class GameController {
         Command[] commands = Command.values();
         int random = (int) (Math.random() * commands.length);
         return new CommandCard(commands[random]);
+    }
+
+    public Player getWinner() {
+        return winner;
     }
 
     // XXX: V2
@@ -134,17 +139,14 @@ public class GameController {
     public void startFinalisationPhase(){
         makeProgramFieldsInvisible();
         board.setPhase(Phase.FINALISATION);
-        //This is not proper
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Winner found");
-        alert.setContentText("The winner is " + winner.getName());
-        Optional<ButtonType> result = alert.showAndWait();
+        if (board.getPhase()== Phase.FINALISATION){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Winner found!");
+            alert.setHeaderText("The winner is " + board.getWinner());
+            Optional<ButtonType> result = alert.showAndWait();
 
-        System.out.println("der er fundet en vinder");
-
-
-
-
+            System.out.println("der er fundet en vinder");
+        }
     }
 
     // XXX: V2
@@ -237,7 +239,7 @@ public class GameController {
                     executeEntities();
                     for (int i = 0; i < board.getPlayersNumber(); i++) {
                         if(board.getPlayer(i).getPlayerToken()==board.getMaxCheckpoints()){
-                            winner = board.getPlayer(i);
+                            board.setWinner(board.getPlayer(i).getName());
                             startFinalisationPhase();
                             break;
                         }
