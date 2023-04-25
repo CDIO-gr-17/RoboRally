@@ -241,7 +241,7 @@ class GameControllerTest {
     }
 
     /**
-     * Test of an backup
+     * Test of a backup. The player moves one spaces
      *
      * @author Mads Fogelberg @s224563
      */
