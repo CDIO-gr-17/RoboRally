@@ -93,8 +93,6 @@ public class SpaceView extends StackPane implements ViewObserver {
 
 
     private void updatePlayer() {
-        this.getChildren().clear();
-
         Player player = space.getPlayer();
         if (player != null) {
             Polygon arrow = new Polygon(0.0, 0.0,
@@ -263,19 +261,13 @@ public class SpaceView extends StackPane implements ViewObserver {
         }
     }
      */
-
-
-
-
     @Override
     public void updateView(Subject subject) {
         if (subject == this.space) {
+            this.getChildren().clear();
+            drawWalls(space.getWalls());
+            drawActions(space.getActions());
             updatePlayer();
         }
-        drawWalls(space.getWalls());
-        drawActions(space.getActions());
-
-
     }
-
 }

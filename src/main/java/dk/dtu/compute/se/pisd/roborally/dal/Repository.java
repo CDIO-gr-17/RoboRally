@@ -629,6 +629,7 @@ class Repository implements IRepository {
 	/**
 	 * SQL insert query for inserting a hand of cards in the database
 	 * @author Jakob Agergaard
+	 *
 	 */
 	private static final String SQL_INSERT_HAND =
 			"INSERT INTO HAND(gameID, playerID, CARD1, CARD2, CARD3, CARD4, CARD5, CARD6, CARD7, CARD8) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";

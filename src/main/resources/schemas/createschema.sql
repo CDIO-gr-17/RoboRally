@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS Player (
   
   positionX int,
   positionY int,
-  checkpoint int,
+  checkpoint int default 0,
   heading tinyint,
   healthpoints int default 10,
   
