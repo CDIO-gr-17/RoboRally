@@ -173,7 +173,9 @@ public class AppController implements Observer {
         boardDialog.setTitle("Game");
         boardDialog.setHeaderText("Select which saved game you want to continue playing");
         Optional<GameInDB> boardResult = boardDialog.showAndWait();
-
+        if(!boardResult.isPresent()) {
+            return;
+        }
 
         // XXX needs to be implememted eventually
         // for now, we just create a new game

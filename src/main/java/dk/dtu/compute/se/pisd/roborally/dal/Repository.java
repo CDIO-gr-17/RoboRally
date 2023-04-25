@@ -172,9 +172,9 @@ class Repository implements IRepository {
 			rs.close();
 
 			updatePlayersInDB(game);
-            /* TOODO this method needs to be implemented first
+
 			updateCardFieldsInDB(game);
-			*/
+
 
             connection.commit();
             connection.setAutoCommit(true);
@@ -298,8 +298,36 @@ class Repository implements IRepository {
 	}
 
 	/**
+	 * Updates the hand cards in the database
+	 * @param game        the game
+	 * @throws SQLException
+	 * @author Jakob Agergaard
+	 */
+	private void updateCardFieldsInDB(Board game) throws SQLException {
+		PreparedStatement ps = getSelectHandStatement();
+		ps.setInt(1,game.getGameId());
+
+		ResultSet rs = ps.executeQuery();
+		while (rs.next()) {
+			int playerId = rs.getInt(PLAYER_PLAYERID);
+			for (int i = 0; i < Player.NO_CARDS; i++) {
+				CommandCard card = game.getPlayer(playerId).getCardField(i).getCard();
+				if (card == null){
+					rs.updateString(i+3,null);
+
+				} else {
+					String command = card.command.name();
+					rs.updateString(i + 3, command);
+				}
+				rs.updateRow();
+			}
+		}
+		rs.close();
+	}
+
+	/**
 	 * Loads cards from players hand into game
-	 * @param game            The game from which you want to load the hands
+	 * @param game            The game which you want to assign the cards from the database too
 	 * @throws SQLException
 	 * @author Jakob Agergaard
 	 */
@@ -315,10 +343,12 @@ class Repository implements IRepository {
 			if (i++ == playerId){
 				for (int j = 0; j < Player.NO_CARDS; j++) {
 					String commandInDB = rs.getString(j+3);
-					CommandCardField field = game.getPlayer(playerId).getCardField(j);
-					CommandCard card;
-					card = new CommandCard(Command.valueOf(commandInDB));
-					field.setCard(card);
+					if (commandInDB != null) {
+						CommandCardField field = game.getPlayer(playerId).getCardField(j);
+						CommandCard card;
+						card = new CommandCard(Command.valueOf(commandInDB));
+						field.setCard(card);
+					}
 				}
 			}
 		}
@@ -544,7 +574,10 @@ class Repository implements IRepository {
 		if(select_hand_stmt == null) {
 			Connection connection = connector.getConnection();
 			try {
-				select_hand_stmt = connection.prepareStatement(SQL_SELECT_HAND);
+				select_hand_stmt = connection.prepareStatement(
+						SQL_SELECT_HAND,
+						ResultSet.TYPE_FORWARD_ONLY,
+						ResultSet.CONCUR_UPDATABLE);
 			} catch (SQLException e) {
 				// TODO error handling
 				e.printStackTrace();
