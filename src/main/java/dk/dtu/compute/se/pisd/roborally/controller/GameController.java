@@ -33,7 +33,8 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- *
+ * This class is the bridge between logic and view as per the MVC design pattern
+ * All logic should therefore have a connection to this
  *
  * @author Ekkart Kindler, ekki@dtu.dk
  *
@@ -41,8 +42,6 @@ import java.util.Optional;
 public class GameController {
 
     final public Board board;
-
-    private Player winner;
 
     public GameController(@NotNull Board board) {
         this.board = board;
@@ -104,9 +103,6 @@ public class GameController {
             }
         }
     }
-
-
-    // XXX: V2
     /**
      * Pulls a random command from an array of all possible commands and returns it as a "commandcard"
      * to be used in the programming phase and later executed
@@ -118,13 +114,6 @@ public class GameController {
         int random = (int) (Math.random() * commands.length);
         return new CommandCard(commands[random]);
     }
-
-    public Player getWinner() {
-        return winner;
-    }
-
-    // XXX: V2
-
     /**
      * Makes all programming field (and therefore cards) invisible and thereafter makes only one visible
      * Changes to activation phase and sets currentplayer to player one for this player to start executing
@@ -136,6 +125,12 @@ public class GameController {
         board.setCurrentPlayer(board.getPlayer(0));
         board.setStep(0);
     }
+
+    /**
+     * Announces the winner of the game and start the Final phase.
+     * This freezes the game but allows the users to view the state is was in when a winner was found
+     * @author Jakob Agergaard s224570
+     */
     public void startFinalisationPhase(){
         makeProgramFieldsInvisible();
         board.setPhase(Phase.FINALISATION);
@@ -148,8 +143,6 @@ public class GameController {
             System.out.println("der er fundet en vinder");
         }
     }
-
-    // XXX: V2
 
     /**
      * Makes one programming cardfield visible for all players
@@ -166,8 +159,6 @@ public class GameController {
         }
     }
 
-    // XXX: V2
-
     /**
      * makes all programming cardfields invisible
      */
@@ -180,9 +171,6 @@ public class GameController {
             }
         }
     }
-
-    // XXX: V2
-
     /**
      * Sends all planned programming cards to execution
      */
@@ -190,9 +178,6 @@ public class GameController {
         board.setStepMode(false);
         continuePrograms();
     }
-
-    // XXX: V2
-
     /**
      * sends the next planned programming card for the current player to execution
      */
@@ -200,9 +185,6 @@ public class GameController {
         board.setStepMode(true);
         continuePrograms();
     }
-
-    // XXX: V2
-
     /**
      * Continues execution of cards as long as activation phase is active and stepmode is off
      */
@@ -211,11 +193,10 @@ public class GameController {
             executeNextStep();
         } while (board.getPhase() == Phase.ACTIVATION && !board.isStepMode());
     }
-
-    // XXX: V2
-
     /**
-     * Executes the current commandcard
+     * Executes the programmed commandcard for all players step by step
+     * @author Ekki
+     * @author Jakob Agergaard s224570
      */
     private void executeNextStep() {
         Player currentPlayer = board.getCurrentPlayer();
@@ -299,7 +280,11 @@ public class GameController {
     }
 
 
-    // XXX: V2
+    /**
+     * Reads the command and executes the appropriate method
+     * @param player    The player on which the command should be executed for or on
+     * @param command   The command which needs to be executed
+     */
     private void executeCommand(@NotNull Player player, Command command) {
         if (player != null && player.board == board && command != null) {
             // XXX This is a very simplistic way of dealing with some basic cards and
@@ -332,6 +317,8 @@ public class GameController {
     }
 
     /**
+     * Executes all entities on the board. This method decides the order of the execution og the entities.
+     * This means a lot to the playthrough experience
      * @author Jakob Agergaard
      */
     public void executeEntities(){
@@ -360,6 +347,9 @@ public class GameController {
         }
     }
 
+    /**
+     * executes the doAction() method for all gears on the board
+     */
     public void executeGear() {
         for (int i = 0; i < board.width; i++) {
             for (int j = 0; j < board.height; j++) {
@@ -374,6 +364,9 @@ public class GameController {
         }
     }
 
+    /**
+     * executes the doAction() method for all pushPanels on the board
+     */
     public void executePushpanel() {
         for (int i = 0; i < board.width; i++) {
             for (int j = 0; j < board.height; j++) {
@@ -388,6 +381,7 @@ public class GameController {
     }
 
     /**
+     * executes the doAction() method for all checkpoints on the board
      * @author Jakob Agergaard
      */
     public void executeCheckpoints() {
@@ -403,7 +397,9 @@ public class GameController {
         }
     }
 
-
+    /**
+     * executes the doAction() method for all lasers on the board
+     */
     public void executeBoardLasers(){
         for (int i = 0; i < board.width; i++) {
             for (int j = 0; j < board.height; j++) {
