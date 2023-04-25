@@ -77,7 +77,15 @@ public class AppController implements Observer {
     }
 
     /**
-     * Creates board and players according to dialouge
+     * Creates board and players according to dialouge windows.
+     * The player first chooses a number of players, then a board type,
+     *  which is given set of premade boards
+     *  that gets pulled from a JSON file.
+     * The players then chooses a name for the game and names for the different players.
+     * At last the state of the game is initiatet and given a new instance of a gamecontroller
+     * @Author Ekkart Kindler
+     * @Author Jakob-SA
+     * @Author Esben Elnegaard
      */
     public void newGame() {
         ChoiceDialog<Integer> playerDialog = new ChoiceDialog<>(PLAYER_NUMBER_OPTIONS.get(0), PLAYER_NUMBER_OPTIONS);

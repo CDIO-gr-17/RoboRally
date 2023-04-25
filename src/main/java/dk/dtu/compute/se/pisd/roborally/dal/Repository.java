@@ -358,11 +358,11 @@ class Repository implements IRepository {
 		rs.close();
 	}
 
-	/**
+	/** Takes a prepared statement that inserts the values of the players already programmet cards in the tables of the database.
 	 *
 	 * @param game
 	 * @throws SQLException
-	 * @author
+	 * @author Esben Elnegaard
 	 * @author Jakob Agergaard
 	 */
 	private void createProgrammingFieldsInDB(Board game) throws SQLException{
@@ -386,11 +386,14 @@ class Repository implements IRepository {
 		ps.close();
 	}
 
-	/**
+	/** Takes the result of the prepared statement, which is
+	 *  a query that pulls the values of the players stored
+	 *  cards in the programming fields. The cards are then given the
+	 *  value of the result of the query.
 	 *
 	 * @param game
 	 * @throws SQLException
-	 * @author
+	 * @author Esben Elnegaard
 	 * @author Jakob Agergaard
 	 */
 	private void loadProgrammingFieldsFromDB(Board game) throws SQLException {
@@ -414,7 +417,9 @@ class Repository implements IRepository {
 		rs.close();
 	}
 
-	/**
+	/** Takes a query of the values already stored in the database of
+	 * the programming fields
+	 * and updates them with the new values.
 	 *
 	 * @param game
 	 * @throws SQLException
