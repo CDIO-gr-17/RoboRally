@@ -9,14 +9,23 @@ public class BoardLaser extends FieldAction{
     public Heading getHeading() {
         return heading;
     }
+    /**
+     * Damages the players in the line of sight of the BoardLaser.
+     * If the player reached 0 health, the players tokens(amount of checkpoints reached) will be reset.
+     * @param gameController the gameController of the respective game
+     * @param space the space this action should be executed for
+     * @return true if the action has been performed
+     * @author Philip Muff @s224566
+     */
     @Override
     public boolean doAction(@NotNull GameController gameController, @NotNull Space space) {
         boolean isLaserDisrupted = false;
         Space nextSpace = space.board.getNeighbour(space,heading);
         while(!isLaserDisrupted) {
             for (Heading wallHeading : nextSpace.getWalls()) {
-                if (wallHeading == heading || wallHeading.ordinal() == heading.ordinal() + 2 % 4);
-                isLaserDisrupted = true;
+                if (wallHeading == heading || wallHeading.ordinal() == heading.ordinal() + 2 % 4) {
+                    isLaserDisrupted = true;
+                }
             }
             if (nextSpace.getPlayer()!=null) {
                 nextSpace.getPlayer().reduceHealth();

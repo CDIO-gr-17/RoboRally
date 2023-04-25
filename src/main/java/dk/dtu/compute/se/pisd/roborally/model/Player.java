@@ -42,8 +42,10 @@ public class Player extends Subject {
     private String name;
     private String color;
 
-    private int playerToken = 0;
-    private int playerHealth = 10;
+    final private int startHealth = 10;
+    final private int startTokens = 0;
+    private int playerToken = startTokens;
+    private int playerHealth = startHealth;
 
     private Space space;
     private Heading heading = SOUTH;
@@ -203,7 +205,7 @@ public class Player extends Subject {
         this.playerToken = playerToken;
     }
     public void resetTokens(){
-        playerToken = 0;
-        playerHealth = 10;
+        playerToken = startTokens;
+        playerHealth = startHealth;
     }
 }
