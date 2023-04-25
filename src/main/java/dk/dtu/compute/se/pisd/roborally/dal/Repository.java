@@ -173,9 +173,10 @@ class Repository implements IRepository {
 			rs.close();
 
 			updatePlayersInDB(game);
-            /* TOODO this method needs to be implemented first
-			updateCardFieldsInDB(game);
-			*/
+
+			//updateCardFieldsInDB(game);
+			updateProgrammingFieldsFromDB(game);
+
 
             connection.commit();
             connection.setAutoCommit(true);
@@ -327,6 +328,13 @@ class Repository implements IRepository {
 		rs.close();
 	}
 
+	/**
+	 *
+	 * @param game
+	 * @throws SQLException
+	 * @author
+	 * @author Jakob Agergaard
+	 */
 	private void createProgrammingFieldsInDB(Board game) throws SQLException{
 		PreparedStatement ps = getInsertProgrammingFieldStatement();
 		for (int i = 0; i < game.getPlayersNumber(); i++) {
@@ -334,8 +342,13 @@ class Repository implements IRepository {
 			ps.setInt(1,game.getGameId());
 			ps.setInt(2,game.getPlayerNumber(game.getPlayer(i)));
 			for (int j = 0; j < Player.NO_REGISTERS; j++) {
-				String command = game.getPlayer(i).getProgramField(j).getCard().command.name();
-				ps.setString(j+3,command);
+				CommandCard card = game.getPlayer(i).getProgramField(j).getCard();
+				if (card == null){
+					ps.setString(j+3,null);
+				} else {
+					String command = card.command.name();
+					ps.setString(j+3,command);
+				}
 			}
 			int affectedRows = ps.executeUpdate();
 			ResultSet generatedKeys = ps.getGeneratedKeys();
@@ -343,6 +356,13 @@ class Repository implements IRepository {
 		ps.close();
 	}
 
+	/**
+	 *
+	 * @param game
+	 * @throws SQLException
+	 * @author
+	 * @author Jakob Agergaard
+	 */
 	private void loadProgrammingFieldsFromDB(Board game) throws SQLException {
 		PreparedStatement ps = getSelectProgrammingFieldStatement();
 		ps.setInt(1,game.getGameId());
@@ -353,49 +373,45 @@ class Repository implements IRepository {
 			if (i++ == playerId){
 				for (int j = 0; j < Player.NO_REGISTERS; j++) {
 					String commandInDB = rs.getString(j+3);
-					CommandCardField field = game.getPlayer(playerId).getProgramField(j);
-					CommandCard card = new CommandCard(Command.valueOf(commandInDB));
-					field.setCard(card);
-					//field.setVisible(true);
+					if (commandInDB != null){
+						CommandCardField field = game.getPlayer(playerId).getProgramField(j);
+						CommandCard card = new CommandCard(Command.valueOf(commandInDB));
+						field.setCard(card);
+					}
 				}
 			}
 		}
 		rs.close();
 	}
 
-	private void updateProgrammingFieldsInDB(Board game) throws SQLException {
+	/**
+	 *
+	 * @param game
+	 * @throws SQLException
+	 * @author
+	 * @author Jakob Agergaard
+	 */
+	private void updateProgrammingFieldsFromDB(Board game) throws SQLException {
 		PreparedStatement ps = getSelectProgrammingFieldStatement();
-		ps.setInt(1, game.getGameId());
+		ps.setInt(1,game.getGameId());
 
 		ResultSet rs = ps.executeQuery();
 		while (rs.next()) {
 			int playerId = rs.getInt(PLAYER_PLAYERID);
-			// TODO should be more defensive
-			Player player = game.getPlayer(playerId);
-			// rs.updateString(PLAYER_NAME, player.getName()); // not needed: player's names does not change
-			rs.updateInt(PLAYER_POSITION_X, player.getSpace().x);
-			rs.updateInt(PLAYER_POSITION_Y, player.getSpace().y);
-			rs.updateInt(PLAYER_HEADING, player.getHeading().ordinal());
-			rs.updateInt(PLAYER_CHECKPOINT,player.getPlayerToken());
-			rs.updateInt(PLAYER_HP,player.getPlayerHealth());
-			// TODO error handling
-			// TODO take care of case when number of players changes, etc
-			rs.updateRow();
+			for (int i = 0; i < Player.NO_REGISTERS; i++) {
+				CommandCard card = game.getPlayer(playerId).getProgramField(i).getCard();
+				if (card == null){
+					rs.updateString(i+3,null);
+
+				} else {
+					String command = card.command.name();
+					rs.updateString(i + 3, command);
+				}
+				rs.updateRow();
+			}
 		}
 		rs.close();
-
-		// TODO error handling/consistency check: check whether all players were updated
 	}
-
-
-
-
-
-
-
-
-
-
 	private void createPlayersInDB(Board game) throws SQLException {
 		// TODO code should be more defensive
 		PreparedStatement ps = getSelectPlayersStatementU();
@@ -651,7 +667,9 @@ class Repository implements IRepository {
 		if(select_programmingfield_stmt == null) {
 			Connection connection = connector.getConnection();
 			try {
-				select_programmingfield_stmt = connection.prepareStatement(SQL_SELECT_PROGRAMMINGFIELD);
+				select_programmingfield_stmt = connection.prepareStatement(SQL_SELECT_PROGRAMMINGFIELD ,
+						ResultSet.TYPE_FORWARD_ONLY,
+						ResultSet.CONCUR_UPDATABLE);
 			} catch (SQLException e) {
 				// TODO error handling
 				e.printStackTrace();
