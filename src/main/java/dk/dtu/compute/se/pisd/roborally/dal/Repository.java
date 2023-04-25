@@ -108,6 +108,7 @@ class Repository implements IRepository {
 				createPlayersInDB(game);
 				// TOODO this method needs to be implemented first
 				createCardFieldsInDB(game);
+				createProgrammingFieldsInDB(game);
 
 
 				// since current player is a foreign key, it can oly be
@@ -174,6 +175,7 @@ class Repository implements IRepository {
 			updatePlayersInDB(game);
 
 			updateCardFieldsInDB(game);
+			updateProgrammingFieldsFromDB(game);
 
 
             connection.commit();
@@ -242,6 +244,7 @@ class Repository implements IRepository {
 				return null;
 			}
 			loadCardFieldsFromDB(game);
+			loadProgrammingFieldsFromDB(game);
 
 			return game;
 		} catch (SQLException e) {
@@ -355,6 +358,90 @@ class Repository implements IRepository {
 		rs.close();
 	}
 
+	/**
+	 *
+	 * @param game
+	 * @throws SQLException
+	 * @author
+	 * @author Jakob Agergaard
+	 */
+	private void createProgrammingFieldsInDB(Board game) throws SQLException{
+		PreparedStatement ps = getInsertProgrammingFieldStatement();
+		for (int i = 0; i < game.getPlayersNumber(); i++) {
+
+			ps.setInt(1,game.getGameId());
+			ps.setInt(2,game.getPlayerNumber(game.getPlayer(i)));
+			for (int j = 0; j < Player.NO_REGISTERS; j++) {
+				CommandCard card = game.getPlayer(i).getProgramField(j).getCard();
+				if (card == null){
+					ps.setString(j+3,null);
+				} else {
+					String command = card.command.name();
+					ps.setString(j+3,command);
+				}
+			}
+			int affectedRows = ps.executeUpdate();
+			ResultSet generatedKeys = ps.getGeneratedKeys();
+		}
+		ps.close();
+	}
+
+	/**
+	 *
+	 * @param game
+	 * @throws SQLException
+	 * @author
+	 * @author Jakob Agergaard
+	 */
+	private void loadProgrammingFieldsFromDB(Board game) throws SQLException {
+		PreparedStatement ps = getSelectProgrammingFieldStatement();
+		ps.setInt(1,game.getGameId());
+		ResultSet rs = ps.executeQuery();
+		int i = 0;
+		while (rs.next()) {
+			int playerId = rs.getInt(PLAYER_PLAYERID);
+			if (i++ == playerId){
+				for (int j = 0; j < Player.NO_REGISTERS; j++) {
+					String commandInDB = rs.getString(j+3);
+					if (commandInDB != null){
+						CommandCardField field = game.getPlayer(playerId).getProgramField(j);
+						CommandCard card = new CommandCard(Command.valueOf(commandInDB));
+						field.setCard(card);
+					}
+				}
+			}
+		}
+		rs.close();
+	}
+
+	/**
+	 *
+	 * @param game
+	 * @throws SQLException
+	 * @author
+	 * @author Jakob Agergaard
+	 */
+	private void updateProgrammingFieldsFromDB(Board game) throws SQLException {
+		PreparedStatement ps = getSelectProgrammingFieldStatement();
+		ps.setInt(1,game.getGameId());
+
+		ResultSet rs = ps.executeQuery();
+		while (rs.next()) {
+			int playerId = rs.getInt(PLAYER_PLAYERID);
+			for (int i = 0; i < Player.NO_REGISTERS; i++) {
+				CommandCard card = game.getPlayer(playerId).getProgramField(i).getCard();
+				if (card == null){
+					rs.updateString(i+3,null);
+
+				} else {
+					String command = card.command.name();
+					rs.updateString(i + 3, command);
+				}
+				rs.updateRow();
+			}
+		}
+		rs.close();
+	}
 	private void createPlayersInDB(Board game) throws SQLException {
 		// TODO code should be more defensive
 		PreparedStatement ps = getSelectPlayersStatementU();
@@ -585,6 +672,49 @@ class Repository implements IRepository {
 		}
 		return select_hand_stmt;
 	}
+
+	private static final String SQL_INSERT_PROGRAMMINGFIELD =
+			"INSERT INTO PROGRAMMINGFIELD(gameID, playerID, CARD1, CARD2, CARD3, CARD4, CARD5) VALUES (?, ?, ?, ?, ?, ?,?)";
+	private PreparedStatement insert_programmingfield_stmt = null;
+
+	private PreparedStatement getInsertProgrammingFieldStatement(){
+		if (insert_programmingfield_stmt == null) {
+			Connection connection = connector.getConnection();
+			try {
+				insert_programmingfield_stmt = connection.prepareStatement(
+						SQL_INSERT_PROGRAMMINGFIELD,
+						Statement.RETURN_GENERATED_KEYS);
+			} catch (SQLException e) {
+				// TODO error handling
+				e.printStackTrace();
+			}
+		}
+		return insert_programmingfield_stmt;
+	}
+
+	private static final String SQL_SELECT_PROGRAMMINGFIELD =
+			"SELECT * FROM PROGRAMMINGFIELD WHERE gameID = ?";
+	private PreparedStatement select_programmingfield_stmt = null;
+
+	private PreparedStatement getSelectProgrammingFieldStatement() {
+		if(select_programmingfield_stmt == null) {
+			Connection connection = connector.getConnection();
+			try {
+				select_programmingfield_stmt = connection.prepareStatement(SQL_SELECT_PROGRAMMINGFIELD ,
+						ResultSet.TYPE_FORWARD_ONLY,
+						ResultSet.CONCUR_UPDATABLE);
+			} catch (SQLException e) {
+				// TODO error handling
+				e.printStackTrace();
+			}
+		}
+		return select_programmingfield_stmt;
+	}
+
+
+
+
+
 
 
 
