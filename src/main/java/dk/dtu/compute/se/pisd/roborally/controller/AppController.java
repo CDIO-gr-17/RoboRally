@@ -90,10 +90,13 @@ public class AppController implements Observer {
             return;
         }
 
+
         ChoiceDialog<String> boardDialog = new ChoiceDialog<>(BOARDS.get(0), BOARDS);
         boardDialog.setTitle("Board");
         boardDialog.setHeaderText("Select the board you want to play");
         Optional<String> boardResult = boardDialog.showAndWait();
+
+
 
         TextInputDialog nameDialog = new TextInputDialog();
         nameDialog.setTitle("Name");
@@ -118,8 +121,7 @@ public class AppController implements Observer {
                     return;
                 }
             }
-            // XXX the board should eventually be created programmatically or loaded from a file
-            //     here we just create an empty board with the required number of players.
+
             Board board = LoadBoard.loadBoard(boardResult.get()+"board");
             board.setGameName(nameResult.get());
 

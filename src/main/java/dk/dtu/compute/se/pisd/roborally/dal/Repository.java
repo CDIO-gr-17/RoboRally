@@ -108,6 +108,7 @@ class Repository implements IRepository {
 				createPlayersInDB(game);
 				// TOODO this method needs to be implemented first
 				createCardFieldsInDB(game);
+				createProgrammingFieldsInDB(game);
 
 
 				// since current player is a foreign key, it can oly be
@@ -242,6 +243,7 @@ class Repository implements IRepository {
 				return null;
 			}
 			loadCardFieldsFromDB(game);
+			loadProgrammingFieldsFromDB(game);
 
 			return game;
 		} catch (SQLException e) {
@@ -324,6 +326,75 @@ class Repository implements IRepository {
 		}
 		rs.close();
 	}
+
+	private void createProgrammingFieldsInDB(Board game) throws SQLException{
+		PreparedStatement ps = getInsertProgrammingFieldStatement();
+		for (int i = 0; i < game.getPlayersNumber(); i++) {
+
+			ps.setInt(1,game.getGameId());
+			ps.setInt(2,game.getPlayerNumber(game.getPlayer(i)));
+			for (int j = 0; j < Player.NO_REGISTERS; j++) {
+				String command = game.getPlayer(i).getProgramField(j).getCard().command.name();
+				ps.setString(j+3,command);
+			}
+			int affectedRows = ps.executeUpdate();
+			ResultSet generatedKeys = ps.getGeneratedKeys();
+		}
+		ps.close();
+	}
+
+	private void loadProgrammingFieldsFromDB(Board game) throws SQLException {
+		PreparedStatement ps = getSelectProgrammingFieldStatement();
+		ps.setInt(1,game.getGameId());
+		ResultSet rs = ps.executeQuery();
+		int i = 0;
+		while (rs.next()) {
+			int playerId = rs.getInt(PLAYER_PLAYERID);
+			if (i++ == playerId){
+				for (int j = 0; j < Player.NO_REGISTERS; j++) {
+					String commandInDB = rs.getString(j+3);
+					CommandCardField field = game.getPlayer(playerId).getProgramField(j);
+					CommandCard card = new CommandCard(Command.valueOf(commandInDB));
+					field.setCard(card);
+					//field.setVisible(true);
+				}
+			}
+		}
+		rs.close();
+	}
+
+	private void updateProgrammingFieldsInDB(Board game) throws SQLException {
+		PreparedStatement ps = getSelectProgrammingFieldStatement();
+		ps.setInt(1, game.getGameId());
+
+		ResultSet rs = ps.executeQuery();
+		while (rs.next()) {
+			int playerId = rs.getInt(PLAYER_PLAYERID);
+			// TODO should be more defensive
+			Player player = game.getPlayer(playerId);
+			// rs.updateString(PLAYER_NAME, player.getName()); // not needed: player's names does not change
+			rs.updateInt(PLAYER_POSITION_X, player.getSpace().x);
+			rs.updateInt(PLAYER_POSITION_Y, player.getSpace().y);
+			rs.updateInt(PLAYER_HEADING, player.getHeading().ordinal());
+			rs.updateInt(PLAYER_CHECKPOINT,player.getPlayerToken());
+			rs.updateInt(PLAYER_HP,player.getPlayerHealth());
+			// TODO error handling
+			// TODO take care of case when number of players changes, etc
+			rs.updateRow();
+		}
+		rs.close();
+
+		// TODO error handling/consistency check: check whether all players were updated
+	}
+
+
+
+
+
+
+
+
+
 
 	private void createPlayersInDB(Board game) throws SQLException {
 		// TODO code should be more defensive
@@ -552,6 +623,47 @@ class Repository implements IRepository {
 		}
 		return select_hand_stmt;
 	}
+
+	private static final String SQL_INSERT_PROGRAMMINGFIELD =
+			"INSERT INTO PROGRAMMINGFIELD(gameID, playerID, CARD1, CARD2, CARD3, CARD4, CARD5) VALUES (?, ?, ?, ?, ?, ?,?)";
+	private PreparedStatement insert_programmingfield_stmt = null;
+
+	private PreparedStatement getInsertProgrammingFieldStatement(){
+		if (insert_programmingfield_stmt == null) {
+			Connection connection = connector.getConnection();
+			try {
+				insert_programmingfield_stmt = connection.prepareStatement(
+						SQL_INSERT_PROGRAMMINGFIELD,
+						Statement.RETURN_GENERATED_KEYS);
+			} catch (SQLException e) {
+				// TODO error handling
+				e.printStackTrace();
+			}
+		}
+		return insert_programmingfield_stmt;
+	}
+
+	private static final String SQL_SELECT_PROGRAMMINGFIELD =
+			"SELECT * FROM PROGRAMMINGFIELD WHERE gameID = ?";
+	private PreparedStatement select_programmingfield_stmt = null;
+
+	private PreparedStatement getSelectProgrammingFieldStatement() {
+		if(select_programmingfield_stmt == null) {
+			Connection connection = connector.getConnection();
+			try {
+				select_programmingfield_stmt = connection.prepareStatement(SQL_SELECT_PROGRAMMINGFIELD);
+			} catch (SQLException e) {
+				// TODO error handling
+				e.printStackTrace();
+			}
+		}
+		return select_programmingfield_stmt;
+	}
+
+
+
+
+
 
 
 
