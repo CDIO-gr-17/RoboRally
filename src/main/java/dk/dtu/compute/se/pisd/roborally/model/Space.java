@@ -51,6 +51,7 @@ public class Space extends Subject {
 
     private Pushpanel pushpanel;
 
+    private Gear gear;
 
    // private Gear gear;
 
@@ -151,6 +152,7 @@ public class Space extends Subject {
     }*/
 
     public void createBoardLaser(Heading heading){this.boardLaser = new BoardLaser(heading);}
+
     void playerChanged() {
         // This is a minor hack; since some views that are registered with the space
         // also need to update when some player attributes change, the player can
