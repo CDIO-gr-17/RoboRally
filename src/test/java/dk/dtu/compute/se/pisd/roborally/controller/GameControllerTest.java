@@ -206,8 +206,9 @@ class GameControllerTest {
      * should be moved one space in the direction the conveyorbelt faces.
      * The player still has the original direction and is not turn the same direction as the conveyorbelt.
      *
-     * @author Jakob Agergaard
-     */
+     * @author Philip Muff @s224566
+     **/
+
     @Test
     void conveyorbeltMove() {
         Board board = gameController.board;
@@ -224,9 +225,9 @@ class GameControllerTest {
 
 
     /**
-     * Test for Assignment V1 (can be deleted later once V1 was shown to the teacher)
+     * Test of an u-turn. The players direction vil turn 180 degrees
      *
-     * @author Jakob Agergaard
+     * @author Mads Fogelberg @s224563
      */
     @Test
     void uTurn() {
@@ -239,6 +240,11 @@ class GameControllerTest {
         Assertions.assertNotNull(board.getSpace(0, 0).getPlayer(), "Space (0,0) should not be empty");
     }
 
+    /**
+     * Test of an backup
+     *
+     * @author Mads Fogelberg @s224563
+     */
     @Test
     void backUp() {
         Board board = gameController.board;
