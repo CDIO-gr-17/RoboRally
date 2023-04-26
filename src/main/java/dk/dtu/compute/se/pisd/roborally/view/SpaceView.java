@@ -21,7 +21,9 @@
  */
 package dk.dtu.compute.se.pisd.roborally.view;
 
+import com.sun.javafx.iio.common.ImageLoaderImpl;
 import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
+import dk.dtu.compute.se.pisd.roborally.fileaccess.LoadBoard;
 import dk.dtu.compute.se.pisd.roborally.model.Checkpoint;
 import dk.dtu.compute.se.pisd.roborally.model.ConveyorBelt;
 import dk.dtu.compute.se.pisd.roborally.model.*;
@@ -36,11 +38,10 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
-
-import javax.swing.*;
-import javax.swing.text.html.ImageView;
 import java.awt.*;
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -233,6 +234,16 @@ public class SpaceView extends StackPane implements ViewObserver {
         }
     }
 
+    private void drawTest() {
+        ClassLoader classLoader = SpaceView.class.getClassLoader();
+        InputStream input = classLoader.getResourceAsStream("pictures/BoardLaser.png");
+        Image image = new Image(input);
+        ImageView imageView = new ImageView(image);
+        imageView.setRotate(5);
+        this.getChildren().add(imageView);
+
+    }
+
 
     private void drawBoardLaser(BoardLaser boardLaser){
         if(boardLaser!=null){
@@ -268,6 +279,7 @@ public class SpaceView extends StackPane implements ViewObserver {
             drawWalls(space.getWalls());
             drawActions(space.getActions());
             updatePlayer();
+
         }
     }
 }

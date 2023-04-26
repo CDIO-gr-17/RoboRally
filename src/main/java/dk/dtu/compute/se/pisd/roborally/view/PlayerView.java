@@ -63,6 +63,9 @@ public class PlayerView extends Tab implements ViewObserver {
     private VBox playerInteractionPanel;
 
     private GameController gameController;
+    private Label checkpointStatus;
+    private Label healthStatus;
+
 
     public PlayerView(@NotNull GameController gameController, @NotNull Player player) {
         super(player.getName());
@@ -123,10 +126,15 @@ public class PlayerView extends Tab implements ViewObserver {
             }
         }
 
+        checkpointStatus = new Label(/*"Your next checkpoint is: " + (player.getPlayerToken()+1)*/);
+        healthStatus = new Label(/*"Your health is " + player.getPlayerHealth() + "/10"*/);
+
         top.getChildren().add(programLabel);
         top.getChildren().add(programPane);
         top.getChildren().add(cardsLabel);
         top.getChildren().add(cardsPane);
+        top.getChildren().add(checkpointStatus);
+        top.getChildren().add(healthStatus);
 
         if (player.board != null) {
             player.board.attach(this);
@@ -186,11 +194,18 @@ public class PlayerView extends Tab implements ViewObserver {
                         stepButton.setDisable(false);
                         break;
 
+                    case FINALISATION:
+                        finishButton.setDisable(true);
+                        executeButton.setDisable(true);
+                        stepButton.setDisable(true);
+
                     default:
                         finishButton.setDisable(true);
                         executeButton.setDisable(true);
                         stepButton.setDisable(true);
                 }
+
+
 
 
             } else {
@@ -220,6 +235,8 @@ public class PlayerView extends Tab implements ViewObserver {
                     }
                 }
             }
+            checkpointStatus.setText("Your next checkpoint is: " + (player.getPlayerToken()+1));
+            healthStatus.setText("Your health is " + player.getPlayerHealth() + "/10");
         }
     }
 

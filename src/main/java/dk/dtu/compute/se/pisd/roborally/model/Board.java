@@ -239,6 +239,11 @@ public class Board extends Subject {
 
         return getSpace(x, y);
     }
+
+    /**
+     *
+     * @return
+     */
     public String getNextCheckpointnr(){
         return "Next checkpoint: " + (getCurrentPlayer().getPlayerToken()+1);
     }
@@ -253,8 +258,8 @@ public class Board extends Subject {
         // XXX: V1 add the move count to the status message
         // XXX: V2 changed the status so that it shows the phase, the current player and the number of steps
         return "Phase: " + getPhase().name() +
-                ", Player = " + getCurrentPlayer().getName()+
-                ", Number of moves = " + getCounter();
+                ", Current player: " + getCurrentPlayer().getName()+
+                ", Total moves: " + getCounter();
 
     }
     private int counter;

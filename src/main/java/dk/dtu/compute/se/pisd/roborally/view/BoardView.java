@@ -48,9 +48,6 @@ public class BoardView extends VBox implements ViewObserver {
     private PlayersView playersView;
 
     private Label statusLabel;
-    private Label checkpointStatus;
-    private Label healthStatus;
-
     private SpaceEventHandler spaceEventHandler;
 
     public BoardView(@NotNull GameController gameController) {
@@ -59,15 +56,10 @@ public class BoardView extends VBox implements ViewObserver {
         mainBoardPane = new GridPane();
         playersView = new PlayersView(gameController);
         statusLabel = new Label("<no status>");
-        checkpointStatus = new Label("<no checkpoints>");
-        healthStatus = new Label("<no health>");
-
 
         this.getChildren().add(mainBoardPane);
         this.getChildren().add(playersView);
         this.getChildren().add(statusLabel);
-        this.getChildren().add(checkpointStatus);
-        this.getChildren().add(healthStatus);
 
         spaces = new SpaceView[board.width][board.height];
 
@@ -92,8 +84,7 @@ public class BoardView extends VBox implements ViewObserver {
         if (subject == board) {
             Phase phase = board.getPhase();
             statusLabel.setText(board.getStatusMessage());
-            checkpointStatus.setText(board.getNextCheckpointnr());
-            healthStatus.setText(board.getHealth());
+
         }
     }
     // XXX this handler and its uses should eventually be deleted! This is just to help test the
