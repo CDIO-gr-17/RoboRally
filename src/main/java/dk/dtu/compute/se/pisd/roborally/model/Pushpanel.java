@@ -57,7 +57,8 @@ public class Pushpanel extends FieldAction {
             if(space.getPlayer()!=null) {
                 Player player = space.getPlayer();
                 Space nextSpace = space.board.getNeighbour(space,heading);
-                gameController.moveToSpace(player, nextSpace, heading);
+                Space nextNextSpace = nextSpace.board.getNeighbour(nextSpace,heading);
+                gameController.moveToSpace(player, nextNextSpace, heading);
             }
         } catch (ImpossibleMoveException e) {
 

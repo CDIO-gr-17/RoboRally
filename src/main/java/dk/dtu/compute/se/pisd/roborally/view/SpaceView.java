@@ -283,6 +283,16 @@ public class SpaceView extends StackPane implements ViewObserver {
     }
     private void drawPushPanel(Pushpanel pushPanel){
         if(pushPanel!=null) {
+            InputStream input = classLoader.getResourceAsStream("pictures/pushpanel.png");
+            Image image = new Image(input);
+            ImageView imageView = new ImageView(image);
+            imageView.setFitHeight(SPACE_HEIGHT);
+            imageView.setFitWidth(SPACE_WIDTH);
+            imageView.setRotate((90 * pushPanel.getHeading().ordinal()+180) % 360);
+            this.getChildren().add(imageView);
+
+
+ /*
             Arc arc = new Arc();
             arc.setCenterX(1.0f);
             arc.setCenterY(1.0f);
@@ -304,6 +314,8 @@ public class SpaceView extends StackPane implements ViewObserver {
 
             this.getChildren().add(r);
             this.getChildren().add(arc);
+
+  */
         }
     }
     private void drawActions(List<FieldAction> actions){
