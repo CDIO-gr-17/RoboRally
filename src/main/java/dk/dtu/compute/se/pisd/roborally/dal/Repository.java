@@ -70,6 +70,12 @@ class Repository implements IRepository {
 		this.connector = connector;
 	}
 
+	/**
+	 * Creates a game in the database and stores the values of the games attributes:
+	 * Gamename, boardname(type), players, phase and step
+	 * @param game
+	 * @return True if the data is loaded succesfully in the database
+	 */
 	@Override
 	public boolean createGameInDB(Board game) {
 		if (game.getGameId() == null) {
@@ -78,21 +84,11 @@ class Repository implements IRepository {
 				connection.setAutoCommit(false);
 
 				PreparedStatement ps = getInsertGameStatementRGK();
-				// TODO: the name should eventually set by the user
-				//       for the game and should be then used
-				//       game.getName();
 				ps.setString(1, game.getGameName()); // instead of name
 				ps.setString(2, game.boardName);
 				ps.setNull(3, Types.TINYINT); // game.getPlayerNumber(game.getCurrentPlayer())); is inserted after players!
 				ps.setInt(4, game.getPhase().ordinal());
 				ps.setInt(5, game.getStep());
-
-				// If you have a foreign key constraint for current players,
-				// the check would need to be temporarily disabled, since
-				// MySQL does not have a per transaction validation, but
-				// validates on a per row basis.
-				// Statement statement = connection.createStatement();
-				// statement.execute("SET foreign_key_checks = 0");
 
 				int affectedRows = ps.executeUpdate();
 				ResultSet generatedKeys = ps.getGeneratedKeys();
@@ -101,20 +97,9 @@ class Repository implements IRepository {
 				}
 				generatedKeys.close();
 
-				// Enable foreign key constraint check again:
-				// statement.execute("SET foreign_key_checks = 1");
-				// statement.close();
-
 				createPlayersInDB(game);
-				// TOODO this method needs to be implemented first
 				createCardFieldsInDB(game);
 				createProgrammingFieldsInDB(game);
-
-
-				// since current player is a foreign key, it can oly be
-				// inserted after the players are created, since MySQL does
-				// not have a per transaction validation, but validates on
-				// a per row basis.
 				ps = getSelectGameStatementU();
 				ps.setInt(1, game.getGameId());
 
@@ -149,6 +134,12 @@ class Repository implements IRepository {
 		return false;
 	}
 
+	/**
+	 * Updates the games attributes in the databse:
+	 * Phase, step, the players cards in hand and their programming fields
+	 * @param game
+	 * @return True, if the update is succesfull
+	 */
 	@Override
 	public boolean updateGameInDB(Board game) {
 		assert game.getGameId() != null;
@@ -198,6 +189,14 @@ class Repository implements IRepository {
 		return false;
 	}
 
+	/** Loads the games attributes from the database and creates a game with the same:
+	 *  phase,step, the players cards in hand and their programming field
+	 * @param id The specific game ID for the game which is being loaded.
+	 * @return The board.
+	 * @Author Ekkart Kindler
+	 * @Author Jakob SA
+	 * @Author Esben Elnegaard
+	 */
 	@Override
 	public Board loadGameFromDB(int id) {
 		Board game;
@@ -447,6 +446,13 @@ class Repository implements IRepository {
 		}
 		rs.close();
 	}
+
+	/**
+	 * creates the players in the database and sets the values to the starting
+	 * value of all the players attributes.
+	 * @param game
+	 * @throws SQLException
+	 */
 	private void createPlayersInDB(Board game) throws SQLException {
 		// TODO code should be more defensive
 		PreparedStatement ps = getSelectPlayersStatementU();
@@ -469,6 +475,14 @@ class Repository implements IRepository {
 		rs.close();
 	}
 
+	/**
+	 * Takes a prepared statement that Querys the database
+	 * for at the players attributes and gives them to the
+	 * players.
+	 * @Author Ekkart Kindler
+	 * @param game
+	 * @throws SQLException
+	 */
 	private void loadPlayersFromDB(Board game) throws SQLException {
 		PreparedStatement ps = getSelectPlayersASCStatement();
 		ps.setInt(1, game.getGameId());
@@ -503,6 +517,15 @@ class Repository implements IRepository {
 		}
 		rs.close();
 	}
+
+	/**
+	 * Takes a prepared statemnt that queryes the database
+	 * for all the players attributes and update those
+	 * values
+	 * @Author Ekkart Kindler
+	 * @param game
+	 * @throws SQLException
+	 */
 
 	private void updatePlayersInDB(Board game) throws SQLException {
 		PreparedStatement ps = getSelectPlayersStatementU();
