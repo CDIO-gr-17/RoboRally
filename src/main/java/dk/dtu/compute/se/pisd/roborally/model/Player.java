@@ -105,7 +105,6 @@ public class Player extends Subject {
      */
     public void addToken() {
         playerToken++;
-        System.out.println("Player has " + playerToken + " tokens!");
     }
 
     /**

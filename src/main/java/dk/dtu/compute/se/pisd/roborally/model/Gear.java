@@ -32,6 +32,9 @@ import org.jetbrains.annotations.NotNull;
 public class Gear extends FieldAction {
 
     private Space space;
+
+    private boolean clockwise;
+
     /**
      * This boolean will get the players location on the board, and validate if the player share the space
      * with the boolean, it will return true if this happend to be, and the boolean will call the executefunction
@@ -45,11 +48,16 @@ public class Gear extends FieldAction {
     public boolean doAction(@NotNull GameController gameController, @NotNull Space space) {
             if(space.getPlayer()!=null) {
                 Player player = space.getPlayer();
-                player.setHeading(player.getHeading().next());
+                if (clockwise == true){
+                    player.setHeading(player.getHeading().next());
+                } else {
+                    player.setHeading(player.getHeading().prev());
+                }
             }
         return true;
         }
 
+    public boolean isClockwise() {
+        return clockwise;
     }
-
-
+}

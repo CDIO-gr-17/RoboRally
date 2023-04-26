@@ -247,6 +247,7 @@
         {
           "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.model.Gear",
           "INSTANCE": {
+            "clockwise": true
           }
         }
       ],
@@ -276,6 +277,19 @@
       ],
       "x": 7,
       "y": 1
+    },
+    {
+      "walls": [],
+      "actions": [
+        {
+          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.model.Gear",
+          "INSTANCE": {
+            "clockwise": false
+          }
+        }
+      ],
+      "x": 4,
+      "y": 2
     }
 
   ]

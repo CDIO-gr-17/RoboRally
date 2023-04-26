@@ -29,8 +29,7 @@ import dk.dtu.compute.se.pisd.roborally.model.ConveyorBelt;
 import dk.dtu.compute.se.pisd.roborally.model.*;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 import javafx.scene.shape.Polygon;
@@ -61,6 +60,7 @@ public class SpaceView extends StackPane implements ViewObserver {
     final public static int SPACE_WIDTH = 75;  // 60; // 75;
 
     public final Space space;
+    private ClassLoader classLoader = SpaceView.class.getClassLoader();
 
     /**
      * Creates a visual space in the app and sets its height and width
@@ -80,16 +80,42 @@ public class SpaceView extends StackPane implements ViewObserver {
         this.setMinHeight(SPACE_HEIGHT);
         this.setMaxHeight(SPACE_HEIGHT);
 
+
+        /*
         if ((space.x + space.y) % 2 == 0) {
             this.setStyle("-fx-background-color: white;");
         } else {
             this.setStyle("-fx-background-color: black;");
         }
-
+        */
         // updatePlayer();
         // This space view should listen to changes of the space
+
+
+        /*
+        InputStream input = classLoader.getResourceAsStream("pictures/blank.PNG");
+        Image image = new Image(input);
+        ImageView imageView = new ImageView(image);
+        imageView.setFitHeight(SPACE_HEIGHT);
+        imageView.setFitWidth(SPACE_WIDTH);
+        */
+        InputStream input = classLoader.getResourceAsStream("pictures/blank.PNG");
+        Image image = new Image(input);
+        BackgroundSize backgroundSize = new BackgroundSize(SPACE_HEIGHT,SPACE_WIDTH,true,true,true,false);
+        BackgroundImage backgroundImage = new BackgroundImage(image,BackgroundRepeat.REPEAT ,BackgroundRepeat.NO_REPEAT,BackgroundPosition.CENTER,backgroundSize);
+        Background background = new Background(backgroundImage);
+        this.setBackground(background);
+
+
+
+
+
+
+
+
         space.attach(this);
         update(space);
+        //this.getChildren().add(imageView);
     }
 
 
@@ -114,21 +140,53 @@ public class SpaceView extends StackPane implements ViewObserver {
      * Draw the conveyorbelt on this space
      * @param conveyorBelt the conveyorbelt to be drawn (gets the heading of conveyorbelt)
      * @author Philip Muff
+     * @author Jakob Agergaard
      */
 
     private void drawConveyorbelt(ConveyorBelt conveyorBelt){
         if(conveyorBelt!=null) {
+            InputStream input = classLoader.getResourceAsStream("pictures/conveyor.JPG");
+            Image image = new Image(input);
+            ImageView imageView = new ImageView(image);
+            imageView.setFitHeight(SPACE_HEIGHT);
+            imageView.setFitWidth(SPACE_WIDTH);
+            imageView.setRotate((90 * conveyorBelt.getHeading().ordinal()+180) % 360);
+            this.getChildren().add(imageView);
+
+
+
+/*
             Polygon arrow = new Polygon(0.0, 0.0,
                     5.0, 10.0,
                     10.0, 0.0);
             arrow.setFill(Color.GREY);
             arrow.setRotate((90 * conveyorBelt.getHeading().ordinal()) % 360);
             this.getChildren().add(arrow);
+
+ */
         }
     }
 
+    /**
+     *
+     * @param gear
+     * @author Jakob Agergaard
+     */
     private void drawGear(Gear gear) {
         if (gear != null) {
+            InputStream input;
+            if (gear.isClockwise()){
+                input = classLoader.getResourceAsStream("pictures/clockwise.jpg");
+            } else {
+                input = classLoader.getResourceAsStream("pictures/counterclockwise.jpg");
+            }
+            Image image = new Image(input);
+            ImageView imageView = new ImageView(image);
+            imageView.setFitWidth(SPACE_WIDTH);
+            imageView.setFitHeight(SPACE_HEIGHT);
+            this.getChildren().add(imageView);
+
+/*
              Arc arc = new Arc();
             arc.setCenterX(50.0f);
             arc.setCenterY(10.0f);
@@ -139,6 +197,8 @@ public class SpaceView extends StackPane implements ViewObserver {
             arc.setType(ArcType.OPEN);
             arc.setFill(Color.DARKBLUE);
             this.getChildren().add(arc);
+
+ */
         }
     }
 
@@ -151,6 +211,27 @@ public class SpaceView extends StackPane implements ViewObserver {
      */
     private void drawWalls(List<Heading> walls){
         for(Heading wall:walls){
+            InputStream input;
+            switch(wall){
+                case SOUTH: input = classLoader.getResourceAsStream("pictures/wallsouth.png");
+                    break;
+                case WEST: input = classLoader.getResourceAsStream("pictures/wallwest.png");
+                    break;
+                case NORTH: input = classLoader.getResourceAsStream("pictures/wallnorth.png");
+                    break;
+                case EAST: input = classLoader.getResourceAsStream("pictures/walleast.png");
+                    break;
+                default: input = null;
+                break;
+            }
+            Image image = new Image(input);
+            ImageView imageView = new ImageView(image);
+            imageView.setFitWidth(SPACE_WIDTH);
+            imageView.setFitHeight(SPACE_HEIGHT);
+            this.getChildren().add(imageView);
+
+
+/*
             Pane pane = new Pane();
             Rectangle rectangle = new Rectangle();
             rectangle.setFill(Color.TRANSPARENT);
@@ -171,16 +252,33 @@ public class SpaceView extends StackPane implements ViewObserver {
             line.setStrokeWidth(5);
             pane.getChildren().add(line);
             this.getChildren().add(pane);
+            */
+
         }
     }
 
+    /**
+     * Draws a checkpoint
+     * @param checkpoint
+     * @author Jakob Agergaard
+     */
     private void drawCheckPoint(Checkpoint checkpoint){
         if(checkpoint!=null) {
+            int number = checkpoint.getCheckpointID();
+            InputStream input = classLoader.getResourceAsStream("pictures/checkpoint"+number+".png");
+            Image image = new Image(input);
+            ImageView imageView = new ImageView(image);
+            imageView.setFitWidth(SPACE_WIDTH);
+            imageView.setFitHeight(SPACE_HEIGHT);
+            this.getChildren().add(imageView);
+
+            /*
             Text checkpointText = new Text(""+checkpoint.getCheckpointID());
             Circle circle = new Circle(20,Color.GREEN);
             checkpointText.setFont(Font.font("Times New Roman", FontWeight.BOLD,20));
             this.getChildren().add(circle);
             this.getChildren().add(checkpointText);
+             */
         }
     }
     private void drawPushPanel(Pushpanel pushPanel){
@@ -233,31 +331,28 @@ public class SpaceView extends StackPane implements ViewObserver {
             }
         }
     }
-
-    private void drawTest() {
-        ClassLoader classLoader = SpaceView.class.getClassLoader();
-        InputStream input = classLoader.getResourceAsStream("pictures/BoardLaser.png");
-        Image image = new Image(input);
-        ImageView imageView = new ImageView(image);
-        imageView.setRotate(5);
-        this.getChildren().add(imageView);
-
-    }
-
-
     private void drawBoardLaser(BoardLaser boardLaser){
         if(boardLaser!=null){
+            InputStream input = classLoader.getResourceAsStream("pictures/boardlaser.png");
+            Image image = new Image(input);
+            ImageView imageView = new ImageView(image);
+            imageView.setFitWidth(SPACE_WIDTH);
+            imageView.setFitHeight(SPACE_HEIGHT);
+            imageView.setRotate((90 * boardLaser.getHeading().ordinal()+180) % 360);
+            this.getChildren().add(imageView);
+
+            /*
             Polygon arrow = new Polygon(0.0, 0.0,
                     15.0, 30.0,
                     30.0, 0.0);
             arrow.setFill(Color.RED);
             arrow.setRotate((90 * boardLaser.getHeading().ordinal()) % 360);
             this.getChildren().add(arrow);
+
+             */
         }
     }
     /*
-
-    Method not implemented
 
     private void drawLaser(BoardLaser boardLaser){
         if(boardLaser!=null) {
@@ -276,8 +371,8 @@ public class SpaceView extends StackPane implements ViewObserver {
     public void updateView(Subject subject) {
         if (subject == this.space) {
             this.getChildren().clear();
-            drawWalls(space.getWalls());
             drawActions(space.getActions());
+            drawWalls(space.getWalls());
             updatePlayer();
 
         }
