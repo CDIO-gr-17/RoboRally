@@ -236,7 +236,7 @@ public class PlayerView extends Tab implements ViewObserver {
                 }
             }
             checkpointStatus.setText("Your next checkpoint is: " + (player.getPlayerToken()+1));
-            healthStatus.setText("Your health is " + player.getPlayerHealth() + "/10");
+            healthStatus.setText("Your health is " + player.getPlayerHealth() + "/" + player.getStartHealth());
         }
     }
 

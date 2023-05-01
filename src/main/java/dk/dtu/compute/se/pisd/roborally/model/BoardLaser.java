@@ -34,6 +34,11 @@ public class BoardLaser extends FieldAction{
                 }
                 isLaserDisrupted = true;
             }
+            for (FieldAction action: nextSpace.getActions()) {
+                if (action.getClass().getSimpleName().equals("BoardLaser")) {
+                    isLaserDisrupted = true;
+                }
+            }
             nextSpace = nextSpace.board.getNeighbour(nextSpace,heading);
         }
         return true;

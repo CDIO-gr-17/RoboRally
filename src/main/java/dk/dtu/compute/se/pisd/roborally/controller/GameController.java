@@ -322,11 +322,11 @@ public class GameController {
      * @author Jakob Agergaard
      */
     public void executeEntities(){
-        executeCheckpoints();
         executeConveyorbelts();
-        executeBoardLasers();
-        executeGear();
         executePushpanel();
+        executeGear();
+        executeBoardLasers();
+        executeCheckpoints();
     }
 
     /**
@@ -401,6 +401,7 @@ public class GameController {
      * executes the doAction() method for all lasers on the board
      */
     public void executeBoardLasers(){
+
         for (int i = 0; i < board.width; i++) {
             for (int j = 0; j < board.height; j++) {
                 Space currentSpace = board.getSpace(i,j);

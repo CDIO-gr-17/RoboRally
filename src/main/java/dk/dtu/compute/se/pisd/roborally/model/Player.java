@@ -42,17 +42,17 @@ public class Player extends Subject {
     private String name;
     private String color;
 
-    final private int startHealth = 10;
+    final private int startHealth = 5;
+
     final private int startTokens = 0;
     private int playerToken = startTokens;
     private int playerHealth = startHealth;
-
     private Space space;
+
     private Heading heading = SOUTH;
-
     private CommandCardField[] program;
-    private CommandCardField[] cards;
 
+    private CommandCardField[] cards;
     /**
      * Creates a player and assigns a board, name and color.
      * Assigns new cardfields to a programming-cards and a hand-cards field-array.
@@ -77,6 +77,10 @@ public class Player extends Subject {
         for (int i = 0; i < cards.length; i++) {
             cards[i] = new CommandCardField(this);
         }
+    }
+
+    public int getStartHealth() {
+        return startHealth;
     }
 
     public String getName() {
