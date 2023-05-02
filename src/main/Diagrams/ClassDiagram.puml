@@ -23,27 +23,21 @@ Class ProgrammingCard {
 Command
 }
 
-Board "1" -- "74"DamageCards
-Board "1" -- "40" UpgradeCards
-Board "1" -- "48" EnergyCube
 Board "1" - "2..6" Robot
-Board "1" --- "64..*" Space
+Board "1" -- "64..*" Space
 Space "0..1" -- "0..1" Robot
 Robot "1" -- "3..8" ProgrammingCard : < Belongs to
 Robot "1" -- "1"PlayerMat : < Belongs to
 PlayerMat "1" *--"5" ProgrammingField
-Space "0..1" --- "0...5" BoardEntity : > Is placed on
+Space "0..1" --- "0...5" BoardEntity : < Is placed on
 BoardEntity <|-- DamageEntity
 DamageEntity <|-- BoardLaser
-DamageEntity <|-- Pit
 BoardEntity <|-- PassivEntity
 PassivEntity <|-- Wall
-PassivEntity <|-- "1" PriorityAntenna
 PassivEntity <|-- "6" CheckPoint
 BoardEntity <|-- MovementEntity
 MovementEntity <|-- Gear
-MovementEntity <|-- BlueConveyorBelt
-MovementEntity <|-- GreenConveyorBelt
+MovementEntity <|-- ConveyorBelt
 MovementEntity <|-- PushPanel
 
 @enduml
