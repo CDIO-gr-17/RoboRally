@@ -22,7 +22,7 @@
 package dk.dtu.compute.se.pisd.roborally.dal;
 
 /**
- * ...
+ * Connects the repository class with the connection chosen in the connector class
  *
  * @author Ekkart Kindler, ekki@dtu.dk
  * @version $Id: $Id
