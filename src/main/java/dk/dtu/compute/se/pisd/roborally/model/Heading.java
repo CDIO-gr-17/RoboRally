@@ -25,7 +25,7 @@ package dk.dtu.compute.se.pisd.roborally.model;
  * Contains all possible headings a robot/player can have
  *
  * @author Ekkart Kindler, ekki@dtu.dk
- *
+ * @version $Id: $Id
  */
 public enum Heading {
 

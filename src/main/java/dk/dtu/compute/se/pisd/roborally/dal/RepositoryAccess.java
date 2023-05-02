@@ -25,12 +25,17 @@ package dk.dtu.compute.se.pisd.roborally.dal;
  * ...
  *
  * @author Ekkart Kindler, ekki@dtu.dk
- *
+ * @version $Id: $Id
  */
 public class RepositoryAccess {
     
 	private static Repository repository;
 	
+	/**
+	 * <p>Getter for the field <code>repository</code>.</p>
+	 *
+	 * @return a {@link dk.dtu.compute.se.pisd.roborally.dal.IRepository} object.
+	 */
 	public static IRepository getRepository() {
 		if(repository == null) {
 			repository = new Repository(new Connector());

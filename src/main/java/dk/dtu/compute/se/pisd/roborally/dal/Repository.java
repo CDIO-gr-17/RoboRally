@@ -71,10 +71,10 @@ class Repository implements IRepository {
 	}
 
 	/**
+	 * {@inheritDoc}
+	 *
 	 * Creates a game in the database and stores the values of the games attributes:
 	 * Gamename, boardname(type), players, phase and step
-	 * @param game
-	 * @return True if the data is loaded succesfully in the database
 	 */
 	@Override
 	public boolean createGameInDB(Board game) {
@@ -135,10 +135,10 @@ class Repository implements IRepository {
 	}
 
 	/**
+	 * {@inheritDoc}
+	 *
 	 * Updates the games attributes in the databse:
 	 * Phase, step, the players cards in hand and their programming fields
-	 * @param game
-	 * @return True, if the update is succesfull
 	 */
 	@Override
 	public boolean updateGameInDB(Board game) {
@@ -189,10 +189,11 @@ class Repository implements IRepository {
 		return false;
 	}
 
-	/** Loads the games attributes from the database and creates a game with the same:
+	/**
+	 * {@inheritDoc}
+	 *
+	 * Loads the games attributes from the database and creates a game with the same:
 	 *  phase,step, the players cards in hand and their programming field
-	 * @param id The specific game ID for the game which is being loaded.
-	 * @return The board.
 	 * @Author Ekkart Kindler
 	 * @Author Jakob SA
 	 * @Author Esben Elnegaard
@@ -254,6 +255,7 @@ class Repository implements IRepository {
 		return null;
 	}
 
+	/** {@inheritDoc} */
 	@Override
 	public List<GameInDB> getGames() {
 		// TODO when there many games in the DB, fetching all available games

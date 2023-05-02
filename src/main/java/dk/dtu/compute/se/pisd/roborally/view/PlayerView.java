@@ -38,7 +38,7 @@ import java.util.List;
  * This class contains what each individual player sees. The view is unique for each player.
  *
  * @author Ekkart Kindler, ekki@dtu.dk
- *
+ * @version $Id: $Id
  */
 public class PlayerView extends Tab implements ViewObserver {
 
@@ -67,6 +67,12 @@ public class PlayerView extends Tab implements ViewObserver {
     private Label healthStatus;
 
 
+    /**
+     * <p>Constructor for PlayerView.</p>
+     *
+     * @param gameController a {@link dk.dtu.compute.se.pisd.roborally.controller.GameController} object.
+     * @param player a {@link dk.dtu.compute.se.pisd.roborally.model.Player} object.
+     */
     public PlayerView(@NotNull GameController gameController, @NotNull Player player) {
         super(player.getName());
         this.setStyle("-fx-text-base-color: " + player.getColor() + ";");
@@ -142,6 +148,7 @@ public class PlayerView extends Tab implements ViewObserver {
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public void updateView(Subject subject) {
         if (subject == player.board) {

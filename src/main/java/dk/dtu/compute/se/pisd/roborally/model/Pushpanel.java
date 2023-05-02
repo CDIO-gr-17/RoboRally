@@ -26,29 +26,38 @@ import dk.dtu.compute.se.pisd.roborally.controller.ImpossibleMoveException;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * ...
+ * An entity that can be placed on the board and pushes the player two spaces
  *
  * @author Ekkart Kindler, ekki@dtu.dk
- *
+ * @version $Id: $Id
  */
 public class Pushpanel extends FieldAction {
 
     private Heading heading;
+    /**
+     * <p>Constructor for Pushpanel.</p>
+     *
+     * @param heading a {@link dk.dtu.compute.se.pisd.roborally.model.Heading} object.
+     */
     public Pushpanel(@NotNull Heading heading){
         this.heading = heading;
     }
 
+    /**
+     * <p>Getter for the field <code>heading</code>.</p>
+     *
+     * @return a {@link dk.dtu.compute.se.pisd.roborally.model.Heading} object.
+     */
     public Heading getHeading() {
         return heading;
     }
 
     /**
+     * {@inheritDoc}
+     *
      * This boolean identifies the player's location, and validates if the location is in fact shared with
      * push panel's space. If this happen to be, the loop will return true, and the function of the push panel will
      * activate, and it will push the player one space in the push panel's direction.
-     * @param gameController the gameController of the respective game
-     * @param space the space this action should be executed for
-     * @return true if an action is performed
      * @author Mads Fogelberg s224563@dtu.dk, Jarl Boyd Roest s224556@dtu.dk
      */
     @Override

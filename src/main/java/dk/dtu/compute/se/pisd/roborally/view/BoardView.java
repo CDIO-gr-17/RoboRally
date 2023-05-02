@@ -34,10 +34,10 @@ import javafx.scene.layout.VBox;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * ...
+ *
  *
  * @author Ekkart Kindler, ekki@dtu.dk
- *
+ * @version $Id: $Id
  */
 public class BoardView extends VBox implements ViewObserver {
 
@@ -50,6 +50,11 @@ public class BoardView extends VBox implements ViewObserver {
     private Label statusLabel;
     private SpaceEventHandler spaceEventHandler;
 
+    /**
+     * <p>Creates boardview and a few things belonging to this.</p>
+     *
+     * @param gameController a {@link dk.dtu.compute.se.pisd.roborally.controller.GameController} object.
+     */
     public BoardView(@NotNull GameController gameController) {
         board = gameController.board;
 
@@ -79,6 +84,7 @@ public class BoardView extends VBox implements ViewObserver {
         update(board);
     }
 
+    /** {@inheritDoc} */
     @Override
     public void updateView(Subject subject) {
         if (subject == board) {

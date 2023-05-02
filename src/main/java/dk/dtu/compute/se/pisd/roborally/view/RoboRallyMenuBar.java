@@ -28,10 +28,10 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 
 /**
- * ...
+ * The menubar which currently allows the user to acces the relevant functions in the appcontroller.
  *
  * @author Ekkart Kindler, ekki@dtu.dk
- *
+ * @version $Id: $Id
  */
 public class RoboRallyMenuBar extends MenuBar {
 

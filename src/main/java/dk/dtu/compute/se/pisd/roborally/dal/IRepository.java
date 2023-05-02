@@ -29,16 +29,39 @@ import java.util.List;
  * ...
  *
  * @author Ekkart Kindler, ekki@dtu.dk
- *
+ * @version $Id: $Id
  */
 public interface IRepository {
 	
+ 	/**
+ 	 * <p>createGameInDB.</p>
+ 	 *
+ 	 * @param game a {@link dk.dtu.compute.se.pisd.roborally.model.Board} object.
+ 	 * @return a boolean.
+ 	 */
  	boolean createGameInDB(Board game);
 	
+	/**
+	 * <p>updateGameInDB.</p>
+	 *
+	 * @param game a {@link dk.dtu.compute.se.pisd.roborally.model.Board} object.
+	 * @return a boolean.
+	 */
 	boolean updateGameInDB(Board game);
 	
+	/**
+	 * <p>loadGameFromDB.</p>
+	 *
+	 * @param id a int.
+	 * @return a {@link dk.dtu.compute.se.pisd.roborally.model.Board} object.
+	 */
 	Board loadGameFromDB(int id);
 	
+	/**
+	 * <p>getGames.</p>
+	 *
+	 * @return a {@link java.util.List} object.
+	 */
 	List<GameInDB> getGames();
 
 }

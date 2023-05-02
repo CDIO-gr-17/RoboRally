@@ -49,14 +49,16 @@ import java.util.List;
 
 
 /**
- * ...
+ * This class draws the space and all the entities on it. Mostly using pictures
  *
  * @author Ekkart Kindler, ekki@dtu.dk
- *
+ * @version $Id: $Id
  */
 public class SpaceView extends StackPane implements ViewObserver {
 
+    /** Constant <code>SPACE_HEIGHT=75</code> */
     final public static int SPACE_HEIGHT = 75; // 60; // 75;
+    /** Constant <code>SPACE_WIDTH=75</code> */
     final public static int SPACE_WIDTH = 75;  // 60; // 75;
 
     public final Space space;
@@ -379,6 +381,7 @@ public class SpaceView extends StackPane implements ViewObserver {
         }
     }
      */
+    /** {@inheritDoc} */
     @Override
     public void updateView(Subject subject) {
         if (subject == this.space) {

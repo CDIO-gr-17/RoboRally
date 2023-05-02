@@ -59,7 +59,7 @@ import java.util.Optional;
  * This means running the menubar and controlling user access to files EI. database later on
  *
  * @author Ekkart Kindler, ekki@dtu.dk
- *
+ * @version $Id: $Id
  */
 public class AppController implements Observer {
 
@@ -72,6 +72,11 @@ public class AppController implements Observer {
 
     private GameController gameController;
     private IRepository repoAcces = RepositoryAccess.getRepository();
+    /**
+     * <p>Constructor for AppController.</p>
+     *
+     * @param roboRally a {@link dk.dtu.compute.se.pisd.roborally.RoboRally} object.
+     */
     public AppController(@NotNull RoboRally roboRally) {
         this.roboRally = roboRally;
     }
@@ -83,6 +88,7 @@ public class AppController implements Observer {
      *  that gets pulled from a JSON file.
      * The players then chooses a name for the game and names for the different players.
      * At last the state of the game is initiatet and given a new instance of a gamecontroller
+     *
      * @Author Ekkart Kindler
      * @Author Jakob-SA
      * @Author Esben Elnegaard
@@ -161,6 +167,8 @@ public class AppController implements Observer {
     }
 
     /**
+     *  Saves the game by updating the current game's info in the database
+     *
      * @author Jakob Agergaard
      */
     public void saveGame() {
@@ -171,6 +179,8 @@ public class AppController implements Observer {
     }
 
     /**
+     * Loads a game from the database based on the choosen gameID and gameName
+     *
      * @author Jakob Agergaard
      */
     public void loadGame() {
@@ -192,14 +202,6 @@ public class AppController implements Observer {
             gameController = new GameController(board);
             roboRally.createBoardView(gameController);
 
-
-        }
-    }
-    public void finishGame(String winner){
-        if(gameController.board.getPhase()== Phase.FINALISATION){
-            Alert alert = new Alert(AlertType.INFORMATION);
-            alert.setTitle("Winner found");
-            alert.setContentText("The winner is ");
 
         }
     }
@@ -249,6 +251,7 @@ public class AppController implements Observer {
     }
 
     /**
+     * Checks if gamecontroller is present
      *
      * @return Boolean that is true when the game is running or the gamecontroller has not been set null
      */
@@ -257,6 +260,7 @@ public class AppController implements Observer {
     }
 
 
+    /** {@inheritDoc} */
     @Override
     public void update(Subject subject) {
         // XXX do nothing for now

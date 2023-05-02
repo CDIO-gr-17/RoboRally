@@ -28,7 +28,7 @@ import java.util.List;
  * Contains all possible commands for the robots
  *
  * @author Ekkart Kindler, ekki@dtu.dk
- *
+ * @version $Id: $Id
  */
 public enum Command {
 
@@ -62,6 +62,7 @@ public enum Command {
 
     /**
      * Returns whether a command is interactive or not
+     *
      * @return true if the command is interactive
      */
     public boolean isInteractive() {
@@ -70,6 +71,7 @@ public enum Command {
 
     /**
      * Returns the list of all options of an interactive command
+     *
      * @return The list of options
      */
     public List<Command> getOptions() {

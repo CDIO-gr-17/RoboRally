@@ -28,7 +28,7 @@ import org.jetbrains.annotations.NotNull;
  * Card that holds a command
  *
  * @author Ekkart Kindler, ekki@dtu.dk
- *
+ * @version $Id: $Id
  */
 public class CommandCard extends Subject {
 

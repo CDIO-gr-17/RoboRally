@@ -32,7 +32,7 @@ import java.util.List;
  * can have many walls, one player, one checkpoint, one conveyorbelt and so on.
  *
  * @author Ekkart Kindler, ekki@dtu.dk
- *
+ * @version $Id: $Id
  */
 public class Space extends Subject {
 
@@ -60,6 +60,13 @@ public class Space extends Subject {
     public final int y;
     private Player player;
 
+    /**
+     * <p>Constructor for Space.</p>
+     *
+     * @param board a {@link dk.dtu.compute.se.pisd.roborally.model.Board} object.
+     * @param x a int.
+     * @param y a int.
+     */
     public Space(Board board, int x, int y) {
         this.board = board;
         this.x = x;
@@ -67,12 +74,18 @@ public class Space extends Subject {
         player = null;
     }
 
+    /**
+     * <p>Getter for the field <code>player</code>.</p>
+     *
+     * @return a {@link dk.dtu.compute.se.pisd.roborally.model.Player} object.
+     */
     public Player getPlayer() {
         return player;
     }
 
     /**
      * Sets the player belonging to this space
+     *
      * @param player    The player which belongs to this space
      */
     public void setPlayer(Player player) {
@@ -93,6 +106,7 @@ public class Space extends Subject {
 
     /**
      * "creates" a wall by adding the walls heading to the list of walls on this space
+     *
      * @param heading       The heading which the wall should be facing
      * @author Jakob Agergaard
      */
@@ -125,16 +139,27 @@ public class Space extends Subject {
     public List<Heading> getWalls(){
         return walls;
     }
+    /**
+     * <p>Getter for the field <code>actions</code>.</p>
+     *
+     * @return a {@link java.util.List} object.
+     */
     public List <FieldAction> getActions() {
         return actions;
     }
 
+    /**
+     * <p>createCheckpoint.</p>
+     *
+     * @param checkpointID a int.
+     */
     public void createCheckpoint(int checkpointID){
         this.checkpoint= new Checkpoint(checkpointID);
     }
 
     /**
      * Creates a conveyorbelt on this space with a given heading
+     *
      * @param heading the direction the conveyorbelt is pointing
      * @author Philip Muff
      */
@@ -151,6 +176,11 @@ public class Space extends Subject {
         return null;
     }*/
 
+    /**
+     * <p>createBoardLaser.</p>
+     *
+     * @param heading a {@link dk.dtu.compute.se.pisd.roborally.model.Heading} object.
+     */
     public void createBoardLaser(Heading heading){this.boardLaser = new BoardLaser(heading);}
 
     void playerChanged() {

@@ -29,6 +29,12 @@ import dk.dtu.compute.se.pisd.roborally.model.Player;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * <p>Gear class.</p>
+ *
+ * @author jakob
+ * @version $Id: $Id
+ */
 public class Gear extends FieldAction {
 
     private Space space;
@@ -36,12 +42,11 @@ public class Gear extends FieldAction {
     private boolean clockwise;
 
     /**
+     * {@inheritDoc}
+     *
      * This boolean will get the players location on the board, and validate if the player share the space
      * with the boolean, it will return true if this happend to be, and the boolean will call the executefunction
      * of the gear. The gear's function is to turn the player's direction 90 degrees counter-clockwise.
-     * @param gameController the gameController of the respective game
-     * @param space the space this action should be executed for
-     * @return true if an action is performed
      * @author Mads Fogelberg s224563@dtu.dk, Jarl Boyd Roest s224556@dtu.dk
      */
     @Override
@@ -57,6 +62,11 @@ public class Gear extends FieldAction {
         return true;
         }
 
+    /**
+     * <p>isClockwise.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isClockwise() {
         return clockwise;
     }
