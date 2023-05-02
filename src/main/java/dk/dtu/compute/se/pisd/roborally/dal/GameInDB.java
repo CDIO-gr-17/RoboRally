@@ -22,10 +22,10 @@
 package dk.dtu.compute.se.pisd.roborally.dal;
 
 /**
- * ...
- *
+ * This class is the blueprint for a game that can be stored in the database which
+ * only needs to have two attributes: game id, and a name
  * @author Ekkart Kindler, ekki@dtu.dk
- * @version $Id: $Id
+ * @version
  */
 public class GameInDB {
 
@@ -35,15 +35,14 @@ public class GameInDB {
     /**
      * <p>Constructor for GameInDB.</p>
      *
-     * @param id a int.
-     * @param name a {@link java.lang.String} object.
+     * @param id an auto-increment for every new game in the DB.
+     * @param name for the game that the player gives it
      */
     public GameInDB(int id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    /** {@inheritDoc} */
     @Override
     public String toString() {
         return id + ": " + name;

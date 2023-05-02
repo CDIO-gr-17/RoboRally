@@ -26,7 +26,10 @@ import dk.dtu.compute.se.pisd.roborally.model.Board;
 import java.util.List;
 
 /**
- * ...
+ * This interface has the most necessary methods that is implemented in the appController.
+ * Those methods are the most important options for the player:
+ * Create a game, save a game, and load a already saved game.
+ * Further development has been done and is explained in the Repository class.
  *
  * @author Ekkart Kindler, ekki@dtu.dk
  * @version $Id: $Id
@@ -43,23 +46,23 @@ public interface IRepository {
 	
 	/**
 	 * <p>updateGameInDB.</p>
-	 *
-	 * @param game a {@link dk.dtu.compute.se.pisd.roborally.model.Board} object.
+	 *Creates game in DB
+	 * @param game
 	 * @return a boolean.
 	 */
 	boolean updateGameInDB(Board game);
 	
 	/**
 	 * <p>loadGameFromDB.</p>
-	 *
-	 * @param id a int.
-	 * @return a {@link dk.dtu.compute.se.pisd.roborally.model.Board} object.
+	 *Updates game in DB
+	 * @param game
+	 * @return true if the update was succesfull
 	 */
 	Board loadGameFromDB(int id);
 	
 	/**
 	 * <p>getGames.</p>
-	 *
+	 *Loads game from DB.
 	 * @return a {@link java.util.List} object.
 	 */
 	List<GameInDB> getGames();

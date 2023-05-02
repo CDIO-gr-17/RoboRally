@@ -30,7 +30,11 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * ...
+ * This class handles all the data transmition to and from the database.
+ *It implements the methods from the interface IRepository:
+ * loadGameFromDB,updateGameInDB,createGameInDB and getGames
+ * but it also handles all the prepared statements and private methods
+ * which allows the player to create, store, update and load data from the database.
  *
  * @author Ekkart Kindler, ekki@dtu.dk
  *
