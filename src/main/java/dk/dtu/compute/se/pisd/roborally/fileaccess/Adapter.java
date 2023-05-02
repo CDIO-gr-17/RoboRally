@@ -41,17 +41,18 @@ import com.google.gson.JsonSerializer;
  * the class hierarchy resp. to the static type, which is dynamically sub-typed
  * in the structure. Note that this solution does not work if instances of
  * E itself need to be serialized (typically E would be abstract).
- * 
+ *
  * @author Menelaos Perdikeas, https://github.com/mperdikeas
  * @author Ekkart Kindler, ekki@dtu.dk
- *
  * @param <E> The top of the class hierarchy
+ * @version $Id: $Id
  */
 public class Adapter<E> implements JsonSerializer<E>, JsonDeserializer<E>{
 
     private static final String CLASSNAME = "CLASSNAME";
     private static final String INSTANCE  = "INSTANCE";
 
+    /** {@inheritDoc} */
     @Override
     public JsonElement serialize(E src, Type typeOfSrc,
             JsonSerializationContext context) {
@@ -64,6 +65,7 @@ public class Adapter<E> implements JsonSerializer<E>, JsonDeserializer<E>{
         return retValue;
     }
 
+    /** {@inheritDoc} */
     @Override
     public E deserialize(JsonElement json, Type typeOfT,
             JsonDeserializationContext context) throws JsonParseException  {

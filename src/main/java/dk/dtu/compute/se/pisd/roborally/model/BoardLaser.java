@@ -1,20 +1,35 @@
 package dk.dtu.compute.se.pisd.roborally.model;
 import dk.dtu.compute.se.pisd.roborally.controller.GameController;
 import org.jetbrains.annotations.NotNull;
+/**
+ * <p>BoardLaser class.</p>
+ *
+ * @author jakob
+ * @version $Id: $Id
+ */
 public class BoardLaser extends FieldAction{
     private Heading heading;
+    /**
+     * <p>Constructor for BoardLaser.</p>
+     *
+     * @param heading a {@link dk.dtu.compute.se.pisd.roborally.model.Heading} object.
+     */
     public BoardLaser(@NotNull Heading heading){
         this.heading = heading;
     }
+    /**
+     * <p>Getter for the field <code>heading</code>.</p>
+     *
+     * @return a {@link dk.dtu.compute.se.pisd.roborally.model.Heading} object.
+     */
     public Heading getHeading() {
         return heading;
     }
     /**
+     * {@inheritDoc}
+     *
      * Damages the players in the line of sight of the BoardLaser.
      * If the player reached 0 health, the players tokens(amount of checkpoints reached) will be reset.
-     * @param gameController the gameController of the respective game
-     * @param space the space this action should be executed for
-     * @return true if the action has been performed
      * @author Philip Muff @s224566
      */
     @Override

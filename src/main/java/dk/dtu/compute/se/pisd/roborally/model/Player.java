@@ -27,14 +27,16 @@ import org.jetbrains.annotations.NotNull;
 import static dk.dtu.compute.se.pisd.roborally.model.Heading.SOUTH;
 
 /**
- * ...
+ * Class representing a player. Containing every info relevant to each player
  *
  * @author Ekkart Kindler, ekki@dtu.dk
- *
+ * @version $Id: $Id
  */
 public class Player extends Subject {
 
+    /** Constant <code>NO_REGISTERS=5</code> */
     final public static int NO_REGISTERS = 5;
+    /** Constant <code>NO_CARDS=8</code> */
     final public static int NO_CARDS = 8;
 
     final public Board board;
@@ -79,10 +81,20 @@ public class Player extends Subject {
         }
     }
 
+    /**
+     * <p>Getter for the field <code>startHealth</code>.</p>
+     *
+     * @return a int.
+     */
     public int getStartHealth() {
         return startHealth;
     }
 
+    /**
+     * <p>Getter for the field <code>name</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getName() {
         return name;
     }
@@ -104,6 +116,8 @@ public class Player extends Subject {
     }
 
     /**
+     * <p>addToken.</p>
+     *
      * @author Jarl Boyd Roest, s224556@dtu.dk og Esben Elnegaard, s224555@dtu.dk
      * the counter for a player to be abel to collect checkpoints
      */
@@ -112,6 +126,7 @@ public class Player extends Subject {
     }
 
     /**
+     * <p>Getter for the field <code>color</code>.</p>
      *
      * @return  The color of the player as a string
      */
@@ -121,6 +136,7 @@ public class Player extends Subject {
 
     /**
      * Change the color of a player
+     *
      * @param color The desired color of the player as a string
      */
     public void setColor(String color) {
@@ -132,6 +148,7 @@ public class Player extends Subject {
     }
 
     /**
+     * <p>Getter for the field <code>space</code>.</p>
      *
      * @return  The space which the player is positioned on
      */
@@ -139,6 +156,11 @@ public class Player extends Subject {
         return space;
     }
 
+    /**
+     * <p>Setter for the field <code>space</code>.</p>
+     *
+     * @param space a {@link dk.dtu.compute.se.pisd.roborally.model.Space} object.
+     */
     public void setSpace(Space space) {
         Space oldSpace = this.space;
         if (space != oldSpace &&
@@ -155,6 +177,7 @@ public class Player extends Subject {
     }
 
     /**
+     * <p>Getter for the field <code>heading</code>.</p>
      *
      * @return  The current heading of the player
      */
@@ -164,6 +187,7 @@ public class Player extends Subject {
 
     /**
      * Change the heading of the player
+     *
      * @param heading   The whished heading og the player
      */
     public void setHeading(@NotNull Heading heading) {
@@ -177,36 +201,66 @@ public class Player extends Subject {
     }
 
     /**
+     * <p>getProgramField.</p>
      *
-     * @param i
-     * @return
+     * @param i a int.
+     * @return a {@link dk.dtu.compute.se.pisd.roborally.model.CommandCardField} object.
      */
     public CommandCardField getProgramField(int i) {
         return program[i];
     }
 
+    /**
+     * <p>getCardField.</p>
+     *
+     * @param i a int.
+     * @return a {@link dk.dtu.compute.se.pisd.roborally.model.CommandCardField} object.
+     */
     public CommandCardField getCardField(int i) {
         return cards[i];
     }
 
     /**
+     * <p>Getter for the field <code>playerToken</code>.</p>
+     *
      * @author Jarl Boyd Roest, s224556@dtu.dk og Esben Elnegaard, s224555@dtu.dk
      * @return the amount of tokens a player has
      */
     public int getPlayerToken() {
         return playerToken;
     }
+    /**
+     * <p>reduceHealth.</p>
+     */
     public void reduceHealth(){
         playerHealth--;
     }
+    /**
+     * <p>Getter for the field <code>playerHealth</code>.</p>
+     *
+     * @return a int.
+     */
     public int getPlayerHealth(){
         return playerHealth;
     }
+    /**
+     * <p>Setter for the field <code>playerHealth</code>.</p>
+     *
+     * @param playerHealth a int.
+     */
     public void setPlayerHealth(int playerHealth){this.playerHealth = playerHealth;}
 
+    /**
+     * <p>Setter for the field <code>playerToken</code>.</p>
+     *
+     * @param playerToken a int.
+     */
     public void setPlayerToken(int playerToken) {
         this.playerToken = playerToken;
     }
+    /**
+     * <p>resetTokens.</p>
+     */
     public void resetTokens(){
         playerToken = startTokens;
         playerHealth = startHealth;

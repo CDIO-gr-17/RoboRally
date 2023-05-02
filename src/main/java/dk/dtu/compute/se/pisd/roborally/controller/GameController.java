@@ -37,12 +37,17 @@ import java.util.Optional;
  * All logic should therefore have a connection to this
  *
  * @author Ekkart Kindler, ekki@dtu.dk
- *
+ * @version $Id: $Id
  */
 public class GameController {
 
     final public Board board;
 
+    /**
+     * <p>Constructor for GameController.</p>
+     *
+     * @param board a {@link dk.dtu.compute.se.pisd.roborally.model.Board} object.
+     */
     public GameController(@NotNull Board board) {
         this.board = board;
     }
@@ -129,6 +134,7 @@ public class GameController {
     /**
      * Announces the winner of the game and start the Final phase.
      * This freezes the game but allows the users to view the state is was in when a winner was found
+     *
      * @author Jakob Agergaard s224570
      */
     public void startFinalisationPhase(){
@@ -245,6 +251,7 @@ public class GameController {
 
     /**
      * Executes the chosen command of an interactive command-card
+     *
      * @param option the command which should be executed
      * @author Jakob Agergaard
      */
@@ -319,6 +326,7 @@ public class GameController {
     /**
      * Executes all entities on the board. This method decides the order of the execution og the entities.
      * This means a lot to the playthrough experience
+     *
      * @author Jakob Agergaard
      */
     public void executeEntities(){
@@ -331,6 +339,7 @@ public class GameController {
 
     /**
      * executes the doAction() method for all conveyorbelts on the board
+     *
      * @author Philip Muff
      * @author Jakob Agergaard
      */
@@ -382,6 +391,7 @@ public class GameController {
 
     /**
      * executes the doAction() method for all checkpoints on the board
+     *
      * @author Jakob Agergaard
      */
     public void executeCheckpoints() {
@@ -417,11 +427,11 @@ public class GameController {
     /**
      * Moves a player to a specific space in a direction. If another player is on the space a player is trying to move onto,
      * the second player is pushed in the heading of the first player
+     *
      * @param player the player to move
      * @param space the space to move the player to
      * @param heading the heading to move the player in
-     * @throws ImpossibleMoveException thrown if something is obstructing the player to move
-     * @author
+     * @throws dk.dtu.compute.se.pisd.roborally.controller.ImpossibleMoveException thrown if something is obstructing the player to move
      * @author Jakob Agergaard
      */
     public void moveToSpace(
@@ -456,6 +466,7 @@ public class GameController {
 
     /**
      * Moves the given player a space forward in the heading of the player
+     *
      * @param player the player to move
      */
     public void moveForward(@NotNull Player player) {
@@ -477,6 +488,7 @@ public class GameController {
 
     /**
      * Moves the given player two spaces forward in the heading of the player
+     *
      * @param player the player to move
      */
     public void fastForward(@NotNull Player player) {
@@ -487,7 +499,8 @@ public class GameController {
 
     /**
      * Moves the given player a space backward without changing the heading
-     * @param player
+     *
+     * @param player a {@link dk.dtu.compute.se.pisd.roborally.model.Player} object.
      * @author Philip Muff
      */
     public void backUp(@NotNull Player player){
@@ -507,6 +520,7 @@ public class GameController {
 
     /**
      * Turns the player to the right
+     *
      * @param player the player to move
      */
     public void turnRight(@NotNull Player player) {
@@ -516,6 +530,7 @@ public class GameController {
 
     /**
      * Turns the player to the left
+     *
      * @param player the player to move
      */
     public void turnLeft(@NotNull Player player) {
@@ -524,6 +539,7 @@ public class GameController {
 
     /**
      * Turns the player 180degrees around itself(u-turn)
+     *
      * @param player the player to turn
      * @author Philip Muff
      */

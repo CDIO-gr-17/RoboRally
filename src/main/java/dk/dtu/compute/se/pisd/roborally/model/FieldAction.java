@@ -26,10 +26,10 @@ import dk.dtu.compute.se.pisd.roborally.controller.GameController;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
 
 /**
- * ...
+ * Abstract class which should be used as super-class to the entities on the board
  *
  * @author Ekkart Kindler, ekki@dtu.dk
- *
+ * @version $Id: $Id
  */
 public abstract class FieldAction extends Subject {
 

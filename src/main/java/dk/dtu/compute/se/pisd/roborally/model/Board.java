@@ -31,10 +31,10 @@ import java.util.List;
 import static dk.dtu.compute.se.pisd.roborally.model.Phase.INITIALISATION;
 
 /**
- *
+ * <p>Board class.</p>
  *
  * @author Ekkart Kindler, ekki@dtu.dk
- *
+ * @version $Id: $Id
  */
 public class Board extends Subject {
 
@@ -83,10 +83,21 @@ public class Board extends Subject {
         this.stepMode = false;
     }
 
+    /**
+     * <p>Constructor for Board.</p>
+     *
+     * @param width a int.
+     * @param height a int.
+     */
     public Board(int width, int height) {
         this(width, height, "defaultboard");
     }
 
+    /**
+     * <p>Getter for the field <code>gameId</code>.</p>
+     *
+     * @return a {@link java.lang.Integer} object.
+     */
     public Integer getGameId() {
         return gameId;
     }
@@ -124,6 +135,7 @@ public class Board extends Subject {
 
     /**
      * Returns the amount of current players
+     *
      * @return  int representing amount of players
      */
     public int getPlayersNumber() {
@@ -132,6 +144,7 @@ public class Board extends Subject {
 
     /**
      * Adds a player to the game as long as the player belongs in this game and has not already been added
+     *
      * @param player    The player who should be added to the game
      */
     public void addPlayer(@NotNull Player player) {
@@ -141,6 +154,12 @@ public class Board extends Subject {
         }
     }
 
+    /**
+     * <p>getPlayer.</p>
+     *
+     * @param i a int.
+     * @return a {@link dk.dtu.compute.se.pisd.roborally.model.Player} object.
+     */
     public Player getPlayer(int i) {
         if (i >= 0 && i < players.size()) {
             return players.get(i);
@@ -149,10 +168,20 @@ public class Board extends Subject {
         }
     }
 
+    /**
+     * <p>getCurrentPlayer.</p>
+     *
+     * @return a {@link dk.dtu.compute.se.pisd.roborally.model.Player} object.
+     */
     public Player getCurrentPlayer() {
         return current;
     }
 
+    /**
+     * <p>setCurrentPlayer.</p>
+     *
+     * @param player a {@link dk.dtu.compute.se.pisd.roborally.model.Player} object.
+     */
     public void setCurrentPlayer(Player player) {
         if (player != this.current && players.contains(player)) {
             this.current = player;
@@ -160,10 +189,20 @@ public class Board extends Subject {
         }
     }
 
+    /**
+     * <p>Getter for the field <code>phase</code>.</p>
+     *
+     * @return a {@link dk.dtu.compute.se.pisd.roborally.model.Phase} object.
+     */
     public Phase getPhase() {
         return phase;
     }
 
+    /**
+     * <p>Setter for the field <code>phase</code>.</p>
+     *
+     * @param phase a {@link dk.dtu.compute.se.pisd.roborally.model.Phase} object.
+     */
     public void setPhase(Phase phase) {
         if (phase != this.phase) {
             this.phase = phase;
@@ -171,10 +210,20 @@ public class Board extends Subject {
         }
     }
 
+    /**
+     * <p>Getter for the field <code>step</code>.</p>
+     *
+     * @return a int.
+     */
     public int getStep() {
         return step;
     }
 
+    /**
+     * <p>Setter for the field <code>step</code>.</p>
+     *
+     * @param step a int.
+     */
     public void setStep(int step) {
         if (step != this.step) {
             this.step = step;
@@ -183,6 +232,7 @@ public class Board extends Subject {
     }
 
     /**
+     * <p>isStepMode.</p>
      *
      * @return  whether the player wants the whole planned program executed or one command at a time
      */
@@ -192,6 +242,7 @@ public class Board extends Subject {
 
     /**
      * Set whether the player wants to run the program continuosly og in steps for each command
+     *
      * @param stepMode  True for stepmode, false for not
      */
     public void setStepMode(boolean stepMode) {
@@ -201,6 +252,12 @@ public class Board extends Subject {
         }
     }
 
+    /**
+     * <p>getPlayerNumber.</p>
+     *
+     * @param player a {@link dk.dtu.compute.se.pisd.roborally.model.Player} object.
+     * @return a int.
+     */
     public int getPlayerNumber(@NotNull Player player) {
         if (player.board == this) {
             return players.indexOf(player);
@@ -241,15 +298,26 @@ public class Board extends Subject {
     }
 
     /**
+     * <p>getNextCheckpointnr.</p>
      *
-     * @return
+     * @return a {@link java.lang.String} object.
      */
     public String getNextCheckpointnr(){
         return "Next checkpoint: " + (getCurrentPlayer().getPlayerToken()+1);
     }
+    /**
+     * <p>getHealth.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getHealth(){
         return "Health: " + getCurrentPlayer().getPlayerHealth();
     }
+    /**
+     * <p>getStatusMessage.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getStatusMessage() {
         // this is actually a view aspect, but for making assignment V1 easy for
         // the students, this method gives a string representation of the current
@@ -275,29 +343,62 @@ public class Board extends Subject {
             notifyChange();
         }
     }
+    /**
+     * <p>Getter for the field <code>counter</code>.</p>
+     *
+     * @return a int.
+     */
     public int getCounter(){
         return counter;
     }
 
 
+    /**
+     * <p>Getter for the field <code>gameName</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getGameName() {
         return gameName;
     }
 
+    /**
+     * <p>Setter for the field <code>gameName</code>.</p>
+     *
+     * @param gameName a {@link java.lang.String} object.
+     */
     public void setGameName(String gameName) {
         this.gameName = gameName;
     }
 
+    /**
+     * <p>Getter for the field <code>maxCheckpoints</code>.</p>
+     *
+     * @return a int.
+     */
     public int getMaxCheckpoints() {
         return maxCheckpoints;
     }
+    /**
+     * <p>addMaxCheckpoints.</p>
+     */
     public void addMaxCheckpoints() {
         this.maxCheckpoints++;
     }
+    /**
+     * <p>Getter for the field <code>winner</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getWinner() {
         return winner;
     }
 
+    /**
+     * <p>Setter for the field <code>winner</code>.</p>
+     *
+     * @param winner a {@link java.lang.String} object.
+     */
     public void setWinner(String winner) {
         this.winner = winner;
     }

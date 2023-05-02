@@ -19,11 +19,16 @@ public class Checkpoint extends FieldAction {
     /**
      * gives the checkpoint a value 'checkpointID' and creates a token for players to collect
      * @author Jarl Boyd Roest, s224556@dtu.dk og Esben Elnegaard, s224555@dtu.dk
-     * @param checkPointID
+     * @param checkPointID a int.
      */
     public Checkpoint( int checkPointID) {
         this.checkPointID = checkPointID;
     }
+    /**
+     * <p>getCheckpointID.</p>
+     *
+     * @return a int.
+     */
     public int getCheckpointID(){return checkPointID;}
 
 

@@ -62,6 +62,11 @@ public class Gear extends FieldAction {
         return true;
         }
 
+    /**
+     * <p>isClockwise.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isClockwise() {
         return clockwise;
     }

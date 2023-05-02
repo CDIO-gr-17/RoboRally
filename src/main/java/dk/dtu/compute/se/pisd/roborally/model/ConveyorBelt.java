@@ -30,27 +30,36 @@ import dk.dtu.compute.se.pisd.roborally.model.Space;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * ...
+ * A conveyorbelt that can be placed on the board and move a player
  *
  * @author Ekkart Kindler, ekki@dtu.dk
- *
+ * @version $Id: $Id
  */
 public class ConveyorBelt extends FieldAction {
 
     private Heading heading;
+    /**
+     * <p>Constructor for ConveyorBelt.</p>
+     *
+     * @param heading a {@link dk.dtu.compute.se.pisd.roborally.model.Heading} object.
+     */
     public ConveyorBelt(@NotNull Heading heading){
         this.heading = heading;
     }
 
+    /**
+     * <p>Getter for the field <code>heading</code>.</p>
+     *
+     * @return a {@link dk.dtu.compute.se.pisd.roborally.model.Heading} object.
+     */
     public Heading getHeading() {
         return heading;
     }
 
     /**
+     * {@inheritDoc}
+     *
      * Moves the player a single space in the heading of the conveyorbelt
-     * @param gameController the gameController of the respective game
-     * @param space the space this action should be executed for
-     * @return true if an action is performed
      * @author Philip Muff @s224566
      */
     @Override

@@ -30,6 +30,7 @@ import java.io.*;
  * A utility class reading strings from resources and arbitrary input streams.
  *
  * @author Ekkart Kindler, ekki@dtu.dk
+ * @version $Id: $Id
  */
 public class IOUtil {
 

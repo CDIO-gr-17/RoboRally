@@ -38,6 +38,7 @@ import java.io.*;
  * This class is able to read and write Json files containing information about the gameboard
  *
  * @author Ekkart Kindler, ekki@dtu.dk
+ * @version $Id: $Id
  */
 public class LoadBoard {
 
@@ -45,6 +46,12 @@ public class LoadBoard {
     private static final String DEFAULTBOARD = "defaultboard";
     private static final String JSON_EXT = "json";
 
+    /**
+     * <p>loadBoard.</p>
+     *
+     * @param boardname a {@link java.lang.String} object.
+     * @return a {@link dk.dtu.compute.se.pisd.roborally.model.Board} object.
+     */
     public static Board loadBoard(String boardname) {
         if (boardname == null) {
             boardname = DEFAULTBOARD;
@@ -101,6 +108,12 @@ public class LoadBoard {
         return null;
     }
 
+    /**
+     * <p>saveBoard.</p>
+     *
+     * @param board a {@link dk.dtu.compute.se.pisd.roborally.model.Board} object.
+     * @param name a {@link java.lang.String} object.
+     */
     public static void saveBoard(Board board, String name) {
         BoardTemplate template = new BoardTemplate();
         template.width = board.width;
