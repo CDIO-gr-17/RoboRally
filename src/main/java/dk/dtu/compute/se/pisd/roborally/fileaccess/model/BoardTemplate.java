@@ -26,7 +26,8 @@ import java.util.List;
 
 
 /**
- * ...
+ * This template is used as a temporary information holder while reading and writing to Json files
+ * Imitates primitively the board.java from the model
  *
  * @author Ekkart Kindler, ekki@dtu.dk
  * @version $Id: $Id

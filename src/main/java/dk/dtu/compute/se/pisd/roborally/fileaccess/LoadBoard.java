@@ -47,9 +47,10 @@ public class LoadBoard {
     private static final String JSON_EXT = "json";
 
     /**
-     * <p>loadBoard.</p>
+     * Loads the board layout and its elements from a specific json file.
+     * First into a template and then onto a new board which is returned
      *
-     * @param boardname a {@link java.lang.String} object.
+     * @param boardname a {@link java.lang.String} object. The name of the board which should be loaded.
      * @return a {@link dk.dtu.compute.se.pisd.roborally.model.Board} object.
      */
     public static Board loadBoard(String boardname) {
@@ -109,7 +110,7 @@ public class LoadBoard {
     }
 
     /**
-     * <p>saveBoard.</p>
+     * Writes a Json file of the board layout and its elements.
      *
      * @param board a {@link dk.dtu.compute.se.pisd.roborally.model.Board} object.
      * @param name a {@link java.lang.String} object.
