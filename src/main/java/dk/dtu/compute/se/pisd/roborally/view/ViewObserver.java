@@ -26,7 +26,8 @@ import dk.dtu.compute.se.pisd.designpatterns.observer.Subject;
 import javafx.application.Platform;
 
 /**
- * ...
+ * This class is a sub-class to the parentsclass Observer.
+ * It implements the abstract method 'udpate'
  *
  * @author Ekkart Kindler, ekki@dtu.dk
  * @version $Id: $Id
@@ -40,7 +41,13 @@ public interface ViewObserver extends Observer {
      */
     void updateView(Subject subject);
 
-    /** {@inheritDoc} */
+    /**
+     * <p>update.</p>
+     * This method takes an subject as an argument I.E spaceview, playerview etc.
+     * and makes sure the updates in these views are run through the JFXaplicationThread
+     * @param subject the subjects which is updated
+     * @Author Ekkart Kindler
+     * */
     @Override
     default void update(Subject subject) {
         // This default implementation of the update method makes sure that ViewObserver implementations
