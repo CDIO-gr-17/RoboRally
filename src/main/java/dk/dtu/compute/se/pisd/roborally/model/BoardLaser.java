@@ -2,7 +2,7 @@ package dk.dtu.compute.se.pisd.roborally.model;
 import dk.dtu.compute.se.pisd.roborally.controller.GameController;
 import org.jetbrains.annotations.NotNull;
 /**
- * <p>BoardLaser class.</p>
+ *
  *
  * @author jakob
  * @version $Id: $Id

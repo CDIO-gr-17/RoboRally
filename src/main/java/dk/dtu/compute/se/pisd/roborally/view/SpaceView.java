@@ -170,7 +170,7 @@ public class SpaceView extends StackPane implements ViewObserver {
     }
 
     /**
-     *
+     *  Draws a gear on the space if one should be drawn
      * @param gear
      * @author Jakob Agergaard
      */
@@ -260,7 +260,7 @@ public class SpaceView extends StackPane implements ViewObserver {
     }
 
     /**
-     * Draws a checkpoint
+     * Draws a checkpoint on the space if one should be drawn
      * @param checkpoint
      * @author Jakob Agergaard
      */
@@ -283,6 +283,11 @@ public class SpaceView extends StackPane implements ViewObserver {
              */
         }
     }
+
+    /**
+     * Draws a pushPanel on the space if one should be drawn
+     * @param pushPanel
+     */
     private void drawPushPanel(Pushpanel pushPanel){
         if(pushPanel!=null) {
             InputStream input = classLoader.getResourceAsStream("pictures/pushpanel.png");
@@ -320,6 +325,11 @@ public class SpaceView extends StackPane implements ViewObserver {
   */
         }
     }
+
+    /**
+     * Goes through the actions belonging to the space and draws these
+     * @param actions
+     */
     private void drawActions(List<FieldAction> actions){
         for (FieldAction action : actions) {
             switch (action.getClass().getSimpleName()){
@@ -335,16 +345,19 @@ public class SpaceView extends StackPane implements ViewObserver {
                 case "Gear":
                     drawGear((Gear) action);
                     break;
-
-                    case "BoardLaser":
+                case "BoardLaser":
                     drawBoardLaser((BoardLaser) action);
                     break;
-
                     default:
                     System.out.println("Action not drawn!");
             }
         }
     }
+
+    /**
+     * Draws a Boardlaser on the space if one should be drawn
+     * @param boardLaser
+     */
     private void drawBoardLaser(BoardLaser boardLaser){
         if(boardLaser!=null){
             InputStream input = classLoader.getResourceAsStream("pictures/boardlaser.png");
