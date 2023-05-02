@@ -30,7 +30,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
- * ...
+ * Contains the database information and the connection to the database.
  *
  * @author Ekkart Kindler, ekki@dtu.dk
  *
@@ -61,8 +61,11 @@ class Connector {
 			// Platform.exit();
 		}
     }
-    
-    private void createDatabaseSchema() {
+
+	/**
+	 * Creates the databaseschema from the sql script in ressources
+	 */
+	private void createDatabaseSchema() {
 
     	String createTablesStatement =
 				IOUtil.readResource("schemas/createschema.sql");
