@@ -34,7 +34,7 @@ import javafx.scene.layout.VBox;
 import org.jetbrains.annotations.NotNull;
 
 /**
- *
+ * Creates a visual representation of the board from Model package and information that needs to be conveyed to player
  *
  * @author Ekkart Kindler, ekki@dtu.dk
  * @version $Id: $Id
@@ -48,7 +48,7 @@ public class BoardView extends VBox implements ViewObserver {
     private PlayersView playersView;
 
     private Label statusLabel;
-    private SpaceEventHandler spaceEventHandler;
+    //private SpaceEventHandler spaceEventHandler;
 
     /**
      * <p>Creates boardview and a few things belonging to this.</p>
@@ -68,7 +68,7 @@ public class BoardView extends VBox implements ViewObserver {
 
         spaces = new SpaceView[board.width][board.height];
 
-        spaceEventHandler = new SpaceEventHandler(gameController);
+       //spaceEventHandler = new SpaceEventHandler(gameController);
 
         for (int x = 0; x < board.width; x++) {
             for (int y = 0; y < board.height; y++) {
@@ -76,7 +76,7 @@ public class BoardView extends VBox implements ViewObserver {
                 SpaceView spaceView = new SpaceView(space);
                 spaces[x][y] = spaceView;
                 mainBoardPane.add(spaceView, x, y);
-                spaceView.setOnMouseClicked(spaceEventHandler);
+                //spaceView.setOnMouseClicked(spaceEventHandler);
             }
         }
 
@@ -95,6 +95,7 @@ public class BoardView extends VBox implements ViewObserver {
     }
     // XXX this handler and its uses should eventually be deleted! This is just to help test the
     //     behaviour of the game by being able to explicitly move the players on the board!
+    /*
     private class SpaceEventHandler implements EventHandler<MouseEvent> {
 
         final public GameController gameController;
@@ -118,6 +119,6 @@ public class BoardView extends VBox implements ViewObserver {
             }
         }
 
-    }
+    }*/
 
 }
