@@ -7,7 +7,9 @@ import dk.dtu.compute.se.pisd.roborally.model.Space;
 import org.jetbrains.annotations.NotNull;
 
 /**
- *
+ * This is a class that contains checkpoint. The checkpoints are an essential part of the game since
+ * the player has to collect the tokens they gain from the checkpoints to finnish the game.
+ * @author Jarl Boyd Roest s224556@dtu.dk and Esben Elnegaard, s224555@dtu.dk
  */
 
 public class Checkpoint extends FieldAction {

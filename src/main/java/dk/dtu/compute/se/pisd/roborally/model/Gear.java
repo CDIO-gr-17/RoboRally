@@ -29,6 +29,11 @@ import dk.dtu.compute.se.pisd.roborally.model.Player;
 import dk.dtu.compute.se.pisd.roborally.model.Space;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * This class is a gear, that is an extention of the field action class.
+ * The gear is a function to the game, that is placed on a space, and activates if a player lands on it.
+ * @author Jarl Boyd Roest, s224556@dtu.dk and Mads Fogelberg s224563@dtu.dk
+ */
 public class Gear extends FieldAction {
 
     private Space space;

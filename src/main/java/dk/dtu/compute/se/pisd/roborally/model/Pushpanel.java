@@ -26,12 +26,11 @@ import dk.dtu.compute.se.pisd.roborally.controller.ImpossibleMoveException;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * ...
- *
- * @author Ekkart Kindler, ekki@dtu.dk
- *
+ * This class is where the pushpanel is created, that is an extention of the field action class.
+ * The pushpanel is a function to the game, that is placed on a space, and activates if a player lands on it.
+ * @author Jarl Boyd Roest, s224556@dtu.dk and Mads Fogelberg s224563@dtu.dk
  */
-public class Pushpanel extends FieldAction {
+public class  Pushpanel extends FieldAction {
 
     private Heading heading;
     public Pushpanel(@NotNull Heading heading){
