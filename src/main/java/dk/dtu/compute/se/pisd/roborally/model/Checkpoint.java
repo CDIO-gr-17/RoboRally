@@ -13,7 +13,6 @@ import org.jetbrains.annotations.NotNull;
  */
 
 public class Checkpoint extends FieldAction {
-    private Space space;
     private int checkPointID;
 
     /**

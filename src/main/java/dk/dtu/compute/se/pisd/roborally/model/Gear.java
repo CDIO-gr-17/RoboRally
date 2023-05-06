@@ -35,9 +35,6 @@ import org.jetbrains.annotations.NotNull;
  * @author Jarl Boyd Roest, s224556@dtu.dk and Mads Fogelberg s224563@dtu.dk
  */
 public class Gear extends FieldAction {
-
-    private Space space;
-
     private boolean clockwise;
 
     /**

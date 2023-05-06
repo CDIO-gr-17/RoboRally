@@ -36,24 +36,10 @@ import java.util.List;
  */
 public class Space extends Subject {
 
-    //Laver en liste med headings
 
     private List<Heading> walls = new ArrayList<>();
 
     private List<FieldAction> actions = new ArrayList<>();
-
-
-    private List <Checkpoint> checkpoints = new ArrayList<>();
-    private Checkpoint checkpoint;
-
-    private ConveyorBelt conveyorBelt;
-    private BoardLaser boardLaser;
-
-    private Pushpanel pushpanel;
-
-    private Gear gear;
-
-   // private Gear gear;
 
     public final Board board;
     public final int x;
@@ -148,40 +134,6 @@ public class Space extends Subject {
         return actions;
     }
 
-    /**
-     * <p>createCheckpoint.</p>
-     *
-     * @param checkpointID a int.
-     */
-    public void createCheckpoint(int checkpointID){
-        this.checkpoint= new Checkpoint(checkpointID);
-    }
-
-    /**
-     * Creates a conveyorbelt on this space with a given heading
-     *
-     * @param heading the direction the conveyorbelt is pointing
-     * @author Philip Muff
-     */
-    public void createConveyorbelt(Heading heading){
-        this.conveyorBelt = new ConveyorBelt(heading);
-    }
-
-    /*public void createPushpanel(Heading heading) {
-        this.pushpanel = new Pushpanel(heading);
-    }
-    public Pushpanel getPushpanel (){
-        if (actions.contains(Pushpanel.class)){
-        }
-        return null;
-    }*/
-
-    /**
-     * <p>createBoardLaser.</p>
-     *
-     * @param heading a {@link dk.dtu.compute.se.pisd.roborally.model.Heading} object.
-     */
-    public void createBoardLaser(Heading heading){this.boardLaser = new BoardLaser(heading);}
 
     void playerChanged() {
         // This is a minor hack; since some views that are registered with the space
