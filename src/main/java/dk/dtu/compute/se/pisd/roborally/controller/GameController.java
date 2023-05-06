@@ -344,9 +344,17 @@ public class GameController {
      * @author Jakob Agergaard
      */
     public void executeConveyorbelts() {
+        List<Player> moved = new ArrayList<>();
         for (int i = 0; i < board.width; i++) {
             for (int j = 0; j < board.height; j++) {
                 Space currentSpace = board.getSpace(i,j);
+                Player player = currentSpace.getPlayer();
+                if (moved.contains(player)){
+                    return;
+                }
+                if (player!=null) {
+                    moved.add(player);
+                }
                 for (FieldAction action : currentSpace.getActions()) {
                     if (action.getClass()==ConveyorBelt.class) {
                         action.doAction(this, currentSpace);

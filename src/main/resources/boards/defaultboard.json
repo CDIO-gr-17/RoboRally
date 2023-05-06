@@ -174,7 +174,6 @@
     },
     {
       "walls": [
-        "NORTH"
       ],
       "actions": [
         {
@@ -189,7 +188,6 @@
     },
     {
       "walls": [
-        "EAST"
       ],
       "actions": [
         {
@@ -200,7 +198,49 @@
         }
       ],
       "x": 7,
+      "y": 5
+    },
+    {
+      "walls": [
+
+      ],
+      "actions": [
+        {
+          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.model.ConveyorBelt",
+          "INSTANCE": {
+            "heading": "SOUTH"
+          }
+        }
+      ],
+      "x": 7,
+      "y": 6
+    },{
+      "walls": [
+
+      ],
+      "actions": [
+        {
+          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.model.ConveyorBelt",
+          "INSTANCE": {
+            "heading": "SOUTH"
+          }
+        }
+      ],
+      "x": 7,
+      "y": 4
+    },
+    {
+      "walls": [],
+      "actions": [
+        {
+          "CLASSNAME": "dk.dtu.compute.se.pisd.roborally.model.Checkpoint",
+          "INSTANCE": {
+            "checkPointID": "1"
+          }
+        }
+      ],
+      "x": 5,
       "y": 7
     }
-  ]
+    ]
 }
