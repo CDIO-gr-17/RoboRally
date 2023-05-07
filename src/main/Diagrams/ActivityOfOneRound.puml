@@ -13,12 +13,18 @@ repeat
 :Execute next step;
 
 if (Damage done) then (true)
+|Player|
 :Deal damage cards;
 
 else (false)
 
 endif
-
+|System|
+if (Winner found) then (true)
+stop
+else (false)
+endif
+|System|
 repeat while (Cards left?) is (true) not (false)
 
 |Player|

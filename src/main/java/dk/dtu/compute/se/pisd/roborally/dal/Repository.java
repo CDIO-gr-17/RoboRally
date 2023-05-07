@@ -428,7 +428,6 @@ class Repository implements IRepository {
 	 *
 	 * @param game
 	 * @throws SQLException
-	 * @author
 	 * @author Jakob Agergaard
 	 */
 	private void updateProgrammingFieldsFromDB(Board game) throws SQLException {
@@ -666,7 +665,9 @@ class Repository implements IRepository {
 	 *
 	 */
 	private static final String SQL_INSERT_HAND =
-			"INSERT INTO HAND(gameID, playerID, CARD1, CARD2, CARD3, CARD4, CARD5, CARD6, CARD7, CARD8) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			"INSERT INTO HAND(gameID, playerID, CARD1, CARD2, CARD3, " +
+					"CARD4, CARD5, CARD6, CARD7, CARD8) " +
+					"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private PreparedStatement insert_hand_stmt = null;
 
 	private PreparedStatement getInsertHandStatement(){

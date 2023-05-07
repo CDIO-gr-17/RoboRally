@@ -54,24 +54,18 @@ CREATE TABLE IF NOT EXISTS Hand (
     FOREIGN KEY (gameID, playerID) REFERENCES Player(gameID, playerID)
 );;
 
-CREATE TABLE
-    IF NOT EXISTS ProgrammingField (
-                                    gameID int NOT NULL,
-                                    playerID tinyint NOT NULL,
+CREATE TABLE IF NOT EXISTS ProgrammingField (
+        gameID int NOT NULL,
+        playerID tinyint NOT NULL,
+        CARD1 varchar(20) default null,
+        CARD2 varchar(20) default null,
+        CARD3 varchar(20) default null,
+        CARD4 varchar(20) default null,
+        CARD5 varchar(20) default null,
 
-                                    CARD1 varchar(20) default null,
-                                    CARD2 varchar(20) default null,
-                                    CARD3 varchar(20) default null,
-                                    CARD4 varchar(20) default null,
-                                    CARD5 varchar(20) default null,
-
-                                    PRIMARY KEY (gameID, playerID),
-                                    FOREIGN KEY (gameID, playerID) REFERENCES Player(gameID, playerID)
+        PRIMARY KEY (gameID, playerID),
+        FOREIGN KEY (gameID, playerID) REFERENCES Player(gameID, playerID)
 );;
 
 
 SET FOREIGN_KEY_CHECKS = 1;;
-
-    /*
-// TODO still some stuff missing here
-     */
